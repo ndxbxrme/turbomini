@@ -1,0 +1,19 @@
+{
+  "name": "turbomini",
+  "version": "0.0.1",
+  "description": "A tiny SPA framework",
+  "main": "turbomini.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ndxbxrme/turbomini.git"
+  },
+  "author": "ndxbxrme",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ndxbxrme/turbomini/issues"
+  },
+  "homepage": "https://github.com/ndxbxrme/turbomini#readme"
+}
