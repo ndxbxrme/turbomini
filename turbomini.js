@@ -2,6 +2,7 @@ const TurboMini = (() => {
   const useHash = /\.html/.test(document.baseURI);
   const state = {};
   const controllers = {};
+  const templates = {};
   const context = {page:'default',params:[],controller:null};
   const $ = (s, e, a) => {
     const obj = (e || document)['querySelector' + (a ? 'All' : '')](s) || {};
@@ -10,7 +11,7 @@ const TurboMini = (() => {
       removeClass: (name) => {obj.className = obj.className.replace(new RegExp(`\s*\W${name}\W`), '');}
     });
   }
-  const $t = (s, data, isText) => (isText ? s : $(`script[name=${s}]`).innerText).replace(/\{\{(.+?)\}\}/g, (all, m) => (new Function(`with(this) {` + (m.includes('return') ? m : `return (${m})`) + '}').call(data)));
+  const $t = (s, data, isText) => (isText ? s : templates[name] || $(`script[name=${s}]`).innerText || $(`template[name=${s}]`).innerText).replace(/\{\{(.+?)\}\}/g, (all, m) => (new Function(`with(this) {` + (m.includes('return') ? m : `return (${m})`) + '}').call(data)));
   const refresh = () => ($('page').innerHTML = $t(context.page, context.controller));
   const start = async () => {
     try {
@@ -31,9 +32,11 @@ const TurboMini = (() => {
       start();
     }
   };
+  const controller = (name, fn) => controllers[name] = fn;
+  const template = (name, text) => templates[name] = text;
   const run = (fn) => {fn(app); return app};
   window.addEventListener('popstate', start);
-  const app = {$,$t,goto,start,run,refresh,controllers,context,state,useHash};
+  const app = {$,$t,goto,start,run,refresh,controller,template,context,state,useHash};
   return app;
 });
 module.exports = TurboMini;
