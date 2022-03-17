@@ -32,8 +32,8 @@ const TurboMini = (() => {
       start();
     }
   };
-  const controller = (name, fn) => controllers[name] = fn;
-  const template = (name, text) => templates[name] = text;
+  const controller = (name, fn) => {controllers[name] = fn; return app};
+  const template = (name, text) => {templates[name] = text; return app};
   const run = (fn) => {fn(app); return app};
   window.addEventListener('popstate', start);
   const app = {$,$t,goto,start,run,refresh,controller,template,context,state,useHash};
