@@ -1,4 +1,4 @@
-const TurboMini = (() => {
+const TurboMini = ((basePath) => {
   const useHash = /\.html/.test(document.baseURI);
   const state = {};
   const controllers = {};
@@ -16,7 +16,7 @@ const TurboMini = (() => {
   const start = async () => {
     try {
       context.controller && context.controller.unload && await context.controller.unload();
-      [context.page, ...context.params] = (app.useHash ? window.location.hash : window.location.pathname).replace(/^[\/#]/, '').split(/\//g);
+      [context.page, ...context.params] = (app.useHash ? window.location.hash : window.location.pathname).replace(basePath,'').replace(/^[\/#]/, '').split(/\//g);
       context.page = context.page || 'default';
       context.controller = controllers[context.page] && await controllers[context.page](context.params);
       refresh();
