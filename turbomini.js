@@ -11,7 +11,7 @@ const TurboMini = ((basePath) => {
       removeClass: (name) => {obj.className = obj.className.replace(new RegExp(`\s*\W${name}\W`), '');}
     });
   }
-  const $t = (s, data, isText) => (isText ? s : templates[name] || $(`script[name=${s}]`).innerText || $(`template[name=${s}]`).innerHTML).replace(/\{\{(.+?)\}\}/g, (all, m) => (new Function(`with(this) {` + (m.includes('return') ? m : `return (${m})`) + '}').call(data)));
+  const $t = (s, data, isText) => (isText ? s : templates[s] || $(`script[name=${s}]`).innerText || $(`template[name=${s}]`).innerHTML).replace(/\{\{(.+?)\}\}/g, (all, m) => (new Function(`with(this) {` + (m.includes('return') ? m : `return (${m})`) + '}').call(data)));
   const refresh = () => ($('page').innerHTML = $t(context.page, context.controller));
   const start = async () => {
     try {
