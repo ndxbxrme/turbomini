@@ -1,6 +1,6 @@
 {
   "name": "turbomini",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A tiny SPA framework",
   "main": "turbomini.js",
   "module": "turbomini.esm.js",
