@@ -11,7 +11,7 @@ const TurboMini = ((basePath) => {
       removeClass: (name) => {obj.className = obj.className.replace(new RegExp(`\s*\W${name}\W`), '');}
     });
   }
-  const $t = (s, data, isText) => (isText ? s : templates[s] || $(`script[name=${s}]`).innerText || $(`template[name=${s}]`).innerHTML).replace(/\{\{(.+?)\}\}/g, (all, m) => (new Function(`with(this) {` + (m.includes('return') ? m : `return (${m})`) + '}').call(data)));
+  const $t = (s, data, isText) => (isText ? s : templates[s] || $(`script[name="${s}"]`).innerText || $(`template[name="${s}"]`).innerHTML).replace(/\{\{(.+?)\}\}/g, (all, m) => (new Function(`with(this) {` + (m.includes('return') ? m : `return (${m})`) + '}').call(data)));
   const refresh = () => ($('page').innerHTML = $t(context.page, context.controller));
   const start = async () => {
     try {
@@ -34,7 +34,7 @@ const TurboMini = ((basePath) => {
   };
   const controller = (name, fn) => {controllers[name] = fn; return app};
   const template = (name, text) => {templates[name] = text; return app};
-  const run = (fn) => {fn(app); return app};
+  const run = async (fn) => {await fn(app); return app};
   window.addEventListener('popstate', start);
   const app = {$,$t,goto,start,run,refresh,controller,template,context,state,useHash};
   return app;
