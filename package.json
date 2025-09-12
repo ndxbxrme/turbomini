@@ -1,20 +1,49 @@
 {
   "name": "turbomini",
-  "version": "1.0.0",
-  "description": "A tiny SPA framework",
+  "version": "1.1.0",
+  "description": "Tiny dependency-free SPA micro-framework.",
   "main": "turbomini.js",
-  "module": "turbomini.esm.js",
+  "module": "turbomini.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/turbomini.js",
+      "types": "./types/turbomini.d.ts"
+    }
+  },
+  "types": "./types/turbomini.d.ts",
+  "files": [
+    "src"
+  ],
+  "sideEffects": false,
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "examples": "python -m http.server 8055",
+    "test": "node --test",
+    "test:e2e": "npx playwright test",
+    "format": "npx prettier -w .",
+    "lint": "node scripts/lint.mjs || true",
+    "types": "tsc -p tsconfig.json"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ndxbxrme/turbomini.git"
   },
   "author": "ndxbxrme",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/ndxbxrme/turbomini/issues"
   },
-  "homepage": "https://github.com/ndxbxrme/turbomini#readme"
+  "homepage": "https://github.com/ndxbxrme/turbomini#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.35.0",
+    "@playwright/test": "^1.55.0",
+    "eslint": "^9.35.0",
+    "globals": "^16.4.0",
+    "prettier": "^3.6.2",
+    "tsc": "^2.0.4",
+    "typescript": "^5.9.2"
+  }
 }

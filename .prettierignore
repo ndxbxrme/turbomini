@@ -1,0 +1,13 @@
+# generated / external stuff
+node_modules
+dist
+types
+
+# examples and tests usually have their own style, ignore if you don’t want them auto-formatted
+examples
+tests
+test-results
+docs
+
+# misc
+package-lock.json

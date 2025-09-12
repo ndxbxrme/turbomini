@@ -1,247 +1,196 @@
-# TurboMini Documentation
+# TurboMini
 
-## **Overview**
-
-**TurboMini** is a lightweight JavaScript framework designed to handle client-side routing, templating, controllers, and basic state management for single-page applications (SPAs). Its simplicity makes it ideal for small to medium-sized projects where full-scale frameworks like React or Vue might be overkill.
-
-### **Key Features**
-- **Client-Side Routing:** Supports dynamic route management and browser history handling.
-- **Templating:** Lightweight, precompiled templates with powerful data binding.
-- **Controller Management:** Organize logic for each route.
-- **State Management:** Proxy-based reactive state updates.
-- **Middleware:** Pre-routing hooks for tasks like authentication.
-- **Reusable Components:** Combine templates and controllers.
-- **Debugging and Dev Tools:** Easy inspection and debugging.
-- **Error Handling:** Centralized error management.
+A tiny, dependency-free SPA micro-framework.  
+Designed for small projects that want routing, templates, and state without pulling in React/Vue/Angular.
 
 ---
 
-## **Getting Started**
+## Features
 
-### **Installation**
-Include the `TurboMini` library in your project via a module import:
+- **Routing** – history API or hash-based.
+- **Templates** – minimal mustache-style with `{{var}}`.
+- **Controllers** – per-page data providers.
+- **State** – reactive proxy object (auto-refresh).
+- **Middleware** – run before route changes.
+- **Components** – combine templates + controllers.
+- **Tiny footprint** – one file, no deps.
 
-```javascript
-import { TurboMini } from './path/to/turbomini.js';
+---
 
-const app = TurboMini('/basePath');
-```
+## Quick Start
 
-Replace `/basePath` with the base URL of your app (e.g., `/my-app`).
-
-### **Basic Example**
-
-```javascript
-const app = TurboMini('/');
-
-// Define a template
-app.template('home', '<h1>Welcome, {{user.name}}</h1>');
-
-// Define a controller
-app.controller('home', async () => {
-  return { user: { name: 'Alice' } };
-});
-
-// Start the app
-app.start();
-```
-
-Add a `<page>` element to your HTML for dynamic rendering:
+Include a `<page>` element in your HTML:
 
 ```html
-<page></page>
+<!doctype html>
+<html>
+  <body>
+    <page></page>
+    <script type="module">
+      import { TurboMini } from "./src/turbomini.js";
+
+      const app = TurboMini("/");
+
+      app.template("home", "<h1>Hello {{name}}</h1>");
+      app.controller("home", () => ({ name: "TurboMini" }));
+
+      app.start();
+    </script>
+  </body>
+</html>
 ```
 
-Navigate to `#home` or `/home` to see the rendered content.
+Navigate to `/home` (or `#/home` if using hash mode).
 
 ---
 
-## **API Reference**
+## Core API
 
-### **1. `app.template(name, text)`**
-Registers a template by name.
+### `app.template(name, text)`
 
-#### Parameters:
-- `name` (string): The template's unique name.
-- `text` (string): The HTML string for the template, with `{{key}}` placeholders for data binding.
+Register a template.
 
-#### Example:
-```javascript
-app.template('profile', '<div>{{name}} is {{age}} years old</div>');
+```js
+app.template("profile", "<div>{{user}}</div>");
 ```
 
----
+### `app.controller(name, fn)`
 
-### **2. `app.controller(name, fn)`**
-Registers a controller by name. The controller provides the data and logic for a route.
+Register a controller (data provider).
 
-#### Parameters:
-- `name` (string): The route's unique name.
-- `fn` (function): An async function that returns data to be used by the template.
+```js
+app.controller("profile", () => ({ user: "Alice" }));
+```
 
-#### Example:
-```javascript
-app.controller('profile', async (params) => {
-  return { name: 'John Doe', age: 30 };
+### `app.start()`
+
+Boot the router and render the current route.
+
+### `app.goto(route)`
+
+Programmatically change routes.
+
+```js
+app.goto("/profile");
+```
+
+### `app.state`
+
+Reactive object. Any writes trigger a re-render.
+
+```js
+app.state.count = 1;
+```
+
+### `app.refresh()`
+
+Force a re-render manually.
+
+### `app.addMiddleware(fn)`
+
+Run logic before route changes. Return `false` to cancel.
+
+```js
+app.addMiddleware((ctx) => {
+  if (ctx.page === "admin" && !loggedIn()) return false;
 });
 ```
 
----
+### `app.defineComponent(name, { template, controller })`
 
-### **3. `app.goto(route)`**
-Navigates to a specified route programmatically.
+Bundle template + controller.
 
-#### Parameters:
-- `route` (string): The route to navigate to (e.g., `/home`, `/profile/123`).
-
-#### Example:
-```javascript
-app.goto('profile/123');
-```
-
----
-
-### **4. `app.start()`**
-Starts the routing system and renders the initial route.
-
-#### Example:
-```javascript
-app.start();
-```
-
----
-
-### **5. `app.refresh()`**
-Manually re-renders the current page.
-
-#### Example:
-```javascript
-app.refresh();
-```
-
----
-
-### **6. `app.addMiddleware(fn)`**
-Adds a middleware function to be executed before routing.
-
-#### Parameters:
-- `fn` (function): A function that accepts the context and returns `false` to cancel routing.
-
-#### Example:
-```javascript
-app.addMiddleware(async (ctx) => {
-  if (ctx.page === 'admin' && !isAuthenticated()) {
-    app.goto('login');
-    return false;
-  }
+```js
+app.defineComponent("card", {
+  template: "<div>{{title}}</div>",
+  controller: () => ({ title: "Hello" }),
 });
 ```
 
----
+### `app.fetchTemplates(names, path?)`
 
-### **7. `app.defineComponent(name, { template, controller })`**
-Defines a reusable component by combining a template and a controller.
+Load external HTML templates.
 
-#### Parameters:
-- `name` (string): Component's name.
-- `template` (string): HTML for the component.
-- `controller` (function): Logic and data provider for the component.
-
-#### Example:
-```javascript
-app.defineComponent('userCard', {
-  template: '<div>{{user.name}}</div>',
-  controller: async () => ({ user: { name: 'Bob' } })
-});
+```js
+await app.fetchTemplates(["header", "footer"], "/partials/");
 ```
 
----
+### `app.prefetchTemplates(names)`
 
-### **8. `app.prefetchTemplates(names)`**
-Preloads templates into memory to improve loading time.
+Alias for `fetchTemplates`.
 
-#### Parameters:
-- `names` (array): List of template names.
+### `app.inspect()`
 
-#### Example:
-```javascript
-app.prefetchTemplates(['home', 'profile']);
-```
+Debug info: routes + templates.
 
----
-
-### **9. `app.fetchTemplates(templateNames, path)`**
-Fetches templates from the server.
-
-#### Parameters:
-- `templateNames` (array): List of template filenames (without extensions).
-- `path` (string): Path to the templates folder (defaults to `/components/`).
-
-#### Example:
-```javascript
-app.fetchTemplates(['header', 'footer'], '/shared/');
-```
-
----
-
-### **10. `app.inspect()`**
-Returns a list of registered routes and templates.
-
-#### Example:
-```javascript
+```js
 console.log(app.inspect());
 ```
 
 ---
 
-## **Advanced Topics**
+## Example: Counter
 
-### **1. Middleware**
-Middleware functions execute before a route is processed and can modify or cancel the route.
+```js
+const app = TurboMini("/");
+app.template(
+  "counter",
+  `
+  <button id="inc">+</button>
+  <div>Count: {{count}}</div>
+`,
+);
+app.controller("counter", () => app.state);
 
-#### Example:
-```javascript
-app.addMiddleware((context) => {
-  console.log('Navigating to', context.page);
-});
-```
+app.start();
 
-### **2. Router Events**
-Respond to route lifecycle events (`routeChangeStart`, `routeChangeEnd`).
-
-#### Example:
-```javascript
-app.routerEvents.addEventListener('routeChangeStart', () => {
-  console.log('Route is changing...');
-});
-
-app.routerEvents.addEventListener('routeChangeEnd', () => {
-  console.log('Route change completed!');
+document.addEventListener("click", (e) => {
+  if (e.target.id === "inc") app.state.count++;
 });
 ```
 
 ---
 
-## **Best Practices**
-- Keep controllers lightweight; move complex logic to utility functions.
-- Prefetch templates and assets for routes frequently used.
-- Use meaningful names for templates and controllers for better clarity.
+## Development
+
+### Run examples
+
+Start a local server and open [http://localhost:8055/examples/00-hello-world/](http://localhost:8055/examples/00-hello-world/):
+
+```bash
+npm run examples
+```
+
+### Run unit tests
+
+Use Node’s built-in test runner:
+
+```bash
+npm test
+```
+
+### Run end-to-end tests
+
+Run Playwright against the examples:
+
+```bash
+npm run test:e2e
+```
+
+### Code quality
+
+Format and lint:
+
+```bash
+npm run format
+npm run lint
+```
 
 ---
 
-## **Development and Debugging**
-- Enable debugging by setting `app.debug = true`.
-- Use `app.inspect()` to review all registered templates and routes.
-- Centralize error logging with `app.errorHandler`.
+## Notes
 
----
-
-## **FAQ**
-
-### **Q: Can I use nested routes?**
-A: Nested routes are not natively supported but can be handled by dynamically changing the `context.page`.
-
-### **Q: How do I refresh a specific part of the page?**
-A: Use a reusable component to manage that part and manually re-render it as needed.
-
----
+- Routes are based on the first path segment (`/home`, `/about`).
+- The root path `/` (or `#/` in hash mode) resolves to the `default` template/controller.
+- Use hash routing (`TurboMini('#')`) for static hosting.
+- State writes are batched, but you can always call `app.refresh()` explicitly.
