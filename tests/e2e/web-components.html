@@ -38,7 +38,8 @@
       }
       customElements.define('json-comp', JsonComp);
 
-      app.controller('default', () => ({ count: 0 }));
+      app.state.count = 0;
+      app.controller('default', () => app.state);
       app.start();
       window.app = app;
     </script>
