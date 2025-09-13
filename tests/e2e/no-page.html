@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+  <body>
+    <!-- no <page> element -->
+    <script type="module">
+      import { TurboMini } from '../../src/turbomini.js';
+      const app = TurboMini('/tests/e2e/no-page.html');
+      app.template('default', '<h1 id="hello">Hello</h1>');
+      window.app = app;
+    </script>
+  </body>
+</html>
