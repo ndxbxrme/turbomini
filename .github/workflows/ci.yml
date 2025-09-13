@@ -1,5 +1,10 @@
 name: ci
-on: [push, pull_request]
+on:
+  push:
+    branches: [main] # only when code actually lands
+  pull_request:
+    branches: [main] # PRs into main
+
 jobs:
   test:
     runs-on: ubuntu-latest
