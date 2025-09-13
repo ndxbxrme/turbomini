@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <body>
+    <page></page>
+    <script type="module">
+      import { TurboMini } from '../../src/turbomini.js';
+      const app = TurboMini('/examples/05-helpers-showcase');
+      app.registerHelper('uppercase', s => String(s).toUpperCase());
+      app.registerHelper('truncate', (s, len) => String(s).slice(0, Number(len)));
+      app.template('default', `
+        <div id="date">{{date now}}</div>
+        <div id="num">{{number value}}</div>
+        <div id="cls" class="{{classList cls}}">Classes</div>
+        <div id="up">{{uppercase msg}}</div>
+        <div id="tr">{{truncate msg 4}}</div>
+      `);
+      app.controller('default', () => ({
+        now: new Date().toISOString(),
+        value: 12345.67,
+        cls: { active: true, hidden: false },
+        msg: 'hello world'
+      }));
+      app.start();
+      window.app = app;
+    </script>
+  </body>
+</html>

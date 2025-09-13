@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <body>
+    <div>
+      <button class="mode" data-mode="microtask">microtask</button>
+      <button class="mode" data-mode="raf">raf</button>
+      <button class="mode" data-mode="throttle">throttle</button>
+      <button class="mode" data-mode="debounce">debounce</button>
+      <button class="mode" data-mode="idle">idle</button>
+    </div>
+    <div>FPS: <span id="fps">0</span></div>
+    <page></page>
+    <script type="module">
+      import { TurboMini } from '../../src/turbomini.js';
+      const app = TurboMini('/examples/10-scheduler-modes');
+      app.template('default', '<div id="tick">{{tick}}</div>');
+      app.controller('default', () => app.state);
+      app.state.tick = 0;
+      let frames = 0;
+      setInterval(() => { app.state.tick++; frames++; }, 0);
+      setInterval(() => { document.getElementById('fps').textContent = String(frames); frames = 0; }, 1000);
+      document.addEventListener('click', e => {
+        if (e.target.classList.contains('mode')) {
+          app.setRenderStrategy({ mode: e.target.dataset.mode, interval: 50 });
+        }
+      });
+      app.start();
+      window.app = app;
+    </script>
+  </body>
+</html>

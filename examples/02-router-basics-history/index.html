@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <body>
+    <nav>
+      <a id="home-link" href="/examples/02-router-basics-history/home" onclick="app.goto('/examples/02-router-basics-history/home'); return false;">Home</a>
+      <a id="about-link" href="/examples/02-router-basics-history/about" onclick="app.goto('/examples/02-router-basics-history/about'); return false;">About</a>
+    </nav>
+    <page></page>
+    <script type="module">
+      import { TurboMini } from '../../src/turbomini.js';
+      const app = TurboMini('/examples/02-router-basics-history');
+      app.template('home', '<h1 id="home">Home</h1>');
+      app.template('about', '<h1 id="about">About</h1>');
+      app.controller('home', () => ({}));
+      app.controller('about', () => ({}));
+      app.start();
+      window.app = app;
+    </script>
+  </body>
+</html>

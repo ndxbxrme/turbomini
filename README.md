@@ -155,11 +155,26 @@ document.addEventListener("click", (e) => {
 
 ### Run examples
 
-Start a local server and open [http://localhost:8055/examples/00-hello-world/](http://localhost:8055/examples/00-hello-world/):
+Start a local server and open any demo under `examples/`:
 
 ```bash
 npm run examples
 ```
+
+Examples available:
+
+- 00-hello-world
+- 01-counter
+- 02-router-basics-history
+- 03-router-basics-hash
+- 04-partials-and-each
+- 05-helpers-showcase
+- 06-components-grid
+- 07-middleware-guard
+- 08-fetch-templates
+- 09-params-and-controllers
+- 10-scheduler-modes
+- 11-typescript-consumer
 
 ### Run unit tests
 
@@ -174,7 +189,7 @@ npm test
 Run Playwright against the examples:
 
 ```bash
-npm run test:e2e
+npm run test:e2e # or npx playwright test
 ```
 
 ### Code quality

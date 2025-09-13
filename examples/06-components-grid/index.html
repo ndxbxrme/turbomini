@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <body>
+    <page></page>
+    <script type="module">
+      import { TurboMini } from '../../src/turbomini.js';
+      const app = TurboMini('/examples/06-components-grid');
+      class AnimationGridItem extends HTMLElement {
+        constructor() { super(); this.attachShadow({mode:'open'}); }
+        static get observedAttributes() { return ['data']; }
+        attributeChangedCallback() { this.render(); }
+        connectedCallback() { this.render(); }
+        render() {
+          const data = JSON.parse(this.getAttribute('data') || '{}');
+          this.shadowRoot.innerHTML = `<style>:host{display:block;border:1px solid #ccc;padding:4px;margin:2px}</style><div>${data.name}</div>`;
+        }
+      }
+      customElements.define('animation-grid-item', AnimationGridItem);
+      app.template('default', '<div id="grid">{{#each items as item}}<animation-grid-item data="{{{json item}}}"></animation-grid-item>{{/each}}</div>');
+      app.controller('default', () => app.state);
+      app.state.items = [{name:'A'},{name:'B'}];
+      app.start();
+      window.app = app;
+    </script>
+  </body>
+</html>

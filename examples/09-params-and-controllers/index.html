@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <body>
+    <nav>
+      <a href="/examples/09-params-and-controllers/users/42" onclick="app.goto('/examples/09-params-and-controllers/users/42'); return false;">User 42</a>
+    </nav>
+    <page></page>
+    <script type="module">
+      import { TurboMini } from '../../src/turbomini.js';
+      const app = TurboMini('/examples/09-params-and-controllers');
+      app.template('users', '<h1 id="user">User {{id}}</h1>');
+      app.template('default', '<h1 id="notfound">Not found</h1>');
+      app.controller('users', params => ({ id: params[0] }));
+      app.controller('default', () => ({}));
+      app.start();
+      window.app = app;
+    </script>
+  </body>
+</html>

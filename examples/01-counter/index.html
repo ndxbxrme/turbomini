@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <body>
+    <page></page>
+    <div>
+      <button id="inc">+</button>
+      <button id="dec">-</button>
+    </div>
+    <div>
+      <button class="mode" data-mode="microtask">microtask</button>
+      <button class="mode" data-mode="raf">raf</button>
+      <button class="mode" data-mode="debounce">debounce</button>
+    </div>
+    <script type="module">
+      import { TurboMini } from '../../src/turbomini.js';
+      const app = TurboMini('/examples/01-counter');
+      app.template('default', '<h1 id="count">{{count}}</h1>');
+      app.controller('default', () => app.state);
+      app.state.count = 0;
+      document.addEventListener('click', e => {
+        if (e.target.id === 'inc') app.state.count++;
+        if (e.target.id === 'dec') app.state.count--;
+        if (e.target.classList.contains('mode')) {
+          app.setRenderStrategy({ mode: e.target.dataset.mode });
+        }
+      });
+      app.start();
+      window.app = app;
+    </script>
+  </body>
+</html>
