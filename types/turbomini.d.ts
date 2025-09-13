@@ -62,7 +62,7 @@ export type TurboMiniApp = any;
 /** @property {ComponentDefiner} defineComponent */
 /** @property {ControllerRegistrar} controller */
 /** @property {() => Promise<void>} start */
-/** @property {(route: string) => void} goto */
+/** @property {(route: string) => void} goto Navigate to a route; in history mode, routes are prefixed with basePath. */
 /** @property {() => void} refresh */
 /** @property {() => void} refreshNow */
 /** @property {(opts?: RenderStrategyOptions) => void} setRenderStrategy */
@@ -84,6 +84,7 @@ export type TurboMiniApp = any;
 /**
  * Create a TurboMini application.
  * @param {string} [basePath="/"] "/" for history mode, "#" for hash routing, or a sub-path like "/app".
+ * Routes passed to {@link TurboMiniApp.goto} and root-relative anchor clicks are resolved relative to this base path.
  * @returns {TurboMiniApp}
  */
 export function TurboMini(basePath?: string): TurboMiniApp;

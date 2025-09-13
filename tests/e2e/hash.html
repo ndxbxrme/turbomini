@@ -5,7 +5,7 @@
     <script type="module">
       import { TurboMini } from '../../src/turbomini.js';
       const app = TurboMini('#');
-      app.template('default', '<a id="hash-link" href="#/second" onclick="app.goto(\'/second\'); return false;">Go</a><h1 id="home">Home</h1>');
+      app.template('default', '<a id="hash-link" href="/second">Go</a><h1 id="home">Home</h1>');
       app.template('second', '<h1 id="hash-second">Second</h1>');
       app.controller('default', () => ({}));
       app.controller('second', () => ({}));

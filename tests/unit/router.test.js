@@ -52,6 +52,23 @@ test('goto() pushes state and invokes start', async () => {
   assert.equal(controllerCalls, 1);
 });
 
+test('goto() prefixes basePath for history mode', async () => {
+  const pushes = [];
+  globalThis.location = { pathname: '/app', hash: '' };
+  globalThis.history = {
+    pushState: (s, t, p) => {
+      pushes.push(p);
+      globalThis.location.pathname = p;
+    },
+  };
+  const app = TurboMini('/app');
+  app.controller('foo', () => {});
+  app.goto('/foo');
+  await tick();
+  assert.deepEqual(pushes, ['/app/foo']);
+  assert.equal(app.context.page, 'foo');
+});
+
 test('middleware executes in order', async () => {
   globalThis.location = { pathname: '/foo', hash: '' };
   globalThis.history = { pushState() {} };
