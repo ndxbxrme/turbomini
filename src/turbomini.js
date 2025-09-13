@@ -663,6 +663,12 @@ const TurboMini = (basePath = "/") => {
     template,
     $t,
     defineComponent,
+    /**
+     * Expose compiled templates for inspection and debugging.
+     * Not part of the stable public API but useful for tests.
+     * @type {Record<string, Function>}
+     */
+    templates,
 
     // helpers (chainable public wrappers)
     registerHelper: (name, fn) => (_registerHelper(name, fn), app),
