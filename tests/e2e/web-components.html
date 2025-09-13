@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <body>
+    <page></page>
+    <script type="module">
+      import { TurboMini } from '../../src/turbomini.js';
+      const app = TurboMini('/tests/e2e/web-components.html');
+      app.template('default', `
+        <my-el id="upgrade"></my-el>
+        <my-counter id="counter" count="{{count}}"></my-counter>
+        <json-comp id="json">
+          <script type="application/json">{"name":"Alice"}<\/script>
+        </json-comp>
+        <json-comp id="json-empty"></json-comp>
+      `);
+
+      class MyCounter extends HTMLElement {
+        static get observedAttributes() { return ['count']; }
+        connectedCallback() {
+          this.textContent = this.getAttribute('count');
+        }
+        attributeChangedCallback(name, oldValue, newValue) {
+          if (name === 'count') this.textContent = newValue;
+        }
+      }
+      customElements.define('my-counter', MyCounter);
+
+      class JsonComp extends HTMLElement {
+        connectedCallback() {
+          const script = this.querySelector('script[type="application/json"]');
+          if (script) {
+            const data = JSON.parse(script.textContent || '{}');
+            this.textContent = data.name;
+          } else {
+            this.textContent = 'no-data';
+          }
+        }
+      }
+      customElements.define('json-comp', JsonComp);
+
+      app.state.count = 0;
+      app.controller('default', () => app.state);
+      app.start();
+      window.app = app;
+    </script>
+  </body>
+</html>
