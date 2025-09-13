@@ -9,7 +9,7 @@ test('inspect lists registered routes, templates, helpers and default mode', () 
   app.registerHelper('noop', (v) => v);
   const info = app.inspect();
   assert.ok(info.routes.includes('home'));
-  assert.ok(info.templates.includes('tpl'));
+  assert.ok('tpl' in info.templates);
   assert.ok(info.helpers.includes('noop'));
   assert.equal(info.mode, 'history');
 });
@@ -21,7 +21,7 @@ test('inspect reports hash router mode', () => {
   app.registerHelper('h', (v) => v);
   const info = app.inspect();
   assert.ok(info.routes.includes('hash'));
-  assert.ok(info.templates.includes('t'));
+  assert.ok('t' in info.templates);
   assert.ok(info.helpers.includes('h'));
   assert.equal(info.mode, 'hash');
 });
