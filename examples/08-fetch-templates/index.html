@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <body>
+    <div id="error"></div>
+    <page></page>
+    <script type="module">
+      import { TurboMini } from '../../src/turbomini.js';
+      const app = TurboMini('/examples/08-fetch-templates');
+      await app.fetchTemplates(['header','footer'], './');
+      try {
+        await app.fetchTemplates(['missing'], './');
+      } catch (e) {
+        document.getElementById('error').textContent = e.message;
+      }
+      app.template('default', '{{> header}}<main>Content</main>{{> footer}}');
+      app.start();
+      window.app = app;
+    </script>
+  </body>
+</html>

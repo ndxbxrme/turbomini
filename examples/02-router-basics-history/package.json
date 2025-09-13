@@ -1,0 +1,13 @@
+{
+  "name": "02-router-basics-history",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "python -m http.server 8055",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

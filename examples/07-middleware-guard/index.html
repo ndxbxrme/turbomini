@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <body>
+    <button id="login">Toggle Login</button>
+    <nav>
+      <a id="admin-link" href="/examples/07-middleware-guard/admin" onclick="app.goto('/examples/07-middleware-guard/admin'); return false;">Admin</a>
+    </nav>
+    <page></page>
+    <script type="module">
+      import { TurboMini } from '../../src/turbomini.js';
+      const app = TurboMini('/examples/07-middleware-guard');
+      app.template('default', '<h1 id="status">{{loggedIn ? "Logged In" : "Logged Out"}}</h1>');
+      app.template('admin', '<h1 id="admin">Admin</h1>');
+      app.controller('default', () => app.state);
+      app.controller('admin', () => ({}));
+      app.state.loggedIn = false;
+      app.addMiddleware(ctx => {
+        if (ctx.page === 'admin' && !app.state.loggedIn) return false;
+      });
+      document.getElementById('login').addEventListener('click', () => {
+        app.state.loggedIn = !app.state.loggedIn;
+      });
+      app.start();
+      window.app = app;
+    </script>
+  </body>
+</html>

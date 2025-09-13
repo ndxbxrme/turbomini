@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <body>
+    <page></page>
+    <button id="add">Add</button>
+    <button id="remove">Remove</button>
+    <script type="module">
+      import { TurboMini } from '../../src/turbomini.js';
+      const app = TurboMini('/examples/04-partials-and-each');
+      app.template('header', '<h1>Items</h1>');
+      app.template('item', '<li class="item">{{this}}</li>');
+      app.template('default', `{{> header}}\n{{#if items.length}}<ul id="list">{{#each items as item}}{{> item item}}{{/each}}</ul>{{else}}<p id="empty">No items</p>{{/if}}`);
+      app.controller('default', () => app.state);
+      app.state.items = [];
+      document.addEventListener('click', e => {
+        if (e.target.id === 'add') app.state.items.push('item ' + (app.state.items.length + 1));
+        if (e.target.id === 'remove') app.state.items.pop();
+      });
+      app.start();
+      window.app = app;
+    </script>
+  </body>
+</html>

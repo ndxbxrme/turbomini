@@ -1,0 +1,9 @@
+{
+  "name": "11-typescript-consumer",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "python -m http.server 8055"
+  }
+}
