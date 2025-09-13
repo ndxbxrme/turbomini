@@ -507,7 +507,8 @@ const TurboMini = (basePath = "/") => {
     if (!hasDOM) return;
     try {
       const pageEl = $("page");
-      if (!pageEl) throw new Error("<page> element not found.");
+      if (!pageEl || !("innerHTML" in pageEl))
+        throw new Error("<page> element not found.");
       const nextHTML = $t(ctx.page, ctx.data);
       if (lastHTML == null) {
         pageEl.innerHTML = nextHTML;
