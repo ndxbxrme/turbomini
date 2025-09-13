@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <body>
+    <page></page>
+    <script type="module">
+      import { TurboMini } from '../../src/turbomini.js';
+      const app = TurboMini('/tests/e2e/templating.html');
+      app.template('item', '<li class="item">{{this}}</li>');
+      app.template('default', '<ul id="list">{{#each items}}{{> item .}}{{/each}}</ul>');
+      app.controller('default', () => app.state);
+      app.state.items = ['a', 'b'];
+      app.start();
+      window.app = app;
+    </script>
+  </body>
+</html>

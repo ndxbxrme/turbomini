@@ -6,6 +6,7 @@
       import { TurboMini } from '../../src/turbomini.js';
 
       const app = TurboMini('/examples/00-hello-world');
+      window.app = app;
 
       app.template('default', '<h1>Hello {{name}}</h1>');
       app.controller('default', () => ({ name: 'TurboMini' }));
