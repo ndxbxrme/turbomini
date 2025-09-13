@@ -73,7 +73,7 @@ export type TurboMiniApp = any;
 /** @property {(name: string, fn: HelperFn) => TurboMiniApp} registerHelper */
 /** @property {(name: string) => TurboMiniApp} unregisterHelper */
 /** @property {() => string[]} listHelpers */
-/** @property {() => {routes: string[], templates: string[], helpers: string[], mode: "history"|"hash", renderStrategy: RenderMode}} inspect */
+/** @property {() => {routes: string[], templates: Record<string, Function>, helpers: string[], mode: "history"|"hash", renderStrategy: RenderMode}} inspect */
 /** @property {boolean} useHash */
 /** @property {(type: string, handler: EventListener, opts?: any) => TurboMiniApp} on */
 /** @property {(type: string, handler: EventListener, opts?: any) => TurboMiniApp} off */

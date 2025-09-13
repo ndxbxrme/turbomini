@@ -22,7 +22,7 @@
   },
   "scripts": {
     "examples": "python -m http.server 8055",
-    "test": "node --test",
+    "test": "node --test tests/unit",
     "test:e2e": "npx playwright test",
     "format": "npx prettier -w .",
     "lint": "node scripts/lint.mjs || true",

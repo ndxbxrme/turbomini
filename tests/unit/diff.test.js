@@ -51,7 +51,7 @@ test('rendering avoids eval/with/new Function', () => {
   try {
     app.template('tpl', '<p>{{msg}}</p>');
     app.$t('tpl', { msg: 'hi' });
-    const fnSrc = app.templates['tpl'].toString();
+    const fnSrc = app.inspect().templates['tpl'].toString();
     assert.ok(!/\bwith\b/.test(fnSrc));
     assert.ok(!/\beval\b/.test(fnSrc));
     assert.ok(!/Function\(/.test(fnSrc));

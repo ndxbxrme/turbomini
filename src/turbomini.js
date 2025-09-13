@@ -62,7 +62,7 @@
 /** @property {(name: string, fn: HelperFn) => TurboMiniApp} registerHelper */
 /** @property {(name: string) => TurboMiniApp} unregisterHelper */
 /** @property {() => string[]} listHelpers */
-/** @property {() => {routes: string[], templates: string[], helpers: string[], mode: "history"|"hash", renderStrategy: RenderMode}} inspect */
+/** @property {() => {routes: string[], templates: Record<string, Function>, helpers: string[], mode: "history"|"hash", renderStrategy: RenderMode}} inspect */
 /** @property {boolean} useHash */
 /** @property {(type: string, handler: EventListener, opts?: any) => TurboMiniApp} on */
 /** @property {(type: string, handler: EventListener, opts?: any) => TurboMiniApp} off */
@@ -663,12 +663,6 @@ const TurboMini = (basePath = "/") => {
     template,
     $t,
     defineComponent,
-    /**
-     * Expose compiled templates for inspection and debugging.
-     * Not part of the stable public API but useful for tests.
-     * @type {Record<string, Function>}
-     */
-    templates,
 
     // helpers (chainable public wrappers)
     registerHelper: (name, fn) => (_registerHelper(name, fn), app),
@@ -697,7 +691,7 @@ const TurboMini = (basePath = "/") => {
     run: async (fn) => (await fn(app), app),
     inspect: () => ({
       routes: Object.keys(controllers),
-      templates: Object.keys(templates),
+      templates: { ...templates },
       helpers: Object.keys(helpers),
       mode: /** @type {"history"|"hash"} */ (useHash ? "hash" : "history"),
       renderStrategy: _mode,
