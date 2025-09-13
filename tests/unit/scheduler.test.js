@@ -7,7 +7,7 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const runWorker = (code) =>
   new Promise((resolve, reject) => {
-    const worker = new Worker(code, { eval: true });
+    const worker = new Worker(code, { eval: true, type: 'module' });
     worker.on('message', (msg) => resolve(msg));
     worker.on('error', reject);
     worker.on('exit', (c) => c && reject(new Error(`exit ${c}`)));
