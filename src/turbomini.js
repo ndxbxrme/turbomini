@@ -605,13 +605,24 @@ const TurboMini = (basePath = "/") => {
       if (location.hash !== "#" + route) location.hash = route;
       else start();
     } else {
-      if (location.pathname !== route) history.pushState({}, "", route);
+      const fullRoute = basePath === "/" ? route : basePath + route;
+      if (location.pathname !== fullRoute) history.pushState({}, "", fullRoute);
       start();
     }
   };
 
   on("popstate", start);
   on("hashchange", start);
+  if (hasDOM)
+    on("click", (e) => {
+      const a = e.target.closest ? e.target.closest("a") : null;
+      if (!a) return;
+      const href = a.getAttribute("href");
+      if (!href || !href.startsWith("/") || (a.target && a.target !== "_self"))
+        return;
+      e.preventDefault();
+      goto(href);
+    });
 
   // ---- Controllers & middleware --------------------------------------------
   /**
