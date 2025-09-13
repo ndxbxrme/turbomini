@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+  <body>
+    <page></page>
+    <script type="module">
+      import { TurboMini } from '../../src/turbomini.js';
+      const app = TurboMini('/tests/e2e/scheduler.html');
+      app.template('default', '<div id="count">{{count}}</div>');
+      app.controller('default', () => app.state);
+      app.state.count = 0;
+      app.start();
+      window.app = app;
+    </script>
+  </body>
+</html>
