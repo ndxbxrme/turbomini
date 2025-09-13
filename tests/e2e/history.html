@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+  <body>
+    <page></page>
+    <script type="module">
+      import { TurboMini } from '../../src/turbomini.js';
+      const app = TurboMini('/tests/e2e/history.html');
+      app.template('default', '<a id="go" href="/tests/e2e/history.html/second" onclick="app.goto(\'/tests/e2e/history.html/second\'); return false;">Go</a><h1 id="home">Home</h1>');
+      app.template('second', '<h1 id="second">Second</h1>');
+      app.controller('default', () => ({}));
+      app.controller('second', () => ({}));
+      app.start();
+      window.app = app;
+    </script>
+  </body>
+</html>
