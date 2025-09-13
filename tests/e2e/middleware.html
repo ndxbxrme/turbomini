@@ -11,7 +11,7 @@
       app.controller('default', () => ({}));
       app.controller('admin', () => ({}));
       app.controller('delayed', () => ({}));
-      app.middleware(async (ctx) => {
+      app.addMiddleware(async (ctx) => {
         if (ctx.page === 'admin') return false;
         if (ctx.page === 'delayed') {
           await new Promise(r => setTimeout(r, 300));
