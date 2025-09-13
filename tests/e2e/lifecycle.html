@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <body>
+    <page></page>
+    <script type="module">
+      import { TurboMini } from '../../src/turbomini.js';
+      const app = TurboMini('/tests/e2e/lifecycle.html');
+      window.unloadRan = false;
+      app.template('default', '<input id="focusme" /><a id="to-second" href="/tests/e2e/lifecycle.html/second" onclick="app.goto(\'/tests/e2e/lifecycle.html/second\'); return false;">Next</a>');
+      app.template('second', '<h1 id="status">{{status}}</h1>');
+      app.controller('default', () => ({
+        postLoad() {
+          document.getElementById('focusme').focus();
+        },
+        unload() {
+          window.unloadRan = true;
+        }
+      }));
+      app.controller('second', () => ({ status: String(window.unloadRan) }));
+      app.start();
+      window.app = app;
+    </script>
+  </body>
+</html>
