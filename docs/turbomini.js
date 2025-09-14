@@ -52,10 +52,9 @@
 /** @property {ControllerRegistrar} controller */
 /** @property {() => Promise<void>} start */
 /** @property {(route: string) => void} goto */
-/** @property {() => void} refresh */
 /** @property {() => void} refreshNow */
+/** @property {() => void} invalidate */
 /** @property {(opts?: RenderStrategyOptions) => void} setRenderStrategy */
-/** @property {Record<string, any>} state */
 /** @property {Context} context */
 /** @property {TemplateFetcher} fetchTemplates */
 /** @property {TemplateFetcher} prefetchTemplates */
@@ -69,7 +68,6 @@
 /** @property {(el: Element, type: string, handler: EventListener, opts?: any) => (() => void)} listen */
 /** @property {(fn: (app: TurboMiniApp) => any) => Promise<TurboMiniApp>} run */
 /** @property {(e: unknown) => void} errorHandler */
-/** @property {() => void} invalidate */
 
 /**
  * Create a TurboMini application.
@@ -535,7 +533,8 @@ const TurboMini = (basePath = "/") => {
    */
   const refresh = () => invalidate(); // scheduled (back-compat name)
 
-  // ---- State (scheduled) ----------------------------------------------------
+  // ---- Legacy state (scheduled) ---------------------------------------------
+  // Prefer managing your own store and calling app.invalidate()/app.refreshNow().
   const state = new Proxy(
     {},
     {
@@ -680,7 +679,7 @@ const TurboMini = (basePath = "/") => {
     fetchTemplates,
     prefetchTemplates,
 
-    // state & context
+    // legacy state & context (manage your own store)
     state,
     context: ctx,
 

@@ -1,7 +1,7 @@
 # TurboMini
 
-A tiny, dependency-free SPA micro-framework.  
-Designed for small projects that want routing, templates, and state without pulling in React/Vue/Angular.
+A tiny, dependency-free SPA micro-framework.
+Designed for small projects that want routing, templates, and simple user-managed stores without pulling in React/Vue/Angular.
 
 ---
 
@@ -10,7 +10,7 @@ Designed for small projects that want routing, templates, and state without pull
 - **Routing** – history API or hash-based.
 - **Templates** – minimal mustache-style with `{{var}}`.
 - **Controllers** – per-page data providers.
-- **State** – reactive proxy object (auto-refresh).
+- **Stores** – manage your own objects and call `app.invalidate()` on changes.
 - **Middleware** – run before route changes.
 - **Components** – combine templates + controllers.
 - **Tiny footprint** – one file, no deps.
@@ -74,17 +74,14 @@ Programmatically change routes.
 app.goto("/profile");
 ```
 
-### `app.state`
+### `app.invalidate()` / `app.refreshNow()`
 
-Reactive object. Any writes trigger a re-render.
+Schedule or force a render.
 
 ```js
-app.state.count = 1;
+store.count++;
+app.invalidate(); // or app.refreshNow();
 ```
-
-### `app.refresh()`
-
-Force a re-render manually.
 
 ### `app.addMiddleware(fn)`
 
@@ -133,6 +130,7 @@ console.log(app.inspect());
 
 ```js
 const app = TurboMini("/");
+const store = { count: 0 };
 app.template(
   "counter",
   `
@@ -140,12 +138,15 @@ app.template(
   <div>Count: {{count}}</div>
 `,
 );
-app.controller("counter", () => app.state);
+app.controller("counter", () => store);
 
 app.start();
 
 document.addEventListener("click", (e) => {
-  if (e.target.id === "inc") app.state.count++;
+  if (e.target.id === "inc") {
+    store.count++;
+    app.invalidate(); // or app.refreshNow();
+  }
 });
 ```
 
@@ -208,4 +209,4 @@ npm run lint
 - Routes are based on the first path segment (`/home`, `/about`).
 - The root path `/` (or `#/` in hash mode) resolves to the `default` template/controller.
 - Use hash routing (`TurboMini('#')`) for static hosting.
-- State writes are batched, but you can always call `app.refresh()` explicitly.
+- Manage your own store; mutate it and call `app.invalidate()` (or `app.refreshNow()` for an immediate render).
