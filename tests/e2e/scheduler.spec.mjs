@@ -11,8 +11,10 @@ test('microtask coalescing batches renders', async ({ page, serverURL }) => {
       subtree: true,
       characterData: true,
     });
-    window.app.state.count = 1;
-    window.app.state.count = 2;
+    window.store.count = 1;
+    window.app.invalidate();
+    window.store.count = 2;
+    window.app.invalidate();
     await new Promise((r) => setTimeout(r, 0));
     observer.disconnect();
     return count;
@@ -33,8 +35,10 @@ test('raf mode batches multiple writes in one frame', async ({ page, serverURL }
     });
     await new Promise((resolve) => {
       requestAnimationFrame(() => {
-        window.app.state.count = 3;
-        window.app.state.count = 4;
+        window.store.count = 3;
+        window.app.invalidate();
+        window.store.count = 4;
+        window.app.invalidate();
         requestAnimationFrame(() => {
           resolve();
         });

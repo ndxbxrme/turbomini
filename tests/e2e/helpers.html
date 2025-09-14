@@ -5,16 +5,16 @@
     <script type="module">
       import { TurboMini } from '../../src/turbomini.js';
       const app = TurboMini('/tests/e2e/helpers.html');
+      const store = { user: { name: 'Alice & Bob' }, boxClasses: { active: false } };
 
       app.template('default', `
         <div id="comp">{{json user}}</div>
         <div id="box" class="{{classList boxClasses}}">Box</div>
       `);
-      app.controller('default', () => app.state);
-      app.state.user = { name: 'Alice & Bob' };
-      app.state.boxClasses = { active: false };
+      app.controller('default', () => store);
       app.start();
       window.app = app;
+      window.store = store;
     </script>
   </body>
 </html>

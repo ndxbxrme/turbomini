@@ -6,7 +6,8 @@ test('partials render and #each updates DOM', async ({ page, serverURL }) => {
   const items = page.locator('#list li');
   await expect(items).toHaveText(['a', 'b']);
   await page.evaluate(() => {
-    window.app.state.items = [...window.app.state.items, 'c'];
+    window.store.items = [...window.store.items, 'c'];
+    window.app.invalidate();
   });
   await expect(items).toHaveText(['a', 'b', 'c']);
 });
@@ -25,7 +26,8 @@ test('json helper feeds component and classList toggles classes', async ({ page,
   const box = page.locator('#box');
   await expect(box).not.toHaveClass(/active/);
   await page.evaluate(() => {
-    window.app.state.boxClasses = { ...window.app.state.boxClasses, active: true };
+    window.store.boxClasses = { ...window.store.boxClasses, active: true };
+    window.app.invalidate();
   });
   await expect(box).toHaveClass(/active/);
 });

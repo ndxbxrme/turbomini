@@ -5,6 +5,7 @@
     <script type="module">
       import { TurboMini } from '../../src/turbomini.js';
       const app = TurboMini('/tests/e2e/web-components.html');
+      const store = { count: 0 };
       app.template('default', `
         <my-el id="upgrade"></my-el>
         <my-counter id="counter" count="{{count}}"></my-counter>
@@ -38,10 +39,10 @@
       }
       customElements.define('json-comp', JsonComp);
 
-      app.state.count = 0;
-      app.controller('default', () => app.state);
+      app.controller('default', () => store);
       app.start();
       window.app = app;
+      window.store = store;
     </script>
   </body>
 </html>

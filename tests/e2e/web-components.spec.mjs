@@ -17,7 +17,10 @@ test('attribute-driven re-render updates custom element', async ({ page, serverU
   await page.goto(`${serverURL}/tests/e2e/web-components.html`);
   const counter = page.locator('#counter');
   await expect(counter).toHaveText('0');
-  await page.evaluate(() => { window.app.state.count = 1; });
+  await page.evaluate(() => {
+    window.store.count = 1;
+    window.app.invalidate();
+  });
   await expect(counter).toHaveText('1');
 });
 

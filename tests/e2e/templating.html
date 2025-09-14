@@ -5,12 +5,13 @@
     <script type="module">
       import { TurboMini } from '../../src/turbomini.js';
       const app = TurboMini('/tests/e2e/templating.html');
+      const store = { items: ['a', 'b'] };
       app.template('item', '<li class="item">{{this}}</li>');
       app.template('default', '<ul id="list">{{#each items}}{{> item .}}{{/each}}</ul>');
-      app.controller('default', () => app.state);
-      app.state.items = ['a', 'b'];
+      app.controller('default', () => store);
       app.start();
       window.app = app;
+      window.store = store;
     </script>
   </body>
 </html>
