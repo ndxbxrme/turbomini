@@ -5,11 +5,12 @@
     <script type="module">
       import { TurboMini } from '../../src/turbomini.js';
       const app = TurboMini('/tests/e2e/scheduler.html');
+      const store = { count: 0 };
       app.template('default', '<div id="count">{{count}}</div>');
-      app.controller('default', () => app.state);
-      app.state.count = 0;
+      app.controller('default', () => store);
       app.start();
       window.app = app;
+      window.store = store;
     </script>
   </body>
 </html>
