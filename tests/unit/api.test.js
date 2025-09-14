@@ -2,6 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { TurboMini } from '../../src/turbomini.js';
 
+test('app has no state property', () => {
+  const app = TurboMini('/');
+  assert.equal('state' in app, false);
+});
+
 test('inspect lists registered routes, templates, helpers and default mode', () => {
   const app = TurboMini('/');
   app.controller('home', () => {});
