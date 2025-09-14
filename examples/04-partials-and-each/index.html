@@ -10,11 +10,11 @@
       app.template('header', '<h1>Items</h1>');
       app.template('item', '<li class="item">{{this}}</li>');
       app.template('default', `{{> header}}\n{{#if items.length}}<ul id="list">{{#each items as item}}{{> item item}}{{/each}}</ul>{{else}}<p id="empty">No items</p>{{/if}}`);
-      app.controller('default', () => app.state);
-      app.state.items = [];
+      const store = { items: [] };
+      app.controller('default', () => store);
       document.addEventListener('click', e => {
-        if (e.target.id === 'add') app.state.items.push('item ' + (app.state.items.length + 1));
-        if (e.target.id === 'remove') app.state.items.pop();
+        if (e.target.id === 'add') { store.items.push('item ' + (store.items.length + 1)); app.invalidate(); }
+        if (e.target.id === 'remove') { store.items.pop(); app.invalidate(); }
       });
       app.start();
       window.app = app;

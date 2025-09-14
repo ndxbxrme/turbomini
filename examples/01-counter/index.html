@@ -15,11 +15,11 @@
       import { TurboMini } from '../../src/turbomini.js';
       const app = TurboMini('/examples/01-counter');
       app.template('default', '<h1 id="count">{{count}}</h1>');
-      app.controller('default', () => app.state);
-      app.state.count = 0;
+      const store = { count: 0 };
+      app.controller('default', () => store);
       document.addEventListener('click', e => {
-        if (e.target.id === 'inc') app.state.count++;
-        if (e.target.id === 'dec') app.state.count--;
+        if (e.target.id === 'inc') { store.count++; app.invalidate(); }
+        if (e.target.id === 'dec') { store.count--; app.invalidate(); }
         if (e.target.classList.contains('mode')) {
           app.setRenderStrategy({ mode: e.target.dataset.mode });
         }

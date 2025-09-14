@@ -14,10 +14,10 @@
       import { TurboMini } from '../../src/turbomini.js';
       const app = TurboMini('/examples/10-scheduler-modes');
       app.template('default', '<div id="tick">{{tick}}</div>');
-      app.controller('default', () => app.state);
-      app.state.tick = 0;
+      const store = { tick: 0 };
+      app.controller('default', () => store);
       let frames = 0;
-      setInterval(() => { app.state.tick++; frames++; }, 0);
+      setInterval(() => { store.tick++; app.invalidate(); frames++; }, 0);
       setInterval(() => { document.getElementById('fps').textContent = String(frames); frames = 0; }, 1000);
       document.addEventListener('click', e => {
         if (e.target.classList.contains('mode')) {

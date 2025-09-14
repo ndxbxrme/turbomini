@@ -17,8 +17,8 @@
       }
       customElements.define('animation-grid-item', AnimationGridItem);
       app.template('default', '<div id="grid">{{#each items as item}}<animation-grid-item data="{{{json item}}}"></animation-grid-item>{{/each}}</div>');
-      app.controller('default', () => app.state);
-      app.state.items = [{name:'A'},{name:'B'}];
+      const store = { items: [{name:'A'},{name:'B'}] };
+      app.controller('default', () => store);
       app.start();
       window.app = app;
     </script>
