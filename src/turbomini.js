@@ -55,7 +55,6 @@
 /** @property {() => void} refresh */
 /** @property {() => void} refreshNow */
 /** @property {(opts?: RenderStrategyOptions) => void} setRenderStrategy */
-/** @property {Record<string, any>} state */
 /** @property {Context} context */
 /** @property {TemplateFetcher} fetchTemplates */
 /** @property {TemplateFetcher} prefetchTemplates */
@@ -536,18 +535,6 @@ const TurboMini = (basePath = "/") => {
    */
   const refresh = () => invalidate(); // scheduled (back-compat name)
 
-  // ---- State (scheduled) ----------------------------------------------------
-  const state = new Proxy(
-    {},
-    {
-      set(target, prop, value) {
-        target[prop] = value;
-        invalidate(); // schedule a render based on strategy
-        return true;
-      },
-    },
-  );
-
   // ---- Router ---------------------------------------------------------------
   const normalizeRoute = () => {
     let raw = useHash
@@ -693,7 +680,6 @@ const TurboMini = (basePath = "/") => {
     prefetchTemplates,
 
     // state & context
-    state,
     context: ctx,
 
     // utilities

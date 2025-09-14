@@ -15,15 +15,3 @@ test('template: missing template throws', () => {
   assert.throws(() => app.$t('nope', {}), /Template "nope" not found/);
 });
 
-test('state writes coalesce (microtask)', async () => {
-  const app = TurboMini('/');
-  let renders = 0;
-  app.refreshNow = () => { renders++; };  // count actual renders
-
-  app.state.a = 1;
-  app.state.b = 2;
-  app.state.c = 3;
-
-  await Promise.resolve();  // flush microtask debounce
-  assert.equal(renders, 1);
-});
