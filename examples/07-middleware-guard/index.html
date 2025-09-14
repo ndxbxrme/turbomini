@@ -11,14 +11,15 @@
       const app = TurboMini('/examples/07-middleware-guard');
       app.template('default', '<h1 id="status">{{loggedIn ? "Logged In" : "Logged Out"}}</h1>');
       app.template('admin', '<h1 id="admin">Admin</h1>');
-      app.controller('default', () => app.state);
-      app.controller('admin', () => ({}));
-      app.state.loggedIn = false;
+      const store = { loggedIn: false };
+      app.controller('default', () => store);
+      app.controller('admin', () => store);
       app.addMiddleware(ctx => {
-        if (ctx.page === 'admin' && !app.state.loggedIn) return false;
+        if (ctx.page === 'admin' && !store.loggedIn) return false;
       });
       document.getElementById('login').addEventListener('click', () => {
-        app.state.loggedIn = !app.state.loggedIn;
+        store.loggedIn = !store.loggedIn;
+        app.invalidate();
       });
       app.start();
       window.app = app;
