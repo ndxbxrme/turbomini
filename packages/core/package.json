@@ -1,0 +1,37 @@
+{
+  "name": "turbomini",
+  "version": "1.1.0",
+  "description": "Tiny dependency-free SPA micro-framework.",
+  "type": "module",
+  "main": "./src/turbomini.js",
+  "module": "./src/turbomini.js",
+  "exports": {
+    ".": {
+      "import": "./src/turbomini.js",
+      "types": "./types/turbomini.d.ts"
+    }
+  },
+  "types": "./types/turbomini.d.ts",
+  "files": [
+    "src",
+    "types"
+  ],
+  "sideEffects": false,
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build:types": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json",
+    "test": "node --test tests/unit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ndxbxrme/turbomini.git"
+  },
+  "author": "ndxbxrme",
+  "bugs": {
+    "url": "https://github.com/ndxbxrme/turbomini/issues"
+  },
+  "homepage": "https://github.com/ndxbxrme/turbomini#readme"
+}

@@ -12,13 +12,16 @@ const MIME = {
   '.svg':  'image/svg+xml',
 };
 
-export function startStaticServer({ root = '.', defaultPage = '/examples/00-hello-world/index.html' } = {}) {
+export function startStaticServer({ root = '../../', defaultPage = '/templates/examples/00-hello-world/index.html' } = {}) {
   return new Promise((resolveServer) => {
     const s = createServer(async (req, res) => {
       try {
         const path = new URL(req.url, 'http://x').pathname;
         const filePath = path === '/' ? defaultPage : path;
-        const abs = resolve(process.cwd(), root, '.' + filePath);
+        const mappedPath = filePath.startsWith('/examples/')
+          ? '/templates' + filePath
+          : filePath;
+        const abs = resolve(process.cwd(), root, '.' + mappedPath);
         const body = await readFile(abs);
         const type = MIME[extname(abs).toLowerCase()] || 'application/octet-stream';
         res.writeHead(200, { 'Content-Type': type });

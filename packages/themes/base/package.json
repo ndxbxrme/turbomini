@@ -1,0 +1,16 @@
+{
+  "name": "@turbomini/theme-base",
+  "version": "0.1.0",
+  "description": "Base design tokens and CSS for TurboMini projects.",
+  "type": "module",
+  "files": [
+    "dist",
+    "tokens.json"
+  ],
+  "exports": {
+    "./tokens": "./dist/tokens.json",
+    "./css": "./dist/theme.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./tokens.dark.css": "./dist/tokens.dark.css"
+  }
+}

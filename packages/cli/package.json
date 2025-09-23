@@ -1,0 +1,17 @@
+{
+  "name": "@turbomini/cli",
+  "version": "0.1.0",
+  "description": "Command line interface for TurboMini projects.",
+  "type": "module",
+  "bin": {
+    "turbomini": "./bin/turbomini.js"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "dependencies": {
+    "diff": "^5.2.0",
+    "picocolors": "^1.0.0"
+  }
+}

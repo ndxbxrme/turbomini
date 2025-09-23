@@ -1,0 +1,16 @@
+{
+  "name": "@turbomini/wc-button",
+  "version": "0.1.0",
+  "description": "Accessible TurboMini button web component.",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "src"
+  ],
+  "exports": {
+    ".": "./src/tm-button.js"
+  },
+  "dependencies": {
+    "@turbomini/wc-core": "file:../shared"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "@turbomini/wc-core",
+  "version": "0.1.0",
+  "description": "Shared base utilities for TurboMini web components.",
+  "type": "module",
+  "files": [
+    "base-element.js"
+  ],
+  "exports": {
+    ".": "./base-element.js",
+    "./base-element.js": "./base-element.js"
+  }
+}

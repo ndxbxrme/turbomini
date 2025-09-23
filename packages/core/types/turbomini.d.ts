@@ -63,8 +63,8 @@ export type TurboMiniApp = any;
 /** @property {ControllerRegistrar} controller */
 /** @property {() => Promise<void>} start */
 /** @property {(route: string) => void} goto */
+/** @property {() => void} refresh */
 /** @property {() => void} refreshNow */
-/** @property {() => void} invalidate */
 /** @property {(opts?: RenderStrategyOptions) => void} setRenderStrategy */
 /** @property {Context} context */
 /** @property {TemplateFetcher} fetchTemplates */
@@ -79,6 +79,7 @@ export type TurboMiniApp = any;
 /** @property {(el: Element, type: string, handler: EventListener, opts?: any) => (() => void)} listen */
 /** @property {(fn: (app: TurboMiniApp) => any) => Promise<TurboMiniApp>} run */
 /** @property {(e: unknown) => void} errorHandler */
+/** @property {() => void} invalidate */
 /**
  * Create a TurboMini application.
  * @param {string} [basePath="/"] "/" for history mode, "#" for hash routing, or a sub-path like "/app".
