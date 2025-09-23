@@ -1,0 +1,26 @@
+{
+  "tag": "tm-button",
+  "title": "Button",
+  "package": "@turbomini/wc-button",
+  "description": "Theme-aware button with solid, soft, outline, and ghost variants.",
+  "recipes": {
+    "copy": {
+      "path": "recipes/copy"
+    },
+    "wc": {
+      "package": "@turbomini/wc-button",
+      "version": "^0.1.0"
+    }
+  },
+  "props": [
+    { "name": "variant", "type": "'solid'|'soft'|'outline'|'ghost'", "default": "'solid'" },
+    { "name": "size", "type": "'sm'|'md'|'lg'", "default": "'md'" },
+    { "name": "disabled", "type": "boolean", "default": false },
+    { "name": "loading", "type": "boolean", "default": false },
+    { "name": "type", "type": "'button'|'submit'|'reset'", "default": "'button'" },
+    { "name": "value", "type": "string", "default": null }
+  ],
+  "events": [
+    { "name": "tm-press", "detail": "{ originalEvent: MouseEvent, value: string | null }" }
+  ]
+}

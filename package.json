@@ -1,42 +1,22 @@
 {
-  "name": "turbomini",
-  "version": "1.1.0",
-  "description": "Tiny dependency-free SPA micro-framework.",
-  "main": "turbomini.js",
-  "module": "turbomini.js",
+  "name": "turbomini-workspace",
+  "private": true,
+  "version": "0.0.0",
   "type": "module",
-  "exports": {
-    ".": {
-      "import": "./src/turbomini.js",
-      "types": "./types/turbomini.d.ts"
-    }
-  },
-  "types": "./types/turbomini.d.ts",
-  "files": [
-    "src"
+  "workspaces": [
+    "packages/*",
+    "packages/*/*",
+    "templates/*"
   ],
-  "sideEffects": false,
-  "license": "MIT",
-  "engines": {
-    "node": ">=18"
-  },
   "scripts": {
+    "build": "npm run build:types --workspace turbomini",
+    "build:types": "npm run build:types --workspace turbomini",
     "examples": "python -m http.server 8055",
-    "test": "node --test tests/unit",
-    "test:e2e": "npx playwright test",
     "format": "npx prettier -w .",
     "lint": "node scripts/lint.mjs || true",
-    "types": "tsc -p tsconfig.json"
+    "test": "npm run test --workspace turbomini",
+    "test:e2e": "npx playwright test"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ndxbxrme/turbomini.git"
-  },
-  "author": "ndxbxrme",
-  "bugs": {
-    "url": "https://github.com/ndxbxrme/turbomini/issues"
-  },
-  "homepage": "https://github.com/ndxbxrme/turbomini#readme",
   "devDependencies": {
     "@eslint/js": "^9.35.0",
     "@playwright/test": "^1.55.0",
