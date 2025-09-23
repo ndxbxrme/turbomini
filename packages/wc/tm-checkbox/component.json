@@ -1,0 +1,33 @@
+{
+  "tag": "tm-checkbox",
+  "title": "Checkbox",
+  "package": "@turbomini/wc-checkbox",
+  "description": "Checkbox control with indeterminate support.",
+  "recipes": {
+    "copy": { "path": "recipes/copy" },
+    "wc": { "package": "@turbomini/wc-checkbox", "version": "^0.1.0" }
+  },
+  "props": [
+    { "name": "checked", "type": "boolean", "default": false },
+    { "name": "indeterminate", "type": "boolean", "default": false },
+    { "name": "disabled", "type": "boolean", "default": false },
+    { "name": "name", "type": "string", "default": null },
+    { "name": "value", "type": "string", "default": "'on'" }
+  ],
+  "events": [
+    { "name": "tm-change", "detail": "{ checked: boolean, indeterminate: boolean, value: string, originalEvent: Event }" }
+  ],
+  "tokens": [
+    "--tm-control-size",
+    "--tm-control-bg",
+    "--tm-control-border",
+    "--tm-control-checked-bg",
+    "--tm-control-radius",
+    "--tm-label-gap"
+  ],
+  "parts": ["base", "control", "label", "indicator"],
+  "docs": {
+    "readme": "./README.md",
+    "events": "../../../docs/web-components/events.md"
+  }
+}

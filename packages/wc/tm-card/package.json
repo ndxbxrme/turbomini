@@ -1,0 +1,14 @@
+{
+  "name": "@turbomini/wc-card",
+  "version": "0.1.0",
+  "description": "TurboMini card component with optional elevation and interactivity.",
+  "type": "module",
+  "sideEffects": false,
+  "files": ["src"],
+  "exports": {
+    ".": "./src/tm-card.js"
+  },
+  "dependencies": {
+    "@turbomini/wc-core": "file:../shared"
+  }
+}

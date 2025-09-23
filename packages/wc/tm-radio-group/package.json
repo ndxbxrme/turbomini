@@ -1,0 +1,15 @@
+{
+  "name": "@turbomini/wc-radio-group",
+  "version": "0.1.0",
+  "description": "Accessible TurboMini radio group web component.",
+  "type": "module",
+  "sideEffects": false,
+  "files": ["src"],
+  "exports": {
+    ".": "./src/tm-radio-group.js"
+  },
+  "dependencies": {
+    "@turbomini/wc-core": "file:../shared",
+    "@turbomini/wc-radio": "file:../tm-radio"
+  }
+}

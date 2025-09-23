@@ -2,6 +2,7 @@ import path from 'node:path';
 import pc from 'picocolors';
 import { parseCommandArgs } from '../utils/args.js';
 import { loadComponent, resolvePackageSpec, resolveRecipeDir } from '../utils/components.js';
+import { applyStarterDemo } from '../utils/starter.js';
 
 const DEFAULT_MODE = 'copy';
 
@@ -29,6 +30,7 @@ export async function addCommand(context, args) {
         await context.copyDir(recipeDir, projectRoot, {
           skipIfExists: !values.force,
         });
+        await applyStarterDemo(context, component, projectRoot);
         context.logger.log(pc.green(`Installed ${tag} (copy mode).`));
         if (values.mode == null) {
           context.logger.log(

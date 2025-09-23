@@ -1,0 +1,34 @@
+{
+  "tag": "tm-tabs",
+  "title": "Tabs",
+  "package": "@turbomini/wc-tabs",
+  "description": "Keyboard navigable tabs with indicator and orientation support.",
+  "recipes": {
+    "copy": { "path": "recipes/copy" },
+    "wc": { "package": "@turbomini/wc-tabs", "version": "^0.1.0" }
+  },
+  "props": [
+    { "name": "value", "type": "string", "default": null },
+    { "name": "orientation", "type": "'horizontal'|'vertical'", "default": "'horizontal'" },
+    { "name": "fitted", "type": "boolean", "default": false }
+  ],
+  "events": [
+    { "name": "tm-change", "detail": "{ value: string }" }
+  ],
+  "tokens": [
+    "--tm-tabs-border",
+    "--tm-tabs-accent",
+    "--tm-tabs-gap",
+    "--tm-tab-pad",
+    "--tm-tab-radius",
+    "--tm-tab-fg",
+    "--tm-tab-fg-active",
+    "--tm-tab-bg",
+    "--tm-tab-bg-active"
+  ],
+  "parts": ["list", "tab", "tab-indicator", "panel"],
+  "docs": {
+    "readme": "./README.md",
+    "events": "../../../docs/web-components/events.md"
+  }
+}

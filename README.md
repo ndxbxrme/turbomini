@@ -11,6 +11,17 @@ TurboMini is a tiny, dependency-free SPA micro-framework with first-class themin
 | `packages/themes/base` | [`@turbomini/theme-base`](packages/themes/base) | Base design tokens, CSS resets, and utility classes. |
 | `packages/wc/shared` | [`@turbomini/wc-core`](packages/wc/shared) | Shared base element for TurboMini web components. |
 | `packages/wc/tm-button` | [`@turbomini/wc-button`](packages/wc/tm-button) | Accessible `<tm-button>` web component. |
+| `packages/wc/tm-input` | [`@turbomini/wc-input`](packages/wc/tm-input) | Form-friendly `<tm-input>` with label/hint slots. |
+| `packages/wc/tm-switch` | [`@turbomini/wc-switch`](packages/wc/tm-switch) | Accessible `<tm-switch>` toggle. |
+| `packages/wc/tm-checkbox` | [`@turbomini/wc-checkbox`](packages/wc/tm-checkbox) | Custom `<tm-checkbox>` control. |
+| `packages/wc/tm-radio` | [`@turbomini/wc-radio`](packages/wc/tm-radio) | Single `<tm-radio>` control. |
+| `packages/wc/tm-radio-group` | [`@turbomini/wc-radio-group`](packages/wc/tm-radio-group) | `<tm-radio-group>` coordinator. |
+| `packages/wc/tm-dialog` | [`@turbomini/wc-dialog`](packages/wc/tm-dialog) | Accessible `<tm-dialog>` component. |
+| `packages/wc/tm-select` | [`@turbomini/wc-select`](packages/wc/tm-select) | Keyboardable `<tm-select>` dropdown. |
+| `packages/wc/tm-tabs` | [`@turbomini/wc-tabs`](packages/wc/tm-tabs) | `<tm-tabs>` with roving focus. |
+| `packages/wc/tm-tooltip` | [`@turbomini/wc-tooltip`](packages/wc/tm-tooltip) | `<tm-tooltip>` for hover/focus hints. |
+| `packages/wc/tm-toast` | [`@turbomini/wc-toast`](packages/wc/tm-toast) | `<tm-toast>` queue manager. |
+| `packages/wc/tm-card` | [`@turbomini/wc-card`](packages/wc/tm-card) | `<tm-card>` layout surface. |
 | `templates/starter/spa` | – | Opinionated Vite starter that uses the runtime and base theme. |
 
 ## CLI Quick Start

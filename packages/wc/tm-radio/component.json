@@ -1,0 +1,32 @@
+{
+  "tag": "tm-radio",
+  "title": "Radio",
+  "package": "@turbomini/wc-radio",
+  "description": "Standalone radio control used inside radio groups.",
+  "recipes": {
+    "copy": { "path": "recipes/copy" },
+    "wc": { "package": "@turbomini/wc-radio", "version": "^0.1.0" }
+  },
+  "props": [
+    { "name": "checked", "type": "boolean", "default": false },
+    { "name": "disabled", "type": "boolean", "default": false },
+    { "name": "name", "type": "string", "default": null },
+    { "name": "value", "type": "string", "default": null }
+  ],
+  "events": [
+    { "name": "tm-change", "detail": "{ checked: boolean, value: string | null, originalEvent: Event }" }
+  ],
+  "tokens": [
+    "--tm-control-size",
+    "--tm-control-bg",
+    "--tm-control-border",
+    "--tm-control-checked-bg",
+    "--tm-control-radius",
+    "--tm-label-gap"
+  ],
+  "parts": ["base", "control", "label", "indicator"],
+  "docs": {
+    "readme": "./README.md",
+    "events": "../../../docs/web-components/events.md"
+  }
+}

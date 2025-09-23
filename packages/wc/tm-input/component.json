@@ -1,0 +1,54 @@
+{
+  "tag": "tm-input",
+  "title": "Input",
+  "package": "@turbomini/wc-input",
+  "description": "Form-friendly text input with label, hint, and error slots.",
+  "recipes": {
+    "copy": {
+      "path": "recipes/copy"
+    },
+    "wc": {
+      "package": "@turbomini/wc-input",
+      "version": "^0.1.0"
+    }
+  },
+  "props": [
+    { "name": "value", "type": "string", "default": "" },
+    { "name": "type", "type": "string", "default": "'text'" },
+    { "name": "placeholder", "type": "string", "default": "''" },
+    { "name": "size", "type": "'sm'|'md'|'lg'", "default": "'md'" },
+    { "name": "disabled", "type": "boolean", "default": false },
+    { "name": "required", "type": "boolean", "default": false },
+    { "name": "invalid", "type": "boolean", "default": false },
+    { "name": "name", "type": "string", "default": null },
+    { "name": "autocomplete", "type": "string", "default": null }
+  ],
+  "events": [
+    { "name": "tm-input", "detail": "{ value: string, originalEvent: InputEvent }" },
+    { "name": "tm-change", "detail": "{ value: string, originalEvent: Event }" },
+    { "name": "tm-focus", "detail": "{ originalEvent: FocusEvent }" },
+    { "name": "tm-blur", "detail": "{ originalEvent: FocusEvent }" }
+  ],
+  "tokens": [
+    "--tm-input-bg",
+    "--tm-input-fg",
+    "--tm-input-border",
+    "--tm-input-border-focus",
+    "--tm-input-radius",
+    "--tm-input-pad-x",
+    "--tm-input-pad-y",
+    "--tm-input-shadow-focus"
+  ],
+  "parts": [
+    "label",
+    "control",
+    "hint",
+    "error",
+    "icon-start",
+    "icon-end"
+  ],
+  "docs": {
+    "readme": "./README.md",
+    "events": "../../../docs/web-components/events.md"
+  }
+}

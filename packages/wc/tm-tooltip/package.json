@@ -1,0 +1,14 @@
+{
+  "name": "@turbomini/wc-tooltip",
+  "version": "0.1.0",
+  "description": "Accessible TurboMini tooltip web component.",
+  "type": "module",
+  "sideEffects": false,
+  "files": ["src"],
+  "exports": {
+    ".": "./src/tm-tooltip.js"
+  },
+  "dependencies": {
+    "@turbomini/wc-core": "file:../shared"
+  }
+}
