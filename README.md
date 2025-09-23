@@ -155,6 +155,9 @@ To work on the CLI or components, run `npm install` once at the workspace root. 
 4. Run tests/lint (`npm test`, `npm run lint`).
 5. Submit a PR describing the package(s) touched and commands run.
 
+## Maintainer docs
+- [PR Checklist](./docs/maintainers/pr-checklist.md)
+
 ---
 
 Happy shipping! ✨
