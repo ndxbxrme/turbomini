@@ -1,0 +1,16 @@
+{
+  "name": "@turbomini/wc-switch",
+  "version": "0.1.0",
+  "description": "Accessible TurboMini switch web component.",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "src"
+  ],
+  "exports": {
+    ".": "./src/tm-switch.js"
+  },
+  "dependencies": {
+    "@turbomini/wc-core": "file:../shared"
+  }
+}

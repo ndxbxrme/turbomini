@@ -1,0 +1,16 @@
+{
+  "name": "@turbomini/wc-input",
+  "version": "0.1.0",
+  "description": "Accessible TurboMini input web component.",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "src"
+  ],
+  "exports": {
+    ".": "./src/tm-input.js"
+  },
+  "dependencies": {
+    "@turbomini/wc-core": "file:../shared"
+  }
+}

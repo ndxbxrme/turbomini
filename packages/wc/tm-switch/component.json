@@ -1,0 +1,42 @@
+{
+  "tag": "tm-switch",
+  "title": "Switch",
+  "package": "@turbomini/wc-switch",
+  "description": "Accessible toggle switch with keyboard support.",
+  "recipes": {
+    "copy": {
+      "path": "recipes/copy"
+    },
+    "wc": {
+      "package": "@turbomini/wc-switch",
+      "version": "^0.1.0"
+    }
+  },
+  "props": [
+    { "name": "checked", "type": "boolean", "default": false },
+    { "name": "disabled", "type": "boolean", "default": false },
+    { "name": "name", "type": "string", "default": null },
+    { "name": "value", "type": "string", "default": null },
+    { "name": "size", "type": "'sm'|'md'|'lg'", "default": "'md'" }
+  ],
+  "events": [
+    { "name": "tm-change", "detail": "{ checked: boolean, value: string | null, originalEvent: Event }" }
+  ],
+  "tokens": [
+    "--tm-switch-track-bg",
+    "--tm-switch-track-bg-checked",
+    "--tm-switch-thumb-bg",
+    "--tm-switch-radius",
+    "--tm-switch-gap"
+  ],
+  "parts": [
+    "base",
+    "track",
+    "thumb",
+    "label"
+  ],
+  "docs": {
+    "readme": "./README.md",
+    "events": "../../../docs/web-components/events.md"
+  }
+}

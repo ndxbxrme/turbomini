@@ -1,0 +1,49 @@
+{
+  "tag": "tm-select",
+  "title": "Select",
+  "package": "@turbomini/wc-select",
+  "description": "Keyboard accessible select with searchable listbox.",
+  "recipes": {
+    "copy": { "path": "recipes/copy" },
+    "wc": { "package": "@turbomini/wc-select", "version": "^0.1.0" }
+  },
+  "props": [
+    { "name": "value", "type": "string", "default": null },
+    { "name": "disabled", "type": "boolean", "default": false },
+    { "name": "placeholder", "type": "string", "default": "''" },
+    { "name": "size", "type": "'sm'|'md'|'lg'", "default": "'md'" },
+    { "name": "name", "type": "string", "default": null },
+    { "name": "open", "type": "boolean", "default": false }
+  ],
+  "events": [
+    { "name": "tm-open", "detail": "{ open: boolean }" },
+    { "name": "tm-close", "detail": "{ open: boolean }" },
+    { "name": "tm-change", "detail": "{ value: string | null, option: any }" },
+    { "name": "tm-highlight", "detail": "{ value: string | null }" }
+  ],
+  "tokens": [
+    "--tm-select-trigger-bg",
+    "--tm-select-trigger-fg",
+    "--tm-select-trigger-border",
+    "--tm-select-trigger-radius",
+    "--tm-select-trigger-pad",
+    "--tm-select-menu-bg",
+    "--tm-select-menu-shadow",
+    "--tm-select-menu-border",
+    "--tm-select-option-bg-hover",
+    "--tm-select-option-bg-selected",
+    "--tm-z-dropdown"
+  ],
+  "parts": [
+    "trigger",
+    "icon",
+    "menu",
+    "option",
+    "option-check",
+    "option-label"
+  ],
+  "docs": {
+    "readme": "./README.md",
+    "events": "../../../docs/web-components/events.md"
+  }
+}

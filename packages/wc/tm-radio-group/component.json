@@ -1,0 +1,25 @@
+{
+  "tag": "tm-radio-group",
+  "title": "Radio Group",
+  "package": "@turbomini/wc-radio-group",
+  "description": "Groups tm-radio controls with roving tabindex and form support.",
+  "recipes": {
+    "copy": { "path": "recipes/copy" },
+    "wc": { "package": "@turbomini/wc-radio-group", "version": "^0.1.0" }
+  },
+  "props": [
+    { "name": "name", "type": "string", "default": null },
+    { "name": "value", "type": "string", "default": null }
+  ],
+  "events": [
+    { "name": "tm-change", "detail": "{ value: string | null, originalEvent: Event }" }
+  ],
+  "tokens": [
+    "--tm-label-gap"
+  ],
+  "parts": ["base", "label"],
+  "docs": {
+    "readme": "./README.md",
+    "events": "../../../docs/web-components/events.md"
+  }
+}

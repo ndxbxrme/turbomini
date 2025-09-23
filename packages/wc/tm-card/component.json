@@ -1,0 +1,27 @@
+{
+  "tag": "tm-card",
+  "title": "Card",
+  "package": "@turbomini/wc-card",
+  "description": "Containerized surface with header/media/body/footer slots.",
+  "recipes": {
+    "copy": { "path": "recipes/copy" },
+    "wc": { "package": "@turbomini/wc-card", "version": "^0.1.0" }
+  },
+  "props": [
+    { "name": "elevated", "type": "boolean", "default": false },
+    { "name": "interactive", "type": "boolean", "default": false },
+    { "name": "inset", "type": "boolean", "default": false }
+  ],
+  "tokens": [
+    "--tm-card-bg",
+    "--tm-card-fg",
+    "--tm-card-border",
+    "--tm-card-radius",
+    "--tm-card-pad",
+    "--tm-card-shadow"
+  ],
+  "parts": ["header", "media", "body", "footer"],
+  "docs": {
+    "readme": "./README.md"
+  }
+}

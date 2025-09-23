@@ -1,0 +1,14 @@
+{
+  "name": "@turbomini/wc-select",
+  "version": "0.1.0",
+  "description": "Accessible TurboMini select web component.",
+  "type": "module",
+  "sideEffects": false,
+  "files": ["src"],
+  "exports": {
+    ".": "./src/tm-select.js"
+  },
+  "dependencies": {
+    "@turbomini/wc-core": "file:../shared"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "tag": "tm-toast",
+  "title": "Toast",
+  "package": "@turbomini/wc-toast",
+  "description": "Toast manager with queueing, actions, and ESC support.",
+  "recipes": {
+    "copy": { "path": "recipes/copy" },
+    "wc": { "package": "@turbomini/wc-toast", "version": "^0.1.0" }
+  },
+  "props": [
+    { "name": "variant", "type": "'info'|'success'|'warning'|'danger'", "default": "'info'" },
+    { "name": "closable", "type": "boolean", "default": true },
+    { "name": "duration", "type": "number", "default": 4000 }
+  ],
+  "events": [
+    { "name": "tm-close", "detail": "{ id: string, reason: 'timeout'|'action'|'dismiss'|'escape' }" }
+  ],
+  "tokens": [
+    "--tm-toast-bg",
+    "--tm-toast-fg",
+    "--tm-toast-radius",
+    "--tm-toast-shadow",
+    "--tm-toast-gap",
+    "--tm-z-toast"
+  ],
+  "parts": ["item", "title", "description", "action", "close"],
+  "docs": {
+    "readme": "./README.md"
+  }
+}

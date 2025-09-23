@@ -1,0 +1,32 @@
+{
+  "tag": "tm-tooltip",
+  "title": "Tooltip",
+  "package": "@turbomini/wc-tooltip",
+  "description": "Tooltip that follows focus/hover and clamps to viewport.",
+  "recipes": {
+    "copy": { "path": "recipes/copy" },
+    "wc": { "package": "@turbomini/wc-tooltip", "version": "^0.1.0" }
+  },
+  "props": [
+    { "name": "text", "type": "string", "default": null },
+    { "name": "placement", "type": "'top'|'bottom'|'left'|'right'", "default": "'top'" },
+    { "name": "delay", "type": "number", "default": 150 },
+    { "name": "open", "type": "boolean", "default": false }
+  ],
+  "events": [
+    { "name": "tm-open", "detail": "{ open: boolean }" },
+    { "name": "tm-close", "detail": "{ open: boolean }" }
+  ],
+  "tokens": [
+    "--tm-tooltip-bg",
+    "--tm-tooltip-fg",
+    "--tm-tooltip-radius",
+    "--tm-tooltip-pad",
+    "--tm-tooltip-shadow"
+  ],
+  "parts": ["content", "arrow"],
+  "docs": {
+    "readme": "./README.md",
+    "events": "../../../docs/web-components/events.md"
+  }
+}

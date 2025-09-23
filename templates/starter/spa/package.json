@@ -9,7 +9,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "turbomini": "^1.1.0"
+    "turbomini": "^1.1.0",
+    "@turbomini/wc-button": "^0.1.0",
+    "@turbomini/wc-input": "^0.1.0",
+    "@turbomini/wc-switch": "^0.1.0",
+    "@turbomini/wc-checkbox": "^0.1.0",
+    "@turbomini/wc-radio": "^0.1.0",
+    "@turbomini/wc-radio-group": "^0.1.0",
+    "@turbomini/wc-dialog": "^0.1.0",
+    "@turbomini/wc-select": "^0.1.0",
+    "@turbomini/wc-tabs": "^0.1.0",
+    "@turbomini/wc-tooltip": "^0.1.0",
+    "@turbomini/wc-toast": "^0.1.0",
+    "@turbomini/wc-card": "^0.1.0"
   },
   "devDependencies": {
     "vite": "^5.4.9"

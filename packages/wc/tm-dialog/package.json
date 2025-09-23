@@ -1,0 +1,14 @@
+{
+  "name": "@turbomini/wc-dialog",
+  "version": "0.1.0",
+  "description": "Accessible TurboMini dialog web component.",
+  "type": "module",
+  "sideEffects": false,
+  "files": ["src"],
+  "exports": {
+    ".": "./src/tm-dialog.js"
+  },
+  "dependencies": {
+    "@turbomini/wc-core": "file:../shared"
+  }
+}
