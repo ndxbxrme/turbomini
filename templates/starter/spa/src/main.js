@@ -1,5 +1,6 @@
 import { TurboMini } from 'turbomini';
 import './styles/turbomini/theme.css';
+import './styles/app.css';
 
 const app = TurboMini('/');
 
@@ -24,6 +25,19 @@ app.template(
         </article>
       {{/each}}
     </section>
+    <section class="tm-container-demo">
+      <div class="tm-container-demo__grid">
+        <div class="tm-container-demo__content tm-stack">
+          <h2>{{containerDemo.title}}</h2>
+          <p class="tm-text-muted">{{containerDemo.description}}</p>
+          <button type="button" class="tm-container-demo__cta">{{containerDemo.cta}}</button>
+        </div>
+        <div class="tm-container-demo__metric" aria-label="{{containerDemo.metricLabel}}">
+          <span class="tm-container-demo__metric-label">{{containerDemo.metricLabel}}</span>
+          <span class="tm-container-demo__chip">{{containerDemo.metricValue}}</span>
+        </div>
+      </div>
+    </section>
   </main>
 `
 );
@@ -44,7 +58,14 @@ app.controller('default', () => ({
       title: 'Composable components',
       description: 'Install web components or copy source into your project with the CLI.'
     }
-  ]
+  ],
+  containerDemo: {
+    title: 'Container-aware layout',
+    description: 'Resize this panel and the metric snaps into place with CSS container queries.',
+    cta: 'Explore theming docs',
+    metricLabel: 'Breakpoint',
+    metricValue: '≥ 42rem'
+  }
 }));
 
 app.start();

@@ -22,5 +22,30 @@
   ],
   "events": [
     { "name": "tm-press", "detail": "{ originalEvent: MouseEvent, value: string | null }" }
-  ]
+  ],
+  "tokens": [
+    "--tm-button-bg",
+    "--tm-button-bg-hover",
+    "--tm-button-bg-active",
+    "--tm-button-fg",
+    "--tm-button-border",
+    "--tm-button-border-hover",
+    "--tm-button-shadow",
+    "--tm-button-radius",
+    "--tm-button-font-weight",
+    "--tm-button-font-size",
+    "--tm-button-pad-y",
+    "--tm-button-pad-x",
+    "--tm-button-gap",
+    "--tm-button-min-height"
+  ],
+  "parts": [
+    "base",
+    "content",
+    "indicator"
+  ],
+  "docs": {
+    "readme": "./README.md",
+    "events": "../../../docs/web-components/events.md"
+  }
 }

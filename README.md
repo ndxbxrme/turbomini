@@ -29,8 +29,9 @@ Available commands:
 | `turbomini init [dir]` | Scaffold a new project (Vite config, starter app, base theme). |
 | `turbomini theme init [dir]` | Copy base tokens (`tokens.css`, `tokens.dark.css`, `theme.css`) into `src/styles/turbomini`. |
 | `turbomini theme create <name> [--dir .]` | Generate a new theme override folder with editable JSON + CSS. |
-| `turbomini add <component> [--mode copy|wc]` | Install a component recipe (`copy`) or add the web component package (`wc`). |
+| `turbomini add <component> [--mode copy|wc]` | Install a component recipe (`copy`, default) or add the web component package (`wc`). |
 | `turbomini update <component>` | Refresh local component recipes from the monorepo (copy mode). |
+| `turbomini doctor [dir]` | Check for drift between your tokens/packages and the workspace defaults. |
 | All commands support `--dry-run` | Preview file writes with diffs before mutating disk. |
 
 Example usage:
@@ -94,12 +95,16 @@ The first component, `<tm-button>`, demonstrates the TurboMini web component pat
 - Custom events: emits `tm-press` with `{ originalEvent, value }` when activated.
 - Accessible by default (uses native `<button>`, focus ring from tokens, `aria-busy` when loading).
 - Uses only CSS variables (`--tm-button-*`) so themes can override colors, borders, and spacing.
+- Token + parts reference: see [`packages/wc/tm-button/README.md`](packages/wc/tm-button/README.md).
+- Event naming follows the [`tm-*` convention](docs/web-components/events.md).
 
 Install via the CLI:
 
 ```bash
 # Copy recipe into src/components
 turbomini add tm-button --mode copy
+
+# The CLI defaults to copy mode and will remind you how to switch to --mode wc.
 
 # or consume the published web component package
 turbomini add tm-button --mode wc
@@ -123,6 +128,13 @@ Starter projects and the previous examples now live under `templates/`:
 
 - `templates/starter/spa` – Vite starter used by the CLI `init` command.
 - `templates/examples/*` – historical examples preserved for reference.
+
+The starter includes a responsive feature grid that demonstrates container queries (`src/styles/app.css`).
+
+## Server rendering & islands
+
+TurboMini plays nicely with server rendering or island architectures. See [`docs/ssr.md`](docs/ssr.md) for strategies to
+defer web component registration, hydrate progressively, and provide light DOM fallbacks while custom elements load.
 
 ## Development
 

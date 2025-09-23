@@ -4,6 +4,7 @@ import { initCommand } from './commands/init.js';
 import { handleThemeCommand } from './commands/theme.js';
 import { addCommand } from './commands/add.js';
 import { updateCommand } from './commands/update.js';
+import { doctorCommand } from './commands/doctor.js';
 
 function parseGlobalArgs(argv) {
   const options = { dryRun: false, help: false };
@@ -40,6 +41,7 @@ function printHelp() {
     '  theme create <name>  Create a new theme override',
     '  add <component>      Install a component (copy or web component)',
     '  update <component>   Refresh local component recipes',
+    '  doctor [dir]         Check theme tokens and package versions for drift',
     '',
     'Options:',
     '  --dry-run            Preview changes without writing to disk',
@@ -77,6 +79,9 @@ async function run() {
         break;
       case 'update':
         await updateCommand(context, args);
+        break;
+      case 'doctor':
+        await doctorCommand(context, args);
         break;
       default:
         console.error(pc.red(`Unknown command: ${command}`));

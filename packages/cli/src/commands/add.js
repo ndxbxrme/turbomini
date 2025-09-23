@@ -30,6 +30,11 @@ export async function addCommand(context, args) {
           skipIfExists: !values.force,
         });
         context.logger.log(pc.green(`Installed ${tag} (copy mode).`));
+        if (values.mode == null) {
+          context.logger.log(
+            pc.dim(`Install ${tag} as a web component with: turbomini add ${name} --mode wc`)
+          );
+        }
         break;
       }
       case 'wc': {

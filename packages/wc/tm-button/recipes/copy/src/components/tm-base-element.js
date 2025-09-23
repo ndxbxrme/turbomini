@@ -144,24 +144,52 @@ export class TurboMiniElement extends HTMLElement {
     if (!styles) return;
     const list = Array.isArray(styles) ? styles : [styles];
     const adoptable = [];
+    const adoptableFallback = [];
     const inline = [];
 
     for (const item of list) {
       if (!item) continue;
       if (typeof CSSStyleSheet !== 'undefined' && item instanceof CSSStyleSheet) {
         adoptable.push(item);
-      } else if (typeof item === 'string' && typeof CSSStyleSheet !== 'undefined' && 'replaceSync' in CSSStyleSheet.prototype) {
+        let cssText = '';
+        try {
+          cssText = Array.from(item.cssRules ?? []).map((rule) => rule.cssText).join('\n');
+        } catch {
+          cssText = '';
+        }
+        adoptableFallback.push(cssText || null);
+        continue;
+      }
+
+      if (typeof item === 'string' && typeof CSSStyleSheet !== 'undefined' && 'replaceSync' in CSSStyleSheet.prototype) {
         const sheet = new CSSStyleSheet();
         sheet.replaceSync(item);
         adoptable.push(sheet);
-      } else {
-        inline.push(item);
+        adoptableFallback.push(item);
+        continue;
+      }
+
+      inline.push(item);
+    }
+
+    let adopted = false;
+    if (adoptable.length && this.shadowRoot.adoptedStyleSheets !== undefined) {
+      try {
+        const current = this.shadowRoot.adoptedStyleSheets || [];
+        this.shadowRoot.adoptedStyleSheets = [...current, ...adoptable];
+        adopted = true;
+      } catch {
+        adopted = false;
       }
     }
 
-    if (adoptable.length && this.shadowRoot.adoptedStyleSheets !== undefined) {
-      const current = this.shadowRoot.adoptedStyleSheets || [];
-      this.shadowRoot.adoptedStyleSheets = [...current, ...adoptable];
+    if (!adopted) {
+      for (const cssText of adoptableFallback) {
+        if (!cssText) continue;
+        const styleEl = document.createElement('style');
+        styleEl.textContent = cssText;
+        this.shadowRoot.append(styleEl);
+      }
     }
 
     for (const item of inline) {
