@@ -1,0 +1,88 @@
+.tm-container-demo {
+  border-radius: var(--tm-radius-lg);
+  border: 1px solid color-mix(in srgb, var(--tm-color-border) 80%, transparent);
+  background: color-mix(in srgb, var(--tm-color-brand-soft) 35%, transparent);
+  padding: clamp(var(--tm-space-5), 5vw, var(--tm-space-8));
+  container-type: inline-size;
+  box-shadow: var(--tm-shadow-md);
+}
+
+.tm-container-demo__grid {
+  display: grid;
+  gap: var(--tm-space-6);
+}
+
+.tm-container-demo__content {
+  gap: var(--tm-space-4);
+}
+
+.tm-container-demo__metric {
+  display: grid;
+  gap: var(--tm-space-2);
+  justify-items: start;
+}
+
+.tm-container-demo__metric-label {
+  font-size: var(--tm-font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tm-color-text-muted);
+}
+
+.tm-container-demo__chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--tm-space-2) var(--tm-space-4);
+  border-radius: var(--tm-radius-full);
+  background: var(--tm-color-surface);
+  color: var(--tm-color-brand);
+  font-weight: 600;
+  box-shadow: var(--tm-shadow-sm);
+}
+
+.tm-container-demo__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tm-space-2);
+  padding: var(--tm-space-2) var(--tm-space-4);
+  border-radius: var(--tm-radius-full);
+  border: 1px solid color-mix(in srgb, var(--tm-color-brand) 35%, transparent);
+  background: var(--tm-color-brand);
+  color: var(--tm-color-brand-contrast);
+  font-weight: 600;
+  font-size: var(--tm-font-size-sm);
+  cursor: pointer;
+  transition: transform var(--tm-motion-duration-fast) var(--tm-motion-ease-out),
+    box-shadow var(--tm-motion-duration-fast) var(--tm-motion-ease-out);
+}
+
+.tm-container-demo__cta:focus-visible {
+  outline: none;
+  box-shadow: var(--tm-focus-ring);
+}
+
+.tm-container-demo__cta:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--tm-shadow-lg);
+}
+
+@container (min-width: 42rem) {
+  .tm-container-demo__grid {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .tm-container-demo__metric {
+    justify-items: end;
+    text-align: right;
+  }
+}
+
+@container (min-width: 62rem) {
+  .tm-container-demo__chip {
+    font-size: var(--tm-font-size-lg);
+    padding-inline: var(--tm-space-5);
+  }
+}

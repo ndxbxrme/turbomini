@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Shared base utilities for TurboMini web components.",
   "type": "module",
+  "sideEffects": false,
   "files": [
     "base-element.js"
   ],
