@@ -7,3 +7,4 @@ coverage
 *.log
 packages/cli/templates
 packages/cli/packages
+*.tgz
