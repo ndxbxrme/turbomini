@@ -1,4 +1,5 @@
 import fs from 'node:fs/promises';
+import fsSync from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { diffLines } from 'diff';
@@ -50,9 +51,25 @@ export function createContext(options = {}) {
   const contextDir = dirname(import.meta.url); // packages/cli/src
   const cliRoot = path.resolve(contextDir, '..');
   const workspaceRoot = path.resolve(cliRoot, '..', '..');
-  const templatesRoot = path.resolve(workspaceRoot, 'templates');
-  const componentsRoot = path.resolve(workspaceRoot, 'packages', 'wc');
-  const themesRoot = path.resolve(workspaceRoot, 'packages', 'themes');
+
+  function resolveRuntimePath(...segments) {
+    const candidates = [
+      path.resolve(cliRoot, ...segments),
+      path.resolve(workspaceRoot, ...segments),
+    ];
+
+    for (const candidate of candidates) {
+      if (fsSync.existsSync(candidate)) {
+        return candidate;
+      }
+    }
+
+    return candidates[0];
+  }
+
+  const templatesRoot = resolveRuntimePath('templates');
+  const componentsRoot = resolveRuntimePath('packages', 'wc');
+  const themesRoot = resolveRuntimePath('packages', 'themes');
 
   function formatPath(targetPath) {
     const rel = path.relative(cwd, targetPath);
