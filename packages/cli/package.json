@@ -6,9 +6,16 @@
   "bin": {
     "turbomini": "./bin/turbomini.js"
   },
+  "scripts": {
+    "prepack": "node ./scripts/prepack.js",
+    "postpack": "node ./scripts/postpack.js",
+    "test": "node --test"
+  },
   "files": [
     "bin",
-    "src"
+    "src",
+    "templates",
+    "packages"
   ],
   "dependencies": {
     "diff": "^5.2.0",

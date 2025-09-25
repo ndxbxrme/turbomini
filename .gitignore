@@ -5,3 +5,5 @@ test-results
 coverage
 .DS_Store
 *.log
+packages/cli/templates
+packages/cli/packages
