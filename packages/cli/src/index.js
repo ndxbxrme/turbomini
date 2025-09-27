@@ -5,6 +5,7 @@ import { handleThemeCommand } from './commands/theme.js';
 import { addCommand } from './commands/add.js';
 import { updateCommand } from './commands/update.js';
 import { doctorCommand } from './commands/doctor.js';
+import { serveCommand } from './commands/serve.js';
 
 function parseGlobalArgs(argv) {
   const options = { dryRun: false, help: false };
@@ -42,6 +43,7 @@ function printHelp() {
     '  add <component>      Install a component (copy or web component)',
     '  update <component>   Refresh local component recipes',
     '  doctor [dir]         Check theme tokens and package versions for drift',
+    '  serve [dir]          Serve static files with an SPA fallback',
     '',
     'Options:',
     '  --dry-run            Preview changes without writing to disk',
@@ -82,6 +84,9 @@ async function run() {
         break;
       case 'doctor':
         await doctorCommand(context, args);
+        break;
+      case 'serve':
+        await serveCommand(context, args);
         break;
       default:
         console.error(pc.red(`Unknown command: ${command}`));
