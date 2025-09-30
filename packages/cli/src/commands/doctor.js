@@ -1,29 +1,25 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { diffLines } from 'diff';
 import pc from 'picocolors';
 import { parseCommandArgs } from '../utils/args.js';
-
-const THEME_FILES = ['theme.css', 'tokens.css', 'tokens.dark.css', 'tokens.json'];
-
-function renderDiff(expected, actual) {
-  const diff = diffLines(expected, actual);
-  return diff
-    .map((part) => {
-      const color = part.added ? pc.green : part.removed ? pc.red : pc.dim;
-      const prefix = part.added ? '+' : part.removed ? '-' : ' ';
-      return part.value
-        .split('\n')
-        .filter((line) => line.length > 0)
-        .map((line) => color(`${prefix} ${line}`))
-        .join('\n');
-    })
-    .filter(Boolean)
-    .join('\n');
-}
+import { readBundledRuntime, readStamp } from '../utils/runtime.js';
 
 async function readJson(filePath) {
-  return JSON.parse(await fs.readFile(filePath, 'utf8'));
+  try {
+    return JSON.parse(await fs.readFile(filePath, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+async function detectCdnVersion(indexHtmlPath) {
+  try {
+    const html = await fs.readFile(indexHtmlPath, 'utf8');
+    const match = html.match(/turbomini@([^/'"\s]+)/i);
+    return match ? match[1] : null;
+  } catch {
+    return null;
+  }
 }
 
 export async function doctorCommand(context, args) {
@@ -40,102 +36,80 @@ export async function doctorCommand(context, args) {
 
   context.logger.log(pc.bold(`Running TurboMini doctor in ${context.formatPath(projectRoot)}`));
 
-  const projectPackageJson = await readJson(packageJsonPath);
+  const runtime = await readBundledRuntime(context);
+  const stamp = await readStamp(projectRoot);
+  const runtimePath = path.join(projectRoot, 'src', 'turbomini.js');
+  const runtimeExists = await context.fileExists(runtimePath);
+  const packageJson = await readJson(packageJsonPath);
 
-  const versionChecks = [
-    {
-      name: 'turbomini',
-      source: path.join(context.workspaceRoot, 'packages', 'core', 'package.json'),
-    },
-    {
-      name: '@turbomini/theme-base',
-      source: path.join(context.workspaceRoot, 'packages', 'themes', 'base', 'package.json'),
-    },
-  ];
+  const notes = [];
+  let hasIssues = false;
 
-  const versionIssues = [];
-  for (const check of versionChecks) {
-    const expected = (await readJson(check.source)).version;
-    const declared =
-      projectPackageJson.dependencies?.[check.name] ??
-      projectPackageJson.devDependencies?.[check.name];
+  if (!runtimeExists) {
+    if (stamp?.mode === 'cdn') {
+      const cdnVersion = await detectCdnVersion(path.join(projectRoot, 'index.html'));
+      if (cdnVersion && cdnVersion !== runtime.version) {
+        notes.push(pc.yellow(`• CDN runtime pinned to ${cdnVersion}. Latest CLI version is ${runtime.version}.`));
+        hasIssues = true;
+      } else {
+        notes.push(pc.green('• CDN runtime detected. Remember to bump the URL in index.html when upgrading.'));
+      }
+    } else if (stamp?.mode === 'managed') {
+      const declared =
+        packageJson?.dependencies?.turbomini ?? packageJson?.devDependencies?.turbomini ?? null;
+      if (!declared) {
+        notes.push(pc.yellow('• Managed runtime detected but turbomini is missing from package.json dependencies.'));
+        hasIssues = true;
+      } else if (!declared.includes(runtime.version)) {
+        notes.push(
+          pc.yellow(
+            `• Managed runtime uses ${declared}. Latest CLI runtime is ${runtime.version}. Run npm update turbomini.`
+          )
+        );
+        hasIssues = true;
+      } else {
+        notes.push(pc.green('• Managed runtime dependency is up to date.'));
+      }
+    } else {
+      notes.push(pc.yellow('• No src/turbomini.js found. Run turbomini update to install the bundled runtime.'));
+      hasIssues = true;
+    }
+  } else {
+    const localCode = await fs.readFile(runtimePath, 'utf8');
+    const isModified = localCode !== runtime.code;
+    const runtimeVersion = stamp?.runtimeVersion ?? null;
 
-    if (!declared) {
-      continue;
+    if (!runtimeVersion) {
+      notes.push(pc.yellow('• Missing .turbomini.json stamp. Run turbomini update to regenerate it.'));
+      hasIssues = true;
+    } else if (runtimeVersion !== runtime.version) {
+      notes.push(
+        pc.yellow(
+          `• Runtime version ${runtimeVersion} detected. CLI bundles ${runtime.version}. Run turbomini update.`
+        )
+      );
+      hasIssues = true;
     }
 
-    if (!declared.includes(expected)) {
-      versionIssues.push({
-        name: check.name,
-        expected,
-        declared,
-      });
+    if (isModified) {
+      notes.push(pc.yellow(`• ${context.formatPath(runtimePath)} differs from the bundled runtime.`));
+      hasIssues = true;
+    }
+
+    if (!hasIssues) {
+      notes.push(pc.green('• Local TurboMini runtime matches the CLI bundle.'));
     }
   }
 
-  const themeIssues = [];
-  const themeDir = path.join(projectRoot, 'src', 'styles', 'turbomini');
-  const canonicalDir = path.join(context.themesRoot, 'base', 'dist');
-
-  for (const fileName of THEME_FILES) {
-    const projectFile = path.join(themeDir, fileName);
-    if (!(await context.fileExists(projectFile))) {
-      themeIssues.push({
-        fileName,
-        type: 'missing',
-      });
-      continue;
-    }
-
-    const canonicalFile = path.join(canonicalDir, fileName);
-    if (!(await context.fileExists(canonicalFile))) {
-      continue;
-    }
-
-    const [expected, actual] = await Promise.all([
-      fs.readFile(canonicalFile, 'utf8'),
-      fs.readFile(projectFile, 'utf8'),
-    ]);
-
-    if (expected !== actual) {
-      themeIssues.push({
-        fileName,
-        type: 'diff',
-        diff: renderDiff(expected, actual),
-      });
-    }
+  for (const note of notes) {
+    context.logger.log(note);
   }
 
-  if (versionIssues.length === 0 && themeIssues.length === 0) {
-    context.logger.log(pc.green('✓ No drift detected. Tokens and versions look healthy.'));
+  if (!hasIssues) {
+    context.logger.log(pc.green('✓ TurboMini doctor found no issues.'));
     return;
   }
 
-  if (versionIssues.length > 0) {
-    context.logger.log(pc.yellow(pc.bold('\nVersion drift detected:')));
-    for (const issue of versionIssues) {
-      context.logger.log(
-        pc.yellow(
-          `  • ${issue.name} is ${issue.declared}, latest workspace version is ${issue.expected}.`
-        )
-      );
-    }
-  }
-
-  if (themeIssues.length > 0) {
-    context.logger.log(pc.yellow(pc.bold('\nTheme token drift detected:')));
-    for (const issue of themeIssues) {
-      if (issue.type === 'missing') {
-        context.logger.log(pc.yellow(`  • Missing ${issue.fileName} in ${context.formatPath(themeDir)}.`));
-        continue;
-      }
-
-      context.logger.log(pc.yellow(`  • ${issue.fileName} differs from base tokens.`));
-      if (issue.diff) {
-        context.logger.log(issue.diff);
-      }
-    }
-  }
-
+  context.logger.log(pc.yellow('⚠️  TurboMini doctor detected issues. See notes above.'));
   process.exitCode = 1;
 }

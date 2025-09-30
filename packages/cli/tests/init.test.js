@@ -43,20 +43,35 @@ async function setupInstalledCli() {
   return { installRoot, cliInstallDir };
 }
 
-test('init scaffolds a project from workspace sources', async (t) => {
+async function readRuntimeVersion(context) {
+  const runtimeMeta = await readFile(context.runtimeAssets.meta, 'utf8');
+  return JSON.parse(runtimeMeta).version;
+}
+
+test('init scaffolds a project with embedded runtime', async (t) => {
   const tempDir = await createTempDir('turbomini-workspace-');
   t.after(() => rm(tempDir, { recursive: true, force: true }));
 
   const context = createContext({ cwd: tempDir, logger: noopLogger() });
   await initCommand(context, ['demo-app']);
 
-  const packageJsonPath = path.join(tempDir, 'demo-app', 'package.json');
-  const packageJson = JSON.parse(await readFile(packageJsonPath, 'utf8'));
+  const projectRoot = path.join(tempDir, 'demo-app');
+  const packageJson = JSON.parse(await readFile(path.join(projectRoot, 'package.json'), 'utf8'));
   assert.equal(packageJson.name, 'demo-app');
+  assert.equal(packageJson.scripts.dev, 'turbomini serve');
+  assert.equal(packageJson.scripts.build, 'turbomini build');
 
-  const themeCssPath = path.join(tempDir, 'demo-app', 'src', 'styles', 'turbomini', 'theme.css');
-  const themeCss = await readFile(themeCssPath, 'utf8');
-  assert.ok(themeCss.includes('--tm-color-brand'));
+  const indexHtml = await readFile(path.join(projectRoot, 'index.html'), 'utf8');
+  assert.match(indexHtml, /import \{ TurboMini \} from '\.\/src\/turbomini\.js'/);
+
+  const runtimeCode = await readFile(path.join(projectRoot, 'src', 'turbomini.js'), 'utf8');
+  const bundledCode = await readFile(context.runtimeAssets.script, 'utf8');
+  assert.equal(runtimeCode, bundledCode);
+
+  const stamp = JSON.parse(await readFile(path.join(projectRoot, '.turbomini.json'), 'utf8'));
+  const bundledVersion = await readRuntimeVersion(context);
+  assert.equal(stamp.runtimeVersion, bundledVersion);
+  assert.equal(stamp.mode, 'local');
 });
 
 test('init works when the CLI is installed via npm', async (t) => {
@@ -65,17 +80,21 @@ test('init works when the CLI is installed via npm', async (t) => {
 
   const contextModule = await import(pathToFileURL(path.join(cliInstallDir, 'src', 'context.js')));
   const initModule = await import(pathToFileURL(path.join(cliInstallDir, 'src', 'commands', 'init.js')));
+  const runtimeModule = await import(pathToFileURL(path.join(cliInstallDir, 'src', 'utils', 'runtime.js')));
 
   const context = contextModule.createContext({ cwd: installRoot, logger: noopLogger() });
   await initModule.initCommand(context, ['installed-app']);
 
-  const packageJsonPath = path.join(installRoot, 'installed-app', 'package.json');
-  const packageJson = JSON.parse(await readFile(packageJsonPath, 'utf8'));
+  const projectRoot = path.join(installRoot, 'installed-app');
+  const packageJson = JSON.parse(await readFile(path.join(projectRoot, 'package.json'), 'utf8'));
   assert.equal(packageJson.name, 'installed-app');
 
-  const themeCssPath = path.join(installRoot, 'installed-app', 'src', 'styles', 'turbomini', 'theme.css');
-  const themeCss = await readFile(themeCssPath, 'utf8');
-  assert.ok(themeCss.includes('--tm-color-brand'));
+  const indexHtml = await readFile(path.join(projectRoot, 'index.html'), 'utf8');
+  assert.match(indexHtml, /import \{ TurboMini \} from '\.\/src\/turbomini\.js'/);
+
+  const runtimeFiles = await runtimeModule.readBundledRuntime(context);
+  const runtimeCode = await readFile(path.join(projectRoot, 'src', 'turbomini.js'), 'utf8');
+  assert.equal(runtimeCode, runtimeFiles.code);
 });
 
 test('component metadata is available after packaging', async (t) => {

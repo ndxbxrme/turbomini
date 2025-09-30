@@ -6,6 +6,7 @@ import { addCommand } from './commands/add.js';
 import { updateCommand } from './commands/update.js';
 import { doctorCommand } from './commands/doctor.js';
 import { serveCommand } from './commands/serve.js';
+import { buildCommand } from './commands/build.js';
 
 function parseGlobalArgs(argv) {
   const options = { dryRun: false, help: false };
@@ -41,8 +42,10 @@ function printHelp() {
     '  theme init [dir]     Add base theme tokens to a project',
     '  theme create <name>  Create a new theme override',
     '  add <component>      Install a component (copy or web component)',
+    '  build [dir]          Copy project files into dist for deployment',
+    '  update [dir]         Refresh src/turbomini.js with the bundled runtime',
     '  update <component>   Refresh local component recipes',
-    '  doctor [dir]         Check theme tokens and package versions for drift',
+    '  doctor [dir]         Check runtime drift and dependency versions',
     '  serve [dir]          Serve static files with an SPA fallback',
     '',
     'Options:',
@@ -87,6 +90,9 @@ async function run() {
         break;
       case 'serve':
         await serveCommand(context, args);
+        break;
+      case 'build':
+        await buildCommand(context, args);
         break;
       default:
         console.error(pc.red(`Unknown command: ${command}`));

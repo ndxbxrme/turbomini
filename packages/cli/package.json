@@ -15,7 +15,8 @@
     "bin",
     "src",
     "templates",
-    "packages"
+    "packages",
+    "assets"
   ],
   "dependencies": {
     "diff": "^5.2.0",
