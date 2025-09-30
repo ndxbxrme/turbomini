@@ -70,6 +70,12 @@ export function createContext(options = {}) {
   const templatesRoot = resolveRuntimePath('templates');
   const componentsRoot = resolveRuntimePath('packages', 'wc');
   const themesRoot = resolveRuntimePath('packages', 'themes');
+  const assetsRoot = resolveRuntimePath('assets');
+  const runtimeAssets = {
+    script: path.join(assetsRoot, 'turbomini.js'),
+    types: path.join(assetsRoot, 'turbomini.d.ts'),
+    meta: path.join(assetsRoot, 'runtime.json'),
+  };
 
   function formatPath(targetPath) {
     const rel = path.relative(cwd, targetPath);
@@ -197,5 +203,8 @@ export function createContext(options = {}) {
     modifyJson,
     formatPath,
     fileExists,
+    renderDiff,
+    assetsRoot,
+    runtimeAssets,
   };
 }
