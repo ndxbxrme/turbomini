@@ -52,19 +52,21 @@ export function createContext(options = {}) {
   const cliRoot = path.resolve(contextDir, '..');
   const workspaceRoot = path.resolve(cliRoot, '..', '..');
 
-  function resolveRuntimePath(...segments) {
-    const candidates = [
-      path.resolve(cliRoot, ...segments),
-      path.resolve(workspaceRoot, ...segments),
-    ];
-
+  function resolveFirstExistingPath(...candidates) {
     for (const candidate of candidates) {
       if (fsSync.existsSync(candidate)) {
         return candidate;
       }
     }
 
-    return candidates[0];
+    return candidates[candidates.length - 1];
+  }
+
+  function resolveRuntimePath(...segments) {
+    return resolveFirstExistingPath(
+      path.resolve(cliRoot, ...segments),
+      path.resolve(workspaceRoot, ...segments)
+    );
   }
 
   const templatesRoot = resolveRuntimePath('templates');
@@ -72,9 +74,18 @@ export function createContext(options = {}) {
   const themesRoot = resolveRuntimePath('packages', 'themes');
   const assetsRoot = resolveRuntimePath('assets');
   const runtimeAssets = {
-    script: path.join(assetsRoot, 'turbomini.js'),
-    types: path.join(assetsRoot, 'turbomini.d.ts'),
-    meta: path.join(assetsRoot, 'runtime.json'),
+    script: resolveFirstExistingPath(
+      path.join(cliRoot, 'assets', 'turbomini.js'),
+      path.join(workspaceRoot, 'packages', 'core', 'src', 'turbomini.js')
+    ),
+    types: resolveFirstExistingPath(
+      path.join(cliRoot, 'assets', 'turbomini.d.ts'),
+      path.join(workspaceRoot, 'packages', 'core', 'types', 'turbomini.d.ts')
+    ),
+    meta: resolveFirstExistingPath(
+      path.join(cliRoot, 'assets', 'runtime.json'),
+      path.join(workspaceRoot, 'packages', 'core', 'package.json')
+    ),
   };
 
   function formatPath(targetPath) {
