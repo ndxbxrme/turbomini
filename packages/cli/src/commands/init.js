@@ -13,7 +13,7 @@ function normalizeName(input) {
   );
 }
 
-function createIndexHtml({ projectName, runtimeImport, hasLocalRuntime }) {
+function createIndexHtmlOld({ projectName, runtimeImport, hasLocalRuntime }) {
   const runtimeComment = hasLocalRuntime
     ? '\n      // Local runtime ships inside src/turbomini.js.'
     : '';
@@ -39,46 +39,59 @@ function createIndexHtml({ projectName, runtimeImport, hasLocalRuntime }) {
 `;
 }
 
-function createNotFoundHtml(projectName) {
+function createIndexHtml( projectName ) {
   return `<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>${projectName} • Not found</title>
+    <title>${projectName}</title>
     <link rel="stylesheet" href="./src/app.css" />
   </head>
   <body>
-    <main class="not-found">
-      <h1>Not found</h1>
-      <p>The requested page could not be located.</p>
-      <p><a href="/">Return home</a></p>
-    </main>
+    <page></page>
+    <script src="./src/main.js" type="module"></script>
   </body>
 </html>
 `;
 }
 
-function createMainModule() {
+function createNotFoundHtml( projectName ) {
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>${projectName}</title>
+    <link rel="stylesheet" href="./src/app.css" />
+  </head>
+  <body>
+    <page></page>
+    <script src="./src/main.js" type="module"></script>
+  </body>
+</html>
+`;
+}
+
+function createMainModule({ runtimeImport }) {
   return `/**
  * TurboMini starter.
- *
- * Export a start() function that receives the TurboMini factory.
  */
-export function start(TurboMini) {
-  const app = TurboMini('/');
-
-  app.component('app-root', {
-    template: \`
-      <main class="app-shell">
-        <h1>TurboMini</h1>
-        <p>Edit <code>src/main.js</code> and restart turbomini serve.</p>
-      </main>
-    \`,
-  });
-
-  app.mount('#app');
-}
+import { TurboMini } from '${runtimeImport}';
+const app = TurboMini('/');
+app.defineComponent('default', {
+  template: \`
+    <main class="app-shell">
+      <h1>{{name}}</h1>
+    </main>
+  \`,
+  controller: () => {
+    return {
+      name: 'TurboMini'
+    }
+  },
+});
+app.start();
 `;
 }
 
@@ -204,7 +217,7 @@ export async function initCommand(context, args) {
 
   const runtimeImport =
     runtimeMode === 'local'
-      ? './src/turbomini.js'
+      ? './turbomini.js'
       : runtimeMode === 'managed'
       ? 'turbomini'
       : `https://cdn.jsdelivr.net/npm/turbomini@${runtime.version}/+esm`;
@@ -214,13 +227,13 @@ export async function initCommand(context, args) {
   await context.ensureDir(path.join(targetDir, 'src'));
   await context.ensureDir(path.join(targetDir, 'src', 'components'));
 
-  const indexHtml = createIndexHtml({
+  const indexHtml = createIndexHtml(projectName);
+  const notFound = createNotFoundHtml(projectName);
+  const mainModule = createMainModule({
     projectName,
     runtimeImport,
     hasLocalRuntime: runtimeMode === 'local',
   });
-  const notFound = createNotFoundHtml(projectName);
-  const mainModule = createMainModule();
   const styles = createStylesheet();
   const packageJson = createPackageJson({
     projectName,
