@@ -61,8 +61,8 @@ test('init scaffolds a project with embedded runtime', async (t) => {
   assert.equal(packageJson.scripts.dev, 'turbomini serve');
   assert.equal(packageJson.scripts.build, 'turbomini build');
 
-  const indexHtml = await readFile(path.join(projectRoot, 'index.html'), 'utf8');
-  assert.match(indexHtml, /import \{ TurboMini \} from '\.\/src\/turbomini\.js'/);
+  const mainJs = await readFile(path.join(projectRoot, 'src', 'main.js'), 'utf8');
+  assert.match(mainJs, /import \{ TurboMini \} from '\.\/turbomini\.js'/);
 
   const runtimeCode = await readFile(path.join(projectRoot, 'src', 'turbomini.js'), 'utf8');
   const bundledCode = await readFile(context.runtimeAssets.script, 'utf8');
@@ -89,8 +89,8 @@ test('init works when the CLI is installed via npm', async (t) => {
   const packageJson = JSON.parse(await readFile(path.join(projectRoot, 'package.json'), 'utf8'));
   assert.equal(packageJson.name, 'installed-app');
 
-  const indexHtml = await readFile(path.join(projectRoot, 'index.html'), 'utf8');
-  assert.match(indexHtml, /import \{ TurboMini \} from '\.\/src\/turbomini\.js'/);
+  const mainJs = await readFile(path.join(projectRoot, 'src', 'main.js'), 'utf8');
+  assert.match(mainJs, /import \{ TurboMini \} from '\.\/turbomini\.js'/);
 
   const runtimeFiles = await runtimeModule.readBundledRuntime(context);
   const runtimeCode = await readFile(path.join(projectRoot, 'src', 'turbomini.js'), 'utf8');
