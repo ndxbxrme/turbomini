@@ -7,39 +7,51 @@ import { parseCommandArgs } from '../utils/args.js';
 const DEFAULT_PORT = 4173;
 const DEFAULT_HOST = '0.0.0.0';
 
+const CHARSET_TYPES = new Set([
+  'text/css',
+  'text/html',
+  'text/javascript',
+  'text/plain',
+  'application/javascript',
+  'application/json',
+  'application/manifest+json',
+  'image/svg+xml',
+]);
+
+const MIME_TYPES = new Map([
+  ['.apng', 'image/apng'],
+  ['.avif', 'image/avif'],
+  ['.css', 'text/css'],
+  ['.gif', 'image/gif'],
+  ['.html', 'text/html'],
+  ['.ico', 'image/x-icon'],
+  ['.jpeg', 'image/jpeg'],
+  ['.jpg', 'image/jpeg'],
+  ['.js', 'text/javascript'],
+  ['.json', 'application/json'],
+  ['.map', 'application/json'],
+  ['.mjs', 'text/javascript'],
+  ['.mp4', 'video/mp4'],
+  ['.otf', 'font/otf'],
+  ['.png', 'image/png'],
+  ['.svg', 'image/svg+xml'],
+  ['.txt', 'text/plain'],
+  ['.wasm', 'application/wasm'],
+  ['.webmanifest', 'application/manifest+json'],
+  ['.webp', 'image/webp'],
+  ['.woff', 'font/woff'],
+  ['.woff2', 'font/woff2'],
+]);
+
 function getContentType(filePath) {
   const ext = path.extname(filePath).toLowerCase();
-  switch (ext) {
-    case '.html':
-      return 'text/html; charset=utf-8';
-    case '.css':
-      return 'text/css; charset=utf-8';
-    case '.js':
-    case '.mjs':
-    case '.cjs':
-      return 'text/javascript; charset=utf-8';
-    case '.json':
-      return 'application/json; charset=utf-8';
-    case '.svg':
-      return 'image/svg+xml';
-    case '.png':
-      return 'image/png';
-    case '.jpg':
-    case '.jpeg':
-      return 'image/jpeg';
-    case '.gif':
-      return 'image/gif';
-    case '.webp':
-      return 'image/webp';
-    case '.ico':
-      return 'image/x-icon';
-    case '.txt':
-      return 'text/plain; charset=utf-8';
-    case '.map':
-      return 'application/json; charset=utf-8';
-    default:
-      return 'application/octet-stream';
+  const mimeType = MIME_TYPES.get(ext) ?? 'application/octet-stream';
+
+  if (CHARSET_TYPES.has(mimeType)) {
+    return `${mimeType}; charset=utf-8`;
   }
+
+  return mimeType;
 }
 
 async function readFileSafe(filePath) {
