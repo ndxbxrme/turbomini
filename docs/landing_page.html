@@ -1,0 +1,631 @@
+<html>
+  <head>
+
+    <style>
+      @font-face {
+        font-family: 'MiSans-Regular';
+        src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Regular.ttf') format('truetype');
+      }
+      @font-face {
+        font-family: 'MiSans-Bold';
+        src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Bold.ttf') format('truetype');
+      }
+      @font-face {
+        font-family: 'MiSans-Semibold';
+        src: url('https://assets-persist.lovart.ai/agent-static-assets/MiSans-Semibold.ttf') format('truetype');
+      }
+
+      :root {
+        --primary-blue: #3b82f6;
+        --primary-purple: #8b5cf6;
+        --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        --secondary-bg: #f8fafc;
+        --text-main: #0f172a;
+        --text-sub: #475569;
+        --white: #ffffff;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'MiSans-Regular', sans-serif;
+        background-color: #ffffff;
+        color: var(--text-main);
+        width: 100%;
+        margin: 0 auto;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .container {
+        width: 100%;
+        position: relative;
+        background: #ffffff;
+        overflow: hidden;
+        min-height: 1080px; /* Ensure at least screen height */
+      }
+
+      /* Background Decorations */
+      .bg-circle {
+        position: absolute;
+        border-radius: 50%;
+        z-index: 0;
+        filter: blur(80px);
+        opacity: 0.4;
+      }
+      .bg-circle-1 {
+        width: 800px;
+        height: 800px;
+        background: #eff6ff;
+        top: -200px;
+        right: -200px;
+      }
+      .bg-circle-2 {
+        width: 600px;
+        height: 600px;
+        background: #f3e8ff;
+        bottom: 100px;
+        left: -100px;
+      }
+
+      /* Geometric Lines */
+      .geo-line {
+        position: absolute;
+        border: 1px solid rgba(59, 130, 246, 0.1);
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+
+      /* Header */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 40px 120px;
+        position: relative;
+        z-index: 10;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: 'MiSans-Bold';
+        font-size: 28px;
+        color: var(--text-main);
+        letter-spacing: -0.5px;
+      }
+
+      .brand-icon {
+        color: var(--primary-blue);
+        font-size: 32px;
+      }
+
+      nav ul {
+        display: flex;
+        gap: 48px;
+        list-style: none;
+      }
+
+      nav a {
+        text-decoration: none;
+        color: var(--text-sub);
+        font-family: 'MiSans-Semibold';
+        font-size: 18px;
+        transition: color 0.3s;
+      }
+
+      nav a:hover, nav a.active {
+        color: var(--primary-blue);
+      }
+
+      .btn-nav {
+        padding: 12px 32px;
+        border-radius: 50px;
+        border: 2px solid #e2e8f0;
+        background: transparent;
+        font-family: 'MiSans-Semibold';
+        font-size: 16px;
+        color: var(--text-main);
+        cursor: pointer;
+      }
+
+      /* Hero Section */
+      .hero {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 60px 120px 100px;
+        position: relative;
+        z-index: 5;
+      }
+
+      .hero-content {
+        width: 50%;
+        padding-right: 40px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 16px;
+        background: rgba(59, 130, 246, 0.1);
+        color: var(--primary-blue);
+        border-radius: 30px;
+        font-family: 'MiSans-Semibold';
+        font-size: 14px;
+        margin-bottom: 32px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        font-family: 'MiSans-Bold';
+        font-size: 84px;
+        line-height: 1.1;
+        margin-bottom: 24px;
+        background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .hero-subtitle {
+        font-family: 'MiSans-Regular';
+        font-size: 24px;
+        line-height: 1.6;
+        color: var(--text-sub);
+        margin-bottom: 48px;
+        max-width: 600px;
+      }
+
+      .cta-group {
+        display: flex;
+        gap: 24px;
+      }
+
+      .btn-primary {
+        padding: 20px 48px;
+        background: var(--primary-gradient);
+        color: white;
+        border-radius: 50px;
+        font-family: 'MiSans-Bold';
+        font-size: 18px;
+        border: none;
+        box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.4);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .btn-secondary {
+        padding: 20px 48px;
+        background: white;
+        color: var(--text-main);
+        border-radius: 50px;
+        font-family: 'MiSans-Semibold';
+        font-size: 18px;
+        border: 2px solid #e2e8f0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .hero-visual {
+        width: 45%;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .logo-container {
+        position: relative;
+        width: 500px;
+        height: 500px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .logo-img {
+        width: 331px;
+        height: 305px;
+        object-fit: contain;
+        position: relative;
+        z-index: 2;
+        /* Using a slight drop shadow to lift it off the bg */
+        filter: drop-shadow(0 20px 30px rgba(0,0,0,0.05));
+      }
+
+      .orbit-circle {
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid rgba(59, 130, 246, 0.15);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .orbit-1 { width: 400px; height: 400px; }
+      .orbit-2 { width: 550px; height: 550px; border-color: rgba(139, 92, 246, 0.1); }
+      .orbit-3 { width: 700px; height: 700px; border-style: dashed; opacity: 0.3; }
+
+      /* Floating elements for dynamic feel */
+      .float-pill {
+        position: absolute;
+        background: white;
+        padding: 12px 24px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        font-family: 'MiSans-Semibold';
+        font-size: 14px;
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        z-index: 3;
+      }
+      .pill-icon {
+        width: 24px;
+        height: 24px;
+        background: #eff6ff;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-blue);
+      }
+
+      .p1 { top: 100px; right: 50px; }
+      .p2 { bottom: 80px; left: 20px; }
+      .p3 { top: 50%; right: -40px; transform: translateY(-50%); }
+
+
+      /* Features Section */
+      .features {
+        padding: 80px 120px 120px;
+        position: relative;
+        z-index: 5;
+      }
+
+      .section-header {
+        text-align: center;
+        margin-bottom: 80px;
+      }
+
+      .section-title {
+        font-family: 'MiSans-Bold';
+        font-size: 48px;
+        margin-bottom: 16px;
+      }
+
+      .section-desc {
+        font-family: 'MiSans-Regular';
+        color: var(--text-sub);
+        font-size: 20px;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 32px;
+      }
+
+      .feature-card {
+        background: white;
+        border-radius: 24px;
+        padding: 40px 32px;
+        border: 1px solid #f1f5f9;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: var(--primary-gradient);
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      /* Simulating hover state for the 2nd card to show interactivity */
+      .feature-card.active::before {
+        opacity: 1;
+      }
+      .feature-card.active {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+      }
+
+      .icon-box {
+        width: 64px;
+        height: 64px;
+        border-radius: 16px;
+        background: #f8fafc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 24px;
+        font-size: 32px;
+      }
+
+      .f-blue .icon-box { color: #3b82f6; background: #eff6ff; }
+      .f-purple .icon-box { color: #8b5cf6; background: #f3e8ff; }
+      .f-cyan .icon-box { color: #06b6d4; background: #ecfeff; }
+      .f-green .icon-box { color: #10b981; background: #ecfdf5; }
+
+      .card-title {
+        font-family: 'MiSans-Bold';
+        font-size: 24px;
+        margin-bottom: 12px;
+        color: var(--text-main);
+      }
+
+      .card-text {
+        font-family: 'MiSans-Regular';
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--text-sub);
+      }
+
+      /* Footer Mockup */
+      .footer-simple {
+        border-top: 1px solid #e2e8f0;
+        padding: 40px 120px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--text-sub);
+        font-family: 'MiSans-Regular';
+        font-size: 14px;
+        background: #fff;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 24px;
+        font-size: 20px;
+      }
+
+      /* Code Preview Mockup */
+      .code-preview {
+        background: #1e293b;
+        border-radius: 16px;
+        padding: 24px;
+        width: 100%;
+        margin-top: 40px;
+        font-family: 'MiSans-Regular', monospace;
+        position: relative;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      }
+      .code-dots {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+      .dot { width: 12px; height: 12px; border-radius: 50%; }
+      .dot-r { background: #ef4444; }
+      .dot-y { background: #eab308; }
+      .dot-g { background: #22c55e; }
+
+      .code-line {
+        font-size: 14px;
+        line-height: 1.8;
+        color: #94a3b8;
+      }
+      .c-kw { color: #c084fc; } /* keyword */
+      .c-fn { color: #60a5fa; } /* function */
+      .c-str { color: #34d399; } /* string */
+
+      /* Decorative Swoosh */
+      .swoosh {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+      }
+      .swoosh svg {
+        position: absolute;
+        right: -10%;
+        top: -10%;
+        width: 80%;
+        height: 120%;
+        opacity: 0.03;
+        color: var(--primary-blue);
+      }
+
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Background Decoration -->
+      <div class="bg-circle bg-circle-1"></div>
+      <div class="bg-circle bg-circle-2"></div>
+      <div class="swoosh">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" fill="currentColor">
+              <path d="M0 100 C 20 0 50 0 100 100 Z"></path>
+          </svg>
+      </div>
+
+      <!-- Header -->
+      <header>
+          <div class="brand">
+              <img src="https://a.lovart.ai/artifacts/user/geajtV2X1ZTnEt1v.png" alt="Turbomini Logo" style="height: 40px; width: auto;">
+              Turbomini
+          </div>
+          <nav>
+              <ul>
+                  <li><a href="#" class="active">Home</a></li>
+                  <li><a href="#">Documentation</a></li>
+                  <li><a href="#">Examples</a></li>
+                  <li><a href="#">GitHub</a></li>
+              </ul>
+          </nav>
+          <button class="btn-nav">v2.0.1</button>
+      </header>
+
+      <!-- Hero Section -->
+      <section class="hero">
+          <div class="hero-content">
+              <div class="badge">
+                  <i class="ri-flashlight-fill" style="margin-right: 6px;"></i>
+                  Supercharged Performance
+              </div>
+              <h1>A Tiny, Dependency-Free SPA Micro-Framework</h1>
+              <p class="hero-subtitle">
+                  Build lightning-fast web applications with zero overhead. 
+                  Turbomini provides the agility of a hummingbird with the power of modern web components.
+              </p>
+              <div class="cta-group">
+                  <button class="btn-primary">
+                      Get Started <i class="ri-arrow-right-line"></i>
+                  </button>
+                  <button class="btn-secondary">
+                      <i class="ri-github-fill"></i> View Source
+                  </button>
+              </div>
+          </div>
+
+          <div class="hero-visual">
+              <!-- Orbit Circles -->
+              <div class="orbit-circle orbit-1"></div>
+              <div class="orbit-circle orbit-2"></div>
+              <div class="orbit-circle orbit-3"></div>
+
+              <!-- Logo Container -->
+              <div class="logo-container">
+                  <svg
+                     width="88.343643mm"
+                     height="81.19191mm"
+                     viewBox="0 0 88.343643 81.19191"
+                     version="1.1"
+                     id="svg1"
+                     xml:space="preserve"
+                     inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+                     sodipodi:docname="turbomini-logo.svg"
+                     xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+                     xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+                     xmlns="http://www.w3.org/2000/svg"
+                     xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+                       id="namedview1"
+                       pagecolor="#ffffff"
+                       bordercolor="#000000"
+                       borderopacity="0.25"
+                       inkscape:showpageshadow="2"
+                       inkscape:pageopacity="0.0"
+                       inkscape:pagecheckerboard="0"
+                       inkscape:deskcolor="#d1d1d1"
+                       inkscape:document-units="mm"
+                       inkscape:zoom="0.82893869"
+                       inkscape:cx="351.05129"
+                       inkscape:cy="439.71889"
+                       inkscape:window-width="2262"
+                       inkscape:window-height="1381"
+                       inkscape:window-x="1781"
+                       inkscape:window-y="743"
+                       inkscape:window-maximized="0"
+                       inkscape:current-layer="layer1" /><defs
+                       id="defs1" /><g
+                       inkscape:label="Layer 1"
+                       inkscape:groupmode="layer"
+                       id="layer1"
+                       transform="translate(-8.8792699,-11.699063)"><path
+                         id="path1"
+                         style="opacity:1;fill:#1a1a1a;stroke:#fbf4e4;stroke-width:0.264583"
+                         d="m 50.349392,11.831373 c -10.706181,0.01064 -20.268883,4.53423 -27.607617,13.06484 l 5.665287,2.79311 c 20.485986,-18.8695004 43.236536,-6.3299 49.633142,4.62814 l 6.78254,-0.31936 c -3.12332,-6.28395 -13.254868,-19.70478 -32.316894,-20.10833 -0.72359,-0.03956 -1.442713,-0.05911 -2.156458,-0.0584 z M 9.0170309,22.821403 c -0.400657,28.31751 21.2946271,35.79226 27.9285281,36.94555 -6.610619,5.38082 -8.316829,11.09056 -9.176701,17.07647 -5.78368,-6.09471 -8.201107,-13.48435 -8.458398,-21.70462 l -5.585706,-6.304 c -0.108855,8.63353 -0.08697,14.52749 2.25671,20.16156 18.803299,45.201987 82.40857,19.92794 72.91131,-25.82685 l -5.26686,2.07481 c 2.01344,6.35659 -0.81848,22.99654 -10.967289,32.12724 -11.883393,10.69129 -31.962697,12.77478 -38.426079,1.38699 -0.982085,-4.22289 1.290869,-8.41104 2.672189,-10.82879 3.279391,-5.74003 9.366187,-8.76553 13.047265,-10.07794 1.794304,-4.04299 1.616088,-8.08599 1.117245,-12.12898 4.029723,-12.89332 12.490205,-13.37342 18.592663,-4.78782 l 4.388363,-0.47852 c -5.044668,4.60933 -4.827386,2.37105 -7.281726,8.69352 -1.348775,3.47451 -1.511265,7.23458 -2.966744,10.53114 -3.138386,7.10825 -8.794416,12.6435 -20.711914,12.6137 0.9579,1.68284 1.301101,3.58908 4.468461,4.46846 10.684208,0.92596 21.444616,-10.43436 22.729362,-17.93482 1.695699,-9.89965 1.867653,-16.07654 26.903784,-21.48396 -8.03276,-1.96409 -16.06603,-1.22075 -24.098787,-1.67586 -1.500832,-1.3732 -7.805286,-7.70327 -15.057479,-5.66633 -5.010212,1.40725 -8.308832,4.02072 -11.115084,11.65097 -7.321841,-7.44236 -16.452753,-9.79742 -24.946798,-13.71441 -5.252336,-2.42207 -7.636009,-3.31735 -12.9563151,-5.11751 z m 6.7825321,8.93744 c 7.798782,3.34088 14.021085,4.57991 23.539648,10.21384 0.06323,0.09683 7.030824,3.46059 7.101892,11.9693 -1.747959,0.58819 -3.80969,1.05084 -7.660514,0.79788 -18.931394,-5.65863 -20.637086,-15.85766 -22.981026,-22.98102 z m 48.515902,6.70295 a 2.8726492,2.832751 0 0 0 -2.872693,2.83238 2.8726492,2.832751 0 0 0 2.872693,2.8329 2.8726492,2.832751 0 0 0 2.872693,-2.8329 2.8726492,2.832751 0 0 0 -2.872693,-2.83238 z" /></g></svg>
+                  
+                  <!-- Floating Elements -->
+                  <div class="float-pill p1">
+                      <div class="pill-icon"><i class="ri-speed-mini-fill"></i></div>
+                      <span>&lt; 3kb Gzipped</span>
+                  </div>
+                  <div class="float-pill p2">
+                      <div class="pill-icon"><i class="ri-code-s-slash-line"></i></div>
+                      <span>No Virtual DOM</span>
+                  </div>
+                  <div class="float-pill p3">
+                      <div class="pill-icon"><i class="ri-plug-line"></i></div>
+                      <span>Plug &amp; Play</span>
+                  </div>
+              </div>
+          </div>
+      </section>
+
+      <!-- Features Section -->
+      <section class="features">
+          <div class="section-header">
+              <h2 class="section-title">Why Choose Turbomini?</h2>
+              <p class="section-desc">Everything you need to build modern apps, nothing you don't.</p>
+          </div>
+
+          <div class="feature-grid">
+              <!-- Card 1 -->
+              <div class="feature-card f-blue">
+                  <div class="icon-box">
+                      <i class="ri-palette-line"></i>
+                  </div>
+                  <h3 class="card-title">First-Class Theming</h3>
+                  <p class="card-text">Built-in support for dynamic themes. Switch between dark and light modes effortlessly with our intuitive API.</p>
+              </div>
+
+              <!-- Card 2 (Active Style) -->
+              <div class="feature-card active f-purple">
+                  <div class="icon-box">
+                      <i class="ri-layout-masonry-line"></i>
+                  </div>
+                  <h3 class="card-title">Web Components</h3>
+                  <p class="card-text">Leverage the native power of the browser. Create reusable, encapsulated custom elements that work anywhere.</p>
+              </div>
+
+              <!-- Card 3 -->
+              <div class="feature-card f-cyan">
+                  <div class="icon-box">
+                      <i class="ri-links-line"></i>
+                  </div>
+                  <h3 class="card-title">Zero Dependencies</h3>
+                  <p class="card-text">No bloated supply chain. Turbomini is standalone, ensuring security, stability, and blazing fast load times.</p>
+              </div>
+
+              <!-- Card 4 -->
+              <div class="feature-card f-green">
+                  <div class="icon-box">
+                      <i class="ri-rocket-2-line"></i>
+                  </div>
+                  <h3 class="card-title">Lightweight &amp; Fast</h3>
+                  <p class="card-text">Optimized for speed. Minimal runtime overhead means your application starts instantly and stays responsive.</p>
+              </div>
+          </div>
+      </section>
+
+      <!-- Simple Footer -->
+      <footer class="footer-simple">
+          <div>
+              © 2023 Turbomini Framework. Released under MIT License.
+          </div>
+          <div class="social-links">
+              <i class="ri-twitter-x-line"></i>
+              <i class="ri-github-fill"></i>
+              <i class="ri-discord-line"></i>
+          </div>
+      </footer>
+    </div>
+  </body>
+</html>

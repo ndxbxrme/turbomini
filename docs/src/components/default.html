@@ -1,0 +1,218 @@
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">    
+<div class="container">
+      <!-- blur background elements -->
+      <div class="blur-circle blue"></div>
+      <div class="blur-circle purple"></div>
+
+      {{> header name=page}}
+
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-content">
+          <h1>Build fast. Ship smaller.</h1>
+          <p class="hero-subtitle">
+            A tiny, dependency-free SPA micro-framework built for devs who are
+            tired of framework churn and fragile dependency trees.
+          </p>
+
+          <div class="cta-group">
+            <a class="btn-primary" href="./docs">
+              Get Started
+              <i class="ri-arrow-right-line" aria-hidden="true"></i>
+            </a>
+            <a
+              class="btn-secondary"
+              href="https://github.com/ndxbxrme/turbomini"
+            >
+              <i class="ri-github-fill" aria-hidden="true"></i> View Source
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="logo-container">
+            <div class="orbit orbit-1"></div>
+            <div class="orbit orbit-2"></div>
+            <div class="orbit orbit-3"></div>
+
+            <div class="center-logo">
+              <!-- same svg as logo, just bigger -->
+              <tm-animated-logo style="width:260px;height:260px" accent="#00E5A8"></tm-animated-logo>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Example -->
+      <section class="example-section" id="example">
+        <div class="example-inner">
+          <div class="example-copy">
+            <h2>Write apps, not dependency autopsies</h2>
+            <p>
+              Turbomini is for developers who want modern SPA ergonomics without
+              the framework tax. Zero runtime dependencies, web components
+              first, and a surface area you can actually hold in your head.
+            </p>
+            <ul class="example-bullets">
+              <li>
+                <i class="ri-checkbox-circle-line" aria-hidden="true"></i>
+                &lt;3kb min+gzip core
+              </li>
+              <li>
+                <i class="ri-checkbox-circle-line" aria-hidden="true"></i> No
+                build step required
+              </li>
+              <li>
+                <i class="ri-checkbox-circle-line" aria-hidden="true"></i>
+                Optional router + store
+              </li>
+            </ul>
+          </div>
+
+          <div class="code-preview">
+            <div class="code-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <pre><code>// hello-turbomini.html
+&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+  &lt;body&gt;
+    &lt;page&gt;&lt;/page&gt;
+    &lt;script type="module"&gt;
+      import { TurboMini } from './turbomini';
+      const app = TurboMini('/');
+      app.template('home', '&lt;h1&gt;Hello {{name}}&lt;/h1&gt;');
+      app.controller('home', () =&gt; ({ name: 'TurboMini' }));
+      app.start();
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section class="features" id="features">
+        <h2 class="section-title">Why Turbomini?</h2>
+        <p class="section-subtitle">
+          Designed for devs who are done with brittle dependency graphs and
+          ever-expanding framework tax.
+        </p>
+
+        <div class="feature-grid">
+          <div class="feature-card active">
+            <div class="feature-icon">
+              <i class="ri-feather-line" aria-hidden="true"></i>
+            </div>
+            <h3 class="feature-title">Tiny Core</h3>
+            <p class="feature-desc">
+              Under 3kb of runtime. Enough to build real SPAs without the
+              overhead.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon purple">
+              <i class="ri-shield-check-line" aria-hidden="true"></i>
+            </div>
+            <h3 class="feature-title">Zero Dependencies</h3>
+            <p class="feature-desc">
+              No external runtime packages to go stale, break, or get yanked.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon green">
+              <i class="ri-layout-4-line" aria-hidden="true"></i>
+            </div>
+            <h3 class="feature-title">Web Components First</h3>
+            <p class="feature-desc">
+              Ship standards-based components that work anywhere.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="ri-router-line" aria-hidden="true"></i>
+            </div>
+            <h3 class="feature-title">Optional Routing</h3>
+            <p class="feature-desc">
+              Add routing only if you need it — no mandatory framework
+              structure.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon purple">
+              <i class="ri-database-2-line" aria-hidden="true"></i>
+            </div>
+            <h3 class="feature-title">Simple State</h3>
+            <p class="feature-desc">
+              A tiny reactive store that doesn’t turn your app into a science
+              project.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon green">
+              <i class="ri-flashlight-line" aria-hidden="true"></i>
+            </div>
+            <h3 class="feature-title">Fast by Default</h3>
+            <p class="feature-desc">
+              Minimal abstraction means fewer surprises and quicker apps.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="ri-tools-line" aria-hidden="true"></i>
+            </div>
+            <h3 class="feature-title">No Build Step</h3>
+            <p class="feature-desc">
+              Use as ES modules today. Add tooling later if you want.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon purple">
+              <i class="ri-heart-3-line" aria-hidden="true"></i>
+            </div>
+            <h3 class="feature-title">Friendly API</h3>
+            <p class="feature-desc">
+              Fewer concepts, less ceremony, more shipping.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Simple Footer -->
+      <footer class="footer-simple">
+        <div class="footer-left">
+          <div class="logo">
+            <img
+              alt="Turbomini logo"
+              src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTU2IDE1NiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTU2IiBoZWlnaHQ9IjE1NiIgcng9IjMyIiBmaWxsPSJ1cmwoI3BhaW50MF9saW5lYXIpIi8+PHBhdGggZD0iTTQ5LjUgNTQuNUg2OS41VDEwOC41VDEyMS41TTQ5LjUgMTAyLjVINTQuNUg2OS41VDEyMS41IiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9InBhaW50MF9saW5lYXIiIHgxPSIxNTYiIHkxPSIwIiB4Mj0iMCIgeTI9IjE1NiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIHN0b3AtY29sb3I9IiMzQjgyRjYiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM4QjVDRjYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48L3N2Zz4="
+            />
+            Turbomini
+          </div>
+          <span>© 2025 Turbomini. All rights reserved.</span>
+        </div>
+
+        <div class="footer-right">
+          <div class="social-links">
+            <a href="#" aria-label="Turbomini on X"
+              ><i class="ri-twitter-x-line" aria-hidden="true"></i
+            ></a>
+            <a
+              href="https://github.com/ndxbxrme/turbomini"
+              aria-label="Turbomini on GitHub"
+              ><i class="ri-github-fill" aria-hidden="true"></i
+            ></a>
+            <a href="#" aria-label="Join Turbomini Discord"
+              ><i class="ri-discord-line" aria-hidden="true"></i
+            ></a>
+          </div>
+        </div>
+      </footer>
+    </div>

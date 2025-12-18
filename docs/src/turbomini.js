@@ -52,8 +52,8 @@
 /** @property {ControllerRegistrar} controller */
 /** @property {() => Promise<void>} start */
 /** @property {(route: string) => void} goto */
+/** @property {() => void} refresh */
 /** @property {() => void} refreshNow */
-/** @property {() => void} invalidate */
 /** @property {(opts?: RenderStrategyOptions) => void} setRenderStrategy */
 /** @property {Context} context */
 /** @property {TemplateFetcher} fetchTemplates */
@@ -68,6 +68,7 @@
 /** @property {(el: Element, type: string, handler: EventListener, opts?: any) => (() => void)} listen */
 /** @property {(fn: (app: TurboMiniApp) => any) => Promise<TurboMiniApp>} run */
 /** @property {(e: unknown) => void} errorHandler */
+/** @property {() => void} invalidate */
 
 /**
  * Create a TurboMini application.
@@ -505,7 +506,8 @@ const TurboMini = (basePath = "/") => {
     if (!hasDOM) return;
     try {
       const pageEl = $("page");
-      if (!pageEl) throw new Error("<page> element not found.");
+      if (!pageEl || !("innerHTML" in pageEl))
+        throw new Error("<page> element not found.");
       const nextHTML = $t(ctx.page, ctx.data);
       if (lastHTML == null) {
         pageEl.innerHTML = nextHTML;
@@ -533,19 +535,6 @@ const TurboMini = (basePath = "/") => {
    */
   const refresh = () => invalidate(); // scheduled (back-compat name)
 
-  // ---- Legacy state (scheduled) ---------------------------------------------
-  // Prefer managing your own store and calling app.invalidate()/app.refreshNow().
-  const state = new Proxy(
-    {},
-    {
-      set(target, prop, value) {
-        target[prop] = value;
-        invalidate(); // schedule a render based on strategy
-        return true;
-      },
-    },
-  );
-
   // ---- Router ---------------------------------------------------------------
   const normalizeRoute = () => {
     let raw = useHash
@@ -554,8 +543,9 @@ const TurboMini = (basePath = "/") => {
     if (!raw.startsWith("/")) raw = "/" + raw;
     if (basePath !== "/" && basePath !== "#" && raw.startsWith(basePath))
       raw = raw.slice(basePath.length) || "/";
+    const page = Object.keys(templates).find(key => raw.indexOf(key)===1) || "default";
+    raw = raw.replace(page, 'page');
     const parts = raw.split("/").filter(Boolean);
-    const page = parts[0] || "default";
     const params = parts.slice(1);
     return { page, params };
   };
@@ -603,13 +593,24 @@ const TurboMini = (basePath = "/") => {
       if (location.hash !== "#" + route) location.hash = route;
       else start();
     } else {
-      if (location.pathname !== route) history.pushState({}, "", route);
+      const fullRoute = basePath === "/" ? route : basePath + route;
+      if (location.pathname !== fullRoute) history.pushState({}, "", fullRoute);
       start();
     }
   };
 
   on("popstate", start);
   on("hashchange", start);
+  if (hasDOM)
+    on("click", (e) => {
+      const a = e.target.closest ? e.target.closest("a") : null;
+      if (!a) return;
+      const href = a.getAttribute("href");
+      if (!href || !href.startsWith("/") || (a.target && a.target !== "_self"))
+        return;
+      e.preventDefault();
+      goto(href);
+    });
 
   // ---- Controllers & middleware --------------------------------------------
   /**
@@ -679,8 +680,7 @@ const TurboMini = (basePath = "/") => {
     fetchTemplates,
     prefetchTemplates,
 
-    // legacy state & context (manage your own store)
-    state,
+    // state & context
     context: ctx,
 
     // utilities
