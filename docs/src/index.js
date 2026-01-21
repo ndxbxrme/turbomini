@@ -79,7 +79,7 @@ app.run(async app => {
     'guides/themes',
     'guides/web-components',
     'api-reference',
-  ], '/src/components/');
+  ], '/turbomini/src/components/');
   console.log('fetched');
   app.controller('default', () => {
     return {
