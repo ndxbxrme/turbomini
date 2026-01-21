@@ -72,9 +72,11 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 32px 120px;
+        padding: 32px clamp(24px, 6vw, 120px);
         position: relative;
         z-index: 10;
+        flex-wrap: wrap;
+        gap: 16px;
       }
 
       .logo {
@@ -89,9 +91,17 @@
         height: 40px;
       }
 
+      nav {
+        flex: 1 1 320px;
+        display: flex;
+        justify-content: center;
+      }
+
       nav ul {
         display: flex;
-        gap: 48px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: clamp(16px, 3vw, 40px);
         list-style: none;
       }
       nav a {
