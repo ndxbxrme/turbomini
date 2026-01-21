@@ -1,6 +1,25 @@
 # TurboMini Monorepo
 
-TurboMini is a tiny, dependency-free SPA micro-framework with first-class theming and web component support. This repository now hosts the full TurboMini platform: runtime, CLI, theme packs, web components, and starter templates.
+TurboMini is a tiny, dependency-free SPA micro-framework with first-class theming and web component support. This repo hosts the runtime, CLI, theme packs, web components, and starter templates.
+
+Quick links:
+- Docs site: https://ndxbxrme.github.io/turbomini/
+- Examples: `examples/`
+- Core runtime: `packages/core/src/turbomini.js`
+
+## Getting Started
+
+Prefer the docs? Start here: https://ndxbxrme.github.io/turbomini/
+
+Fast local start:
+
+```bash
+npm install
+npx turbomini init my-app
+cd my-app
+npm install
+npm run dev
+```
 
 ## Packages
 
@@ -26,7 +45,7 @@ TurboMini is a tiny, dependency-free SPA micro-framework with first-class themin
 
 ## CLI Quick Start
 
-Install dependencies and run the CLI with `npx`:
+Install dependencies and scaffold a project with the CLI:
 
 ```bash
 npm install
@@ -83,7 +102,7 @@ TurboMini keeps templating and routing extremely small. Import the runtime from 
 </html>
 ```
 
-Controllers return data objects, templates are handlebars-style, and `app.start()` boots the router. The existing runtime API (templates, controllers, middleware, helpers, stores, etc.) is unchanged—see [`packages/core/src/turbomini.js`](packages/core/src/turbomini.js) for the full documentation comments.
+Controllers return data objects, templates are handlebars-style, and `app.start()` boots the router. For the full API surface, see [`packages/core/src/turbomini.js`](packages/core/src/turbomini.js) and the docs site.
 
 ## Theming
 
@@ -151,9 +170,12 @@ defer web component registration, hydrate progressively, and provide light DOM f
 
 ```bash
 npm install
-npm test             # node --test against packages/core/tests
+npm test             # core + CLI + web components
 npm run lint         # ESLint over packages/ and templates/
 npm run test:e2e     # Playwright tests (requires browsers installed)
+npm run examples:check
+npm run docs:check
+npm run runtime:check
 ```
 
 To work on the CLI or components, run `npm install` once at the workspace root. Each package has its own `package.json` for publishing metadata, but builds run from the monorepo.
