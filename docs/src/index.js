@@ -1,66 +1,68 @@
 import { TurboMini } from "./turbomini.js";
 import './components/tm-animated-logo.js';
 const app = TurboMini("/turbomini");
+const docsBase = '/turbomini';
+const examplesBase = `${docsBase}/examples`;
 const examples = [
   {
     title: 'Hello Routing',
     description: 'Basic routing with controllers and templates.',
     meta: 'npm run dev → /examples/hello-routing/',
-    href: '../examples/hello-routing/',
+    href: `${examplesBase}/hello-routing/`,
   },
   {
     title: 'Form Validation',
     description: 'Handle form submit + inline validation with postLoad().',
     meta: 'npm test to verify',
-    href: '../examples/form-validation/',
+    href: `${examplesBase}/form-validation/`,
   },
   {
     title: 'Data Fetching',
     description: 'Load JSON data and render lists with {{#each}}.',
     meta: 'npm run dev to run',
-    href: '../examples/data-fetching/',
+    href: `${examplesBase}/data-fetching/`,
   },
   {
     title: 'State Store',
     description: 'Manual store + app.invalidate() updates.',
     meta: 'npm test to verify',
-    href: '../examples/state-store/',
+    href: `${examplesBase}/state-store/`,
   },
   {
     title: 'Controller Patterns',
     description: 'Compose controllers with shared data utilities.',
     meta: 'npm run dev to run',
-    href: '../examples/controller-patterns/',
+    href: `${examplesBase}/controller-patterns/`,
   },
   {
     title: 'Layouts & Partials',
     description: 'Reusable layout wrapper with header/footer partials.',
     meta: 'npm test to verify',
-    href: '../examples/layouts-partials/',
+    href: `${examplesBase}/layouts-partials/`,
   },
   {
     title: 'Theme Switching',
     description: 'System preference + data-theme persistence.',
     meta: 'npm run dev to run',
-    href: '../examples/theme-switching/',
+    href: `${examplesBase}/theme-switching/`,
   },
   {
     title: 'Web Components',
     description: 'tm-* events, slots, and props in templates.',
     meta: 'npm test to verify',
-    href: '../examples/web-components/',
+    href: `${examplesBase}/web-components/`,
   },
   {
     title: 'Real App Dashboard',
     description: 'Multi-section dashboard with filters + stats.',
     meta: 'npm run dev to run',
-    href: '../examples/real-app-dashboard/',
+    href: `${examplesBase}/real-app-dashboard/`,
   },
   {
     title: 'Middleware Guard',
     description: 'Cancel routes with app.addMiddleware() guards.',
     meta: 'npm test to verify',
-    href: '../examples/middleware-guard/',
+    href: `${examplesBase}/middleware-guard/`,
   },
 ];
 app.run(async app => {

@@ -17,6 +17,7 @@
     "test": "npm run test --workspace turbomini && npm run test --workspace @turbomini/cli && npm run test --workspace @turbomini/wc-tests",
     "examples:check": "node scripts/examples-check.mjs",
     "docs:check": "node scripts/docs-check.mjs",
+    "docs:prepare": "node scripts/docs-sync-examples.mjs",
     "runtime:sync": "node scripts/sync-runtime.mjs",
     "runtime:check": "node scripts/sync-runtime.mjs --check",
     "test:e2e": "npx playwright test",

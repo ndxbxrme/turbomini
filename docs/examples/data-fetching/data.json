@@ -1,0 +1,7 @@
+{
+  "items": [
+    { "id": 1, "title": "TurboMini Primer", "summary": "A short guide to routes and templates." },
+    { "id": 2, "title": "Design Tokens", "summary": "How theme tokens cascade through components." },
+    { "id": 3, "title": "Component Events", "summary": "Listening to tm-* events in controllers." }
+  ]
+}

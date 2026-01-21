@@ -1,0 +1,18 @@
+body {
+  padding: 2rem;
+  font-family: var(--tm-font-sans);
+}
+
+nav {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.card {
+  background: var(--tm-color-surface);
+  border: 1px solid var(--tm-color-border);
+  border-radius: var(--tm-radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--tm-shadow-sm);
+}

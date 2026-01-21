@@ -1,0 +1,9 @@
+{
+  "name": "tm-example-theme-switching",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node ../../packages/cli/bin/turbomini.js serve ..",
+    "test": "node --test tests/*.test.mjs"
+  }
+}

@@ -1,0 +1,27 @@
+body {
+  padding: 2rem;
+  font-family: var(--tm-font-sans);
+}
+
+.counter {
+  display: grid;
+  gap: 1rem;
+  max-width: 360px;
+  border: 1px solid var(--tm-color-border);
+  border-radius: var(--tm-radius-md);
+  padding: 1.5rem;
+  background: var(--tm-color-surface);
+}
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+button {
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--tm-radius-sm);
+  border: 1px solid var(--tm-color-border);
+  background: transparent;
+  font-weight: 600;
+}
