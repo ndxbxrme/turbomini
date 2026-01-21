@@ -26,7 +26,7 @@ test('logs error when no <page> element exists and app remains usable', async ({
   await expect(page.locator('#hello')).toHaveText('Hello');
 });
 
-test('unknown template navigation logs error without freezing the app', async ({ page, serverURL }) => {
+test('unknown template navigation falls back without freezing the app', async ({ page, serverURL }) => {
   const errors = [];
   page.on('console', msg => {
     if (msg.type() === 'error') errors.push(msg.text());
@@ -36,8 +36,9 @@ test('unknown template navigation logs error without freezing the app', async ({
   await expect(page.locator('#home')).toHaveText('Home');
 
   await page.evaluate(() => window.app.goto('/missing'));
+  await expect(page.locator('#home')).toHaveText('Home');
   const hasError = errors.some(text => text.includes('Template "missing" not found.'));
-  expect(hasError).toBeTruthy();
+  expect(hasError).toBeFalsy();
 
   await page.evaluate(() => window.app.goto('/'));
   await expect(page.locator('#home')).toHaveText('Home');
