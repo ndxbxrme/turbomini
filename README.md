@@ -1,4 +1,4 @@
-# TurboMini Monorepo
+# TurboMini 
 
 TurboMini is a tiny, dependency-free SPA micro-framework with first-class theming and web component support. This repo hosts the runtime, CLI, theme packs, web components, and starter templates.
 
