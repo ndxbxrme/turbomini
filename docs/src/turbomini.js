@@ -543,7 +543,7 @@ const TurboMini = (basePath = "/") => {
     if (!raw.startsWith("/")) raw = "/" + raw;
     if (basePath !== "/" && basePath !== "#" && raw.startsWith(basePath))
       raw = raw.slice(basePath.length) || "/";
-    const page = Object.keys(templates).find(key => raw.indexOf(key)===1) || "default";
+    const page = Object.keys(templates).sort((a,b) => a.length > b.length ? -1 : 1).find(key => raw.indexOf(key)===1) || "default";
     raw = raw.replace(page, 'page');
     const parts = raw.split("/").filter(Boolean);
     const params = parts.slice(1);
