@@ -1,0 +1,102 @@
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<div class="container">
+  <div class="blur-circle blue"></div>
+  <div class="blur-circle purple"></div>
+
+  {{> header name=name}}
+
+  <section class="doc-page">
+    <header class="doc-hero">
+      <h1>Core concepts</h1>
+      <p>TurboMini stays small by focusing on three primitives: templates, controllers, and routing.</p>
+    </header>
+
+    <nav class="doc-toc">
+      <a href="#templates">Templates</a>
+      <a href="#helpers">Helpers &amp; partials</a>
+      <a href="#controllers">Controllers</a>
+      <a href="#middleware">Middleware</a>
+      <a href="#routing">Routing</a>
+      <a href="#rendering">Rendering</a>
+      <a href="#scheduling">Render scheduling</a>
+    </nav>
+
+    <section class="doc-card" id="templates">
+      <h2>Templates</h2>
+      <p>Templates are registered strings that render HTML. Use escaped output by default and raw output only when needed.</p>
+      <pre><code class="language-js">app.template('home', '&lt;h1&gt;Hello {{name}}&lt;/h1&gt;');
+app.template('raw', '&lt;div&gt;{{{html}}}&lt;/div&gt;');</code></pre>
+    </section>
+
+    <section class="doc-card" id="helpers">
+      <h2>Helpers and partials</h2>
+      <p>Helpers let you format values inline. Partials compose templates with explicit arguments.</p>
+      <pre><code class="language-js">app.registerHelper('upper', (value) =&gt; String(value).toUpperCase());
+app.template('badge', '&lt;span class=\"pill\"&gt;{{label}}&lt;/span&gt;');
+app.template('list', '{{#each items as item}}{{> badge label=item}}{{/each}}');</code></pre>
+    </section>
+
+    <section class="doc-card" id="controllers">
+      <h2>Controllers</h2>
+      <p>Controllers return data for templates. Use <code>postLoad()</code> for DOM wiring and <code>unload()</code> for cleanup.</p>
+      <pre><code class="language-js">app.controller('home', () =&gt; ({
+  name: 'TurboMini',
+  postLoad() {
+    document.querySelector('button')?.addEventListener('click', () =&gt; {
+      // update state, then app.invalidate()
+    });
+  },
+  unload() {
+    // cleanup timers or listeners
+  }
+}));</code></pre>
+    </section>
+
+    <section class="doc-card" id="middleware">
+      <h2>Middleware and route cancellation</h2>
+      <p>Middleware runs before navigation. Return <code>false</code> to cancel the route.</p>
+      <pre><code class="language-js">app.addMiddleware((ctx) =&gt; {
+  if (ctx.page === 'admin' &amp;&amp; !store.loggedIn) return false;
+});
+
+app.controller('admin', () =&gt; ({ /* data */ }));</code></pre>
+    </section>
+
+    <section class="doc-card" id="routing">
+      <h2>Routing</h2>
+      <p>Routes resolve by matching template names against the URL. Use <code>goto()</code> for navigation and keep templates registered for each route.</p>
+      <pre><code class="language-js">const app = TurboMini('/');
+app.template('about', '&lt;h1&gt;About&lt;/h1&gt;');
+app.controller('about', () =&gt; ({}));
+app.start();</code></pre>
+    </section>
+
+    <section class="doc-card" id="rendering">
+      <h2>Rendering</h2>
+      <p>Call <code>app.invalidate()</code> after state changes. Configure scheduling with <code>setRenderStrategy()</code>.</p>
+      <pre><code class="language-js">app.setRenderStrategy({ mode: 'raf' });
+store.count += 1;
+app.invalidate();</code></pre>
+    </section>
+
+    <section class="doc-card" id="scheduling">
+      <h2>Render scheduling</h2>
+      <p>Choose the scheduling mode that fits your UI. <code>microtask</code> is the default; <code>raf</code> batches with animation frames.</p>
+      <pre><code class="language-js">app.setRenderStrategy({ mode: 'throttle', interval: 32, leading: true });
+app.setRenderStrategy({ mode: 'debounce', interval: 50 });
+app.setRenderStrategy({ mode: 'idle', interval: 200 });</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Go deeper</h2>
+      <p>Need the full API surface? Jump to the reference.</p>
+      <a class="example-card__link" href="/api-reference">Open API reference</a>
+    </section>
+
+    <section class="doc-card">
+      <h2>Apply the concepts</h2>
+      <p>See these primitives used in production-ready patterns.</p>
+      <a class="example-card__link" href="/guides">Browse Guides</a>
+    </section>
+  </section>
+</div>

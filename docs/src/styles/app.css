@@ -423,6 +423,14 @@
         padding-left: clamp(20px, 6vw, 120px);
         padding-right: clamp(20px, 6vw, 120px);
       }
+      .examples-gallery {
+        padding-left: clamp(20px, 6vw, 120px);
+        padding-right: clamp(20px, 6vw, 120px);
+        padding-top: 40px;
+        padding-bottom: 60px;
+        position: relative;
+        z-index: 5;
+      }
 
       /* Real hover (active class still supported) */
       .feature-card:hover::before {
@@ -482,6 +490,140 @@
       .example-bullets i {
         color: var(--primary-blue);
         margin-right: 8px;
+      }
+
+      .examples-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+      }
+
+      .example-card {
+        border: 1px solid var(--border-light);
+        background: rgba(255, 255, 255, 0.65);
+        border-radius: 16px;
+        padding: 18px;
+        backdrop-filter: blur(4px);
+        display: grid;
+        gap: 10px;
+        min-height: 180px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .example-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 18px 24px rgba(15, 23, 42, 0.08);
+      }
+
+      .example-card h3 {
+        font-size: 18px;
+        margin: 0;
+        color: var(--text-main);
+      }
+
+      .example-card p {
+        margin: 0;
+        color: var(--text-sub);
+        line-height: 1.5;
+      }
+
+      .example-card__meta {
+        font-size: 13px;
+        color: var(--text-sub);
+      }
+
+      .example-card__link {
+        margin-top: auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+        color: var(--primary-blue);
+      }
+
+      .examples-page {
+        padding-top: 120px;
+      }
+
+      .doc-page {
+        padding: 120px clamp(20px, 6vw, 120px) 80px;
+        display: grid;
+        gap: 24px;
+        position: relative;
+        z-index: 5;
+      }
+
+      .doc-hero h1 {
+        font-family: 'MiSans-Bold';
+        font-size: clamp(32px, 4vw, 48px);
+        margin-bottom: 8px;
+        color: var(--text-main);
+      }
+
+      .doc-hero p {
+        font-size: 18px;
+        color: var(--text-sub);
+        line-height: 1.6;
+      }
+
+      .doc-card {
+        border: 1px solid var(--border-light);
+        border-radius: 16px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(6px);
+        display: grid;
+        gap: 12px;
+      }
+
+      .doc-card h2 {
+        margin: 0;
+        font-size: 20px;
+        color: var(--text-main);
+      }
+
+      .doc-card pre {
+        margin: 0;
+        background: #0f172a;
+        color: #e2e8f0;
+        padding: 14px 16px;
+        border-radius: 12px;
+        overflow-x: auto;
+      }
+
+      .doc-card code {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 13px;
+      }
+
+      .doc-toc {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px 16px;
+        border: 1px solid var(--border-light);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.65);
+        backdrop-filter: blur(6px);
+      }
+
+      .doc-toc a {
+        color: var(--text-main);
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .doc-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 8px;
+      }
+
+      .doc-links a {
+        color: var(--primary-blue);
+        font-weight: 600;
       }
 
       /* Responsive layout */

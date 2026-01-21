@@ -8,3 +8,4 @@ coverage
 packages/cli/templates
 packages/cli/packages
 *.tgz
+sandbox/agent-lab

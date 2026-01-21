@@ -1,0 +1,58 @@
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<div class="container">
+  <div class="blur-circle blue"></div>
+  <div class="blur-circle purple"></div>
+
+  {{> header name=name}}
+
+  <section class="doc-page">
+    <header class="doc-hero">
+      <h1>Templating</h1>
+      <p>Build clear templates with partials, helpers, and safe rendering.</p>
+    </header>
+
+    <section class="doc-card">
+      <h2>Escaping and raw HTML</h2>
+      <p>Use escaped output by default and reach for triple braces only when needed.</p>
+      <pre><code class="language-js">app.template('safe', '&lt;p&gt;{{title}}&lt;/p&gt;');
+app.template('raw', '&lt;div&gt;{{{html}}}&lt;/div&gt;');</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Partials</h2>
+      <p>Partials receive explicit arguments, so pass what you need.</p>
+      <pre><code class="language-js">app.template('card', '&lt;article&gt;{{title}}&lt;/article&gt;');
+app.template('grid', '{{#each cards as card}}{{> card title=card.title}}{{/each}}');</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>From the layouts example</h2>
+      <p>Wrap content with a layout partial and pass explicit args.</p>
+      <pre><code class="language-js">app.template('layout',
+  '&lt;div class=\"layout\"&gt;{{> header title=title tagline=tagline}}' +
+  '&lt;section&gt;{{{body}}}&lt;/section&gt;{{> footer .}}&lt;/div&gt;'
+);
+
+app.template('cards',
+  '&lt;ul class=\"cards\"&gt;{{#each cards as card}}' +
+  '{{> card title=card.title owner=card.owner}}{{/each}}&lt;/ul&gt;'
+);</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Helpers</h2>
+      <p>Helpers are tiny formatting functions you can register globally.</p>
+      <pre><code class="language-js">app.registerHelper('upper', (value) =&gt; String(value).toUpperCase());
+app.template('title', '{{upper name}}');</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Related examples</h2>
+      <p>These examples focus on layout composition and list rendering.</p>
+      <ul class="doc-links">
+        <li><a href="/examples/layouts-partials">Layouts &amp; Partials</a></li>
+        <li><a href="/examples/data-fetching">Data Fetching</a></li>
+      </ul>
+    </section>
+  </section>
+</div>

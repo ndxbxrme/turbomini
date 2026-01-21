@@ -1,0 +1,31 @@
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<div class="container">
+  <div class="blur-circle blue"></div>
+  <div class="blur-circle purple"></div>
+
+  {{> header name=name}}
+
+  <section class="examples-gallery examples-page">
+    <div class="examples-header">
+      <h2 class="section-title">TurboMini examples</h2>
+      <p class="section-subtitle">
+        Each example is runnable and tested. Use <code>npm run dev</code> inside the example folder.
+      </p>
+    </div>
+    <div class="examples-grid">
+      {{#each examples as example}}
+        <article class="example-card">
+          <h3>{{example.title}}</h3>
+          <p>{{example.description}}</p>
+          <div class="example-card__meta"><code>{{example.meta}}</code></div>
+          <a class="example-card__link" href="{{example.href}}">Open example</a>
+        </article>
+      {{/each}}
+    </div>
+    <section class="doc-card">
+      <h2>Ready for best practices?</h2>
+      <p>Use the guides to understand the patterns behind these examples.</p>
+      <a class="example-card__link" href="/guides">Browse Guides</a>
+    </section>
+  </section>
+</div>

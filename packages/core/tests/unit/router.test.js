@@ -18,6 +18,7 @@ test('history mode path parsing with basePath trimming', async () => {
   globalThis.location = { pathname: '/app/user/42', hash: '' };
   globalThis.history = { pushState() {} };
   const app = TurboMini('/app');
+  app.template('user', '<h1>User</h1>');
   await app.start();
   assert.equal(app.context.page, 'user');
   assert.deepEqual(app.context.params, ['42']);
@@ -26,6 +27,7 @@ test('history mode path parsing with basePath trimming', async () => {
 test('hash mode path parsing', async () => {
   globalThis.location = { hash: '#/product/99', pathname: '' };
   const app = TurboMini('#');
+  app.template('product', '<h1>Product</h1>');
   await app.start();
   assert.equal(app.context.page, 'product');
   assert.deepEqual(app.context.params, ['99']);
@@ -45,6 +47,7 @@ test('goto() pushes state and invokes start', async () => {
   app.controller('foo', () => {
     controllerCalls++;
   });
+  app.template('foo', '<h1>Foo</h1>');
   app.goto('/foo');
   await tick();
   assert.deepEqual(pushes, ['/foo']);
@@ -63,6 +66,7 @@ test('goto() prefixes basePath for history mode', async () => {
   };
   const app = TurboMini('/app');
   app.controller('foo', () => {});
+  app.template('foo', '<h1>Foo</h1>');
   app.goto('/foo');
   await tick();
   assert.deepEqual(pushes, ['/app/foo']);
@@ -83,6 +87,7 @@ test('middleware executes in order', async () => {
   app.controller('foo', () => {
     calls.push('controller');
   });
+  app.template('foo', '<h1>Foo</h1>');
   await app.start();
   assert.deepEqual(calls, ['mw1', 'mw2', 'controller']);
 });
@@ -117,10 +122,11 @@ test('controller return values for sync and async results', async () => {
   const app = TurboMini('/');
   app.controller('sync', () => ({ a: 1 }));
   app.controller('async', async () => ({ b: 2 }));
+  app.template('sync', '<h1>Sync</h1>');
+  app.template('async', '<h1>Async</h1>');
   await app.start();
   assert.deepEqual(app.context.data, { a: 1 });
   app.goto('/async');
   await tick();
   assert.deepEqual(app.context.data, { b: 2 });
 });
-

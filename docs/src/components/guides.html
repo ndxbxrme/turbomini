@@ -1,0 +1,56 @@
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<div class="container">
+  <div class="blur-circle blue"></div>
+  <div class="blur-circle purple"></div>
+
+  {{> header name=name}}
+
+  <section class="doc-page">
+    <header class="doc-hero">
+      <h1>Best practices</h1>
+      <p>Opinionated guidance for building TurboMini projects that scale.</p>
+    </header>
+
+    <nav class="doc-toc">
+      <a href="/guides/project-organization">Project organization</a>
+      <a href="/guides/controllers">Controllers</a>
+      <a href="/guides/templating">Templating</a>
+      <a href="/guides/themes">Themes</a>
+      <a href="/guides/web-components">Web components</a>
+    </nav>
+
+    <section class="doc-card">
+      <h2>Guide set</h2>
+      <p>Choose a guide to dig into a specific area of TurboMini best practices.</p>
+      <pre><code class="language-text">/guides/project-organization
+/guides/controllers
+/guides/templating
+/guides/themes
+/guides/web-components</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Instructions for AI</h2>
+      <p>Guidance for AI coding agents working inside TurboMini repos.</p>
+      <a class="example-card__link" href="../dev/instructions-for-ai.md">Open AI instructions</a>
+    </section>
+
+    <section class="doc-card">
+      <h2>Middleware note</h2>
+      <p>Middleware lives in the Controllers guide and shows how to cancel routes when guards fail.</p>
+      <a class="example-card__link" href="/guides/controllers">Open Controllers guide</a>
+    </section>
+
+    <section class="doc-card">
+      <h2>Need API details?</h2>
+      <p>Each guide references the API primitives used in the examples.</p>
+      <a class="example-card__link" href="/api-reference">Open API reference</a>
+    </section>
+
+    <section class="doc-card">
+      <h2>See working examples</h2>
+      <p>Every guide maps to a runnable example.</p>
+      <a class="example-card__link" href="/examples">Browse Examples</a>
+    </section>
+  </section>
+</div>

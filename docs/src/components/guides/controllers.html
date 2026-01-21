@@ -1,0 +1,73 @@
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<div class="container">
+  <div class="blur-circle blue"></div>
+  <div class="blur-circle purple"></div>
+
+  {{> header name=name}}
+
+  <section class="doc-page">
+    <header class="doc-hero">
+      <h1>Controllers</h1>
+      <p>Keep controllers focused, testable, and composable.</p>
+    </header>
+
+    <section class="doc-card">
+      <h2>Conventions</h2>
+      <p>Return plain data, and attach lifecycle hooks for DOM work.</p>
+      <pre><code class="language-js">app.controller('profile', () =&gt; ({
+  user,
+  postLoad() { /* wire events */ },
+  unload() { /* cleanup */ }
+}));</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Composition</h2>
+      <p>Compose controllers to layer data fetching and derived fields.</p>
+      <pre><code class="language-js">const composeControllers = (...steps) =&gt; async (params) =&gt; {
+  let data = {};
+  for (const step of steps) {
+    const result = await step(params, data);
+    if (result && typeof result === 'object') {
+      data = { ...data, ...result };
+    }
+  }
+  return data;
+};</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>From the controller patterns example</h2>
+      <p>Compose user data and flags with shared helpers.</p>
+      <pre><code class="language-js">const baseUser = async (params) =&gt; loadUser(params[0] ?? '42');
+const withFlags = async (_params, data) =&gt; enrichWithFlags(data);
+
+export const userController = composeControllers(baseUser, withFlags);</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Testing</h2>
+      <p>Test controller helpers in Node without a DOM.</p>
+      <pre><code class="language-js">const data = await userController(['42']);
+assert.equal(data.name, 'Ada Lovelace');</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Middleware guards</h2>
+      <p>Return <code>false</code> from middleware to cancel navigation.</p>
+      <pre><code class="language-js">app.addMiddleware((ctx) =&gt; {
+  if (ctx.page === 'admin' &amp;&amp; !store.loggedIn) return false;
+});</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Related examples</h2>
+      <p>Use these examples to see controller composition in practice.</p>
+      <ul class="doc-links">
+        <li><a href="/examples/controller-patterns">Controller Patterns</a></li>
+        <li><a href="/examples/middleware-guard">Middleware Guard</a></li>
+        <li><a href="/examples/real-app-dashboard">Real App Dashboard</a></li>
+      </ul>
+    </section>
+  </section>
+</div>

@@ -1,0 +1,101 @@
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<div class="container">
+  <div class="blur-circle blue"></div>
+  <div class="blur-circle purple"></div>
+
+  {{> header name=name}}
+
+  <section class="doc-page">
+    <header class="doc-hero">
+      <h1>API reference</h1>
+      <p>Runtime API surface, generated from the core JSDoc types.</p>
+    </header>
+
+    <section class="doc-card">
+      <h2>TurboMini(basePath)</h2>
+      <p>Create a TurboMini app. Use <code>&quot;/&quot;</code> for history routing or <code>&quot;#&quot;</code> for hash routing.</p>
+      <pre><code class="language-js">const app = TurboMini('/');
+const hashApp = TurboMini('#');</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>app.template(name, text)</h2>
+      <p>Register and compile a template string.</p>
+      <pre><code class="language-js">app.template('home', '&lt;h1&gt;Hello {{name}}&lt;/h1&gt;');</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>app.$t(name, data, opts?)</h2>
+      <p>Render a registered template to a string.</p>
+      <pre><code class="language-js">const html = app.$t('home', { name: 'TurboMini' });</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>app.controller(name, fn)</h2>
+      <p>Register a route controller.</p>
+      <pre><code class="language-js">app.controller('home', () =&gt; ({ name: 'TurboMini' }));</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>app.defineComponent(name, def)</h2>
+      <p>Register a template + optional controller as a component.</p>
+      <pre><code class="language-js">app.defineComponent('card', {
+  template: '&lt;article&gt;{{title}}&lt;/article&gt;',
+  controller: () =&gt; ({ title: 'Card' })
+});</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>app.start()</h2>
+      <p>Start routing and render the initial route.</p>
+      <pre><code class="language-js">await app.start();</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>app.goto(route)</h2>
+      <p>Navigate to a new route and re-render.</p>
+      <pre><code class="language-js">app.goto('/profile/42');</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>app.refresh() / app.refreshNow()</h2>
+      <p>Schedule or immediately perform a render.</p>
+      <pre><code class="language-js">app.invalidate(); // alias of scheduled refresh
+app.refreshNow();</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>app.setRenderStrategy(options)</h2>
+      <p>Control render scheduling with <code>microtask</code>, <code>raf</code>, <code>throttle</code>, <code>debounce</code>, or <code>idle</code>.</p>
+      <pre><code class="language-js">app.setRenderStrategy({ mode: 'throttle', interval: 32, leading: true });</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>app.context</h2>
+      <p>Current routing context: <code>page</code>, <code>params</code>, and <code>data</code>.</p>
+      <pre><code class="language-js">const { page, params, data } = app.context;</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>app.fetchTemplates(names, path?)</h2>
+      <p>Fetch templates from the network and register them.</p>
+      <pre><code class="language-js">await app.fetchTemplates(['header', 'footer'], '/components/');</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Helpers</h2>
+      <p>Register or override helpers used in templates.</p>
+      <pre><code class="language-js">app.registerHelper('upper', (value) =&gt; String(value).toUpperCase());
+app.unregisterHelper('upper');
+const helpers = app.listHelpers();</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Events</h2>
+      <p>Attach global listeners or element listeners via helpers.</p>
+      <pre><code class="language-js">app.on('resize', () =&gt; {});
+app.off('resize', handler);
+const dispose = app.listen(button, 'click', () =&gt; {});</code></pre>
+    </section>
+  </section>
+</div>

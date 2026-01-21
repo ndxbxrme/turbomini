@@ -1,0 +1,43 @@
+body {
+  padding: 2rem;
+  font-family: var(--tm-font-sans);
+}
+
+form {
+  display: grid;
+  gap: 1rem;
+  max-width: 420px;
+  background: var(--tm-color-surface);
+  border: 1px solid var(--tm-color-border);
+  border-radius: var(--tm-radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--tm-shadow-sm);
+}
+
+label {
+  font-weight: 600;
+}
+
+input {
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--tm-radius-sm);
+  border: 1px solid var(--tm-color-border);
+  font: inherit;
+}
+
+button {
+  padding: 0.65rem 1rem;
+  border-radius: var(--tm-radius-sm);
+  border: none;
+  background: var(--tm-color-brand);
+  color: var(--tm-color-brand-contrast);
+  font-weight: 600;
+}
+
+.error {
+  color: var(--tm-color-danger, #c2410c);
+}
+
+.success {
+  color: var(--tm-color-success, #16a34a);
+}

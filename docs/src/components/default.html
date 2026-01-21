@@ -16,9 +16,13 @@
           </p>
 
           <div class="cta-group">
-            <a class="btn-primary" href="./docs">
+            <a class="btn-primary" href="/getting-started">
               Get Started
               <i class="ri-arrow-right-line" aria-hidden="true"></i>
+            </a>
+            <a class="btn-secondary" href="/concepts">
+              Explore Concepts
+              <i class="ri-compass-3-line" aria-hidden="true"></i>
             </a>
             <a
               class="btn-secondary"
@@ -183,6 +187,25 @@
               Fewer concepts, less ceremony, more shipping.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section class="examples-gallery" id="examples">
+        <div class="examples-header">
+          <h2 class="section-title">Examples you can run</h2>
+          <p class="section-subtitle">
+            Each example ships with a README and automated tests.
+          </p>
+        </div>
+        <div class="examples-grid">
+          {{#each examples as example}}
+            <article class="example-card">
+              <h3>{{example.title}}</h3>
+              <p>{{example.description}}</p>
+              <div class="example-card__meta"><code>{{example.meta}}</code></div>
+              <a class="example-card__link" href="{{example.href}}">Open example</a>
+            </article>
+          {{/each}}
         </div>
       </section>
 

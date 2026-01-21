@@ -23,7 +23,7 @@
   },
   "scripts": {
     "build:types": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json",
-    "test": "node --test tests/unit"
+    "test": "node --test tests/unit/*.test.js tests/unit/*.test.mjs"
   },
   "repository": {
     "type": "git",

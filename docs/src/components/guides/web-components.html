@@ -1,0 +1,54 @@
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<div class="container">
+  <div class="blur-circle blue"></div>
+  <div class="blur-circle purple"></div>
+
+  {{> header name=name}}
+
+  <section class="doc-page">
+    <header class="doc-hero">
+      <h1>Web components</h1>
+      <p>TurboMini web components emit <code>tm-*</code> events and accept props/attributes.</p>
+    </header>
+
+    <section class="doc-card">
+      <h2>Props and attributes</h2>
+      <p>Set props for state and attributes for defaults or SSR-friendly markup.</p>
+      <pre><code class="language-html">&lt;tm-button variant="ghost" size="lg"&gt;Save&lt;/tm-button&gt;</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Events</h2>
+      <p>Listen for custom events like <code>tm-press</code> and <code>tm-change</code>.</p>
+      <pre><code class="language-js">button.addEventListener('tm-press', (event) =&gt; {
+  console.log(event.detail.value);
+});</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>From the web components example</h2>
+      <p>Wire component events in <code>postLoad()</code>.</p>
+      <pre><code class="language-js">const pressButton = document.querySelector('[data-press]');
+pressButton.addEventListener('tm-press', () =&gt; {
+  store.pressCount += 1;
+  app.invalidate();
+});</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>SSR notes</h2>
+      <p>Provide light DOM fallbacks when custom elements are not yet defined.</p>
+      <pre><code class="language-html">&lt;tm-dialog&gt;
+  &lt;!-- fallback content here --&gt;
+&lt;/tm-dialog&gt;</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Related examples</h2>
+      <p>Run the full component demo and watch events flow.</p>
+      <ul class="doc-links">
+        <li><a href="/examples/web-components">Web Components</a></li>
+      </ul>
+    </section>
+  </section>
+</div>

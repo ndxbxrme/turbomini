@@ -1,0 +1,55 @@
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<div class="container">
+  <div class="blur-circle blue"></div>
+  <div class="blur-circle purple"></div>
+
+  {{> header name=name}}
+
+  <section class="doc-page">
+    <header class="doc-hero">
+      <h1>Getting started</h1>
+      <p>Ship a TurboMini app in minutes with the CLI or a single HTML file.</p>
+    </header>
+
+    <section class="doc-card">
+      <h2>1. Install + scaffold</h2>
+      <p>Use the CLI to scaffold a project with the runtime and starter files.</p>
+      <pre><code class="language-bash">npm install
+npx turbomini init my-app
+cd my-app
+npm install
+npm run dev</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>2. Minimal HTML (no build step)</h2>
+      <p>Prefer zero tooling? Drop TurboMini into a single HTML file.</p>
+      <pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+  &lt;body&gt;
+    &lt;page&gt;&lt;/page&gt;
+    &lt;script type="module"&gt;
+      import { TurboMini } from './turbomini.js';
+      const app = TurboMini('/');
+      app.template('home', '&lt;h1&gt;Hello {{name}}&lt;/h1&gt;');
+      app.controller('home', () =&gt; ({ name: 'TurboMini' }));
+      app.start();
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>3. Add theme tokens</h2>
+      <p>Pull in the base theme tokens and utilities, then switch themes later.</p>
+      <pre><code class="language-bash">npx turbomini theme init</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>4. Run an example</h2>
+      <p>Every example in this repo is runnable with a single command.</p>
+      <pre><code class="language-bash">cd examples/hello-routing
+npm run dev</code></pre>
+    </section>
+  </section>
+</div>

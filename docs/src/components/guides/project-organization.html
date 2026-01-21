@@ -1,0 +1,76 @@
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<div class="container">
+  <div class="blur-circle blue"></div>
+  <div class="blur-circle purple"></div>
+
+  {{> header name=name}}
+
+  <section class="doc-page">
+    <header class="doc-hero">
+      <h1>Project organization</h1>
+      <p>Scale your TurboMini apps with a predictable folder structure.</p>
+    </header>
+
+    <section class="doc-card">
+      <h2>Small apps</h2>
+      <p>Keep everything in a single folder while you iterate quickly.</p>
+      <pre><code class="language-text">src/
+  main.js
+  app.css</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Medium apps</h2>
+      <p>Split controllers and templates as routes grow.</p>
+      <pre><code class="language-text">src/
+  controllers/
+  templates/
+  styles/
+  main.js</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Large apps</h2>
+      <p>Organize by feature to keep teams aligned.</p>
+      <pre><code class="language-text">src/
+  features/
+    billing/
+      controller.js
+      templates.js
+    accounts/
+      controller.js
+      templates.js
+  shared/
+    components/
+    styles/
+  main.js</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>From the real app example</h2>
+      <p>Even a single-file example keeps data and controller setup organized.</p>
+      <pre><code class="language-js">import { TurboMini } from '../shared/turbomini.js';
+
+const ORDERS = [
+  { id: 'A-104', customer: 'Studio One', status: 'active', total: '$1,240' },
+  { id: 'B-221', customer: 'Northwind', status: 'paused', total: '$860' },
+];
+
+export function createApp() {
+  const app = TurboMini('/real-app-dashboard');
+  const store = { filter: 'all' };
+  // templates + controllers live below
+}</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Related examples</h2>
+      <p>Each example includes a README and a test script you can run.</p>
+      <ul class="doc-links">
+        <li><a href="/examples/hello-routing">Hello Routing (small)</a></li>
+        <li><a href="/examples/controller-patterns">Controller Patterns (medium)</a></li>
+        <li><a href="/examples/real-app-dashboard">Real App Dashboard (large)</a></li>
+      </ul>
+    </section>
+  </section>
+</div>

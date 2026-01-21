@@ -1,0 +1,47 @@
+body {
+  padding: 2rem;
+  font-family: var(--tm-font-sans);
+}
+
+.dashboard {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  border: 1px solid var(--tm-color-border);
+  border-radius: var(--tm-radius-md);
+  background: var(--tm-color-surface);
+  padding: 1rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border-bottom: 1px solid var(--tm-color-border);
+  padding: 0.6rem 0.4rem;
+  text-align: left;
+}
+
+.filters {
+  display: flex;
+  gap: 0.5rem;
+}
+
+button {
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--tm-radius-sm);
+  border: 1px solid var(--tm-color-border);
+  background: transparent;
+  font-weight: 600;
+}

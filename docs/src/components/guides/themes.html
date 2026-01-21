@@ -1,0 +1,52 @@
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<div class="container">
+  <div class="blur-circle blue"></div>
+  <div class="blur-circle purple"></div>
+
+  {{> header name=name}}
+
+  <section class="doc-page">
+    <header class="doc-hero">
+      <h1>Themes</h1>
+      <p>TurboMini themes are driven by design tokens and CSS variables.</p>
+    </header>
+
+    <section class="doc-card">
+      <h2>Base tokens</h2>
+      <p>Install base tokens in <code>src/styles/turbomini</code> with the CLI.</p>
+      <pre><code class="language-bash">npx turbomini theme init</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Custom themes</h2>
+      <p>Create overrides in <code>src/styles/themes/&lt;name&gt;</code> and scope with <code>data-theme</code>.</p>
+      <pre><code class="language-bash">npx turbomini theme create brand</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Light / dark switching</h2>
+      <p>Toggle themes by setting <code>document.documentElement.dataset.theme</code>.</p>
+      <pre><code class="language-js">document.documentElement.dataset.theme = 'dark';</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>From the theme switching example</h2>
+      <p>Persist user choice and respect system preference.</p>
+      <pre><code class="language-js">const stored = window.localStorage.getItem('tm-theme');
+let theme = stored || 'system';
+if (theme === 'system') {
+  theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+document.documentElement.dataset.theme = theme;</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Related examples</h2>
+      <p>See token-driven themes and persistence in action.</p>
+      <ul class="doc-links">
+        <li><a href="/examples/theme-switching">Theme Switching</a></li>
+        <li><a href="/examples/web-components">Web Components</a></li>
+      </ul>
+    </section>
+  </section>
+</div>
