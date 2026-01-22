@@ -73,15 +73,15 @@ app.start();</code></pre>
 
     <section class="doc-card" id="rendering">
       <h2>Rendering</h2>
-      <p>Call <code>app.invalidate()</code> after state changes. Configure scheduling with <code>setRenderStrategy()</code>.</p>
+      <p>Call <code>app.refresh()</code> (or <code>app.invalidate()</code>) after state changes. TurboMini schedules renders based on the current strategy and applies a minimal DOM diff.</p>
       <pre><code class="language-js">app.setRenderStrategy({ mode: 'raf' });
 store.count += 1;
-app.invalidate();</code></pre>
+app.refresh();</code></pre>
     </section>
 
     <section class="doc-card" id="scheduling">
       <h2>Render scheduling</h2>
-      <p>Choose the scheduling mode that fits your UI. <code>microtask</code> is the default; <code>raf</code> batches with animation frames.</p>
+      <p>Choose the scheduling mode that fits your UI. <code>microtask</code> is the default; <code>raf</code> batches with animation frames. Throttle, debounce, and idle modes help coalesce frequent updates.</p>
       <pre><code class="language-js">app.setRenderStrategy({ mode: 'throttle', interval: 32, leading: true });
 app.setRenderStrategy({ mode: 'debounce', interval: 50 });
 app.setRenderStrategy({ mode: 'idle', interval: 200 });</code></pre>

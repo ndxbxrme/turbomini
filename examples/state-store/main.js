@@ -40,7 +40,7 @@ export function createApp() {
         if (action === 'inc') store.count += store.step;
         if (action === 'dec') store.count -= store.step;
         if (action === 'reset') store.count = 0;
-        app.invalidate();
+        app.refresh();
       });
     }
   }));

@@ -2,7 +2,7 @@
 
 ## What it demonstrates
 - Simple shared store object for state.
-- Manual `app.invalidate()` to trigger re-renders.
+- Manual `app.refresh()` to trigger re-renders.
 - Event delegation in `postLoad()`.
 
 ## Run it

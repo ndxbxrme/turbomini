@@ -6,6 +6,52 @@ import { TurboMini } from '../../src/turbomini.js';
 // helper to wait for async navigation to complete
 const tick = () => new Promise((r) => setTimeout(r, 0));
 
+const createDomStub = () => {
+  const handlers = {};
+  const pageEl = {
+    innerHTML: '',
+    children: [],
+    attributes: [],
+    setAttribute() {},
+    removeAttribute() {},
+  };
+  const doc = {
+    querySelector: (sel) => (sel === 'page' ? pageEl : null),
+    createElement: () => ({
+      innerHTML: '',
+      children: [],
+      attributes: [],
+      setAttribute() {},
+      removeAttribute() {},
+    }),
+    body: {
+      scrollIntoView() {},
+    },
+  };
+  const win = {
+    addEventListener: (type, handler) => {
+      handlers[type] = handler;
+    },
+    removeEventListener: (type) => {
+      delete handlers[type];
+    },
+    requestAnimationFrame: (fn) => setTimeout(fn, 0),
+    cancelAnimationFrame: (id) => clearTimeout(id),
+  };
+  return {
+    handlers,
+    pageEl,
+    install() {
+      globalThis.window = win;
+      globalThis.document = doc;
+    },
+    restore() {
+      delete globalThis.window;
+      delete globalThis.document;
+    },
+  };
+};
+
 test('normalizeRoute mapping / → default', async () => {
   globalThis.location = { pathname: '/', hash: '' };
   globalThis.history = { pushState() {} };
@@ -129,4 +175,30 @@ test('controller return values for sync and async results', async () => {
   app.goto('/async');
   await tick();
   assert.deepEqual(app.context.data, { b: 2 });
+});
+
+test('hashchange is ignored in history mode', async () => {
+  const dom = createDomStub();
+  dom.install();
+
+  globalThis.location = { pathname: '/home', hash: '#section' };
+  globalThis.history = { pushState() {} };
+
+  const app = TurboMini('/');
+  app.template('home', '<h1>Home</h1>');
+  let calls = 0;
+  app.controller('home', () => {
+    calls += 1;
+    return {};
+  });
+
+  await app.start();
+  assert.equal(calls, 1);
+  assert.ok(dom.handlers.hashchange);
+
+  dom.handlers.hashchange();
+  await tick();
+  assert.equal(calls, 1);
+
+  dom.restore();
 });

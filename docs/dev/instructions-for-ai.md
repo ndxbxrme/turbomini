@@ -6,7 +6,7 @@ This guide tells an AI coding agent how to build TurboMini apps in this repo.
 - Use `TurboMini(basePath)` to create the app. Prefer a base path that matches the deployed subfolder (e.g. `/examples/hello-routing`).
 - Register templates before routing. Routing resolves by matching template names against the URL.
 - Controllers return plain data objects; attach `postLoad()` for DOM wiring and `unload()` for cleanup.
-- Use `app.invalidate()` after any state mutation to trigger a re-render.
+- Use `app.refresh()` (or `app.invalidate()`) after any state mutation to trigger a re-render.
 - For navigation, prefer `<a href="/route">` or `app.goto('/route')`.
 
 ## Scaffolding
@@ -75,4 +75,3 @@ This guide tells an AI coding agent how to build TurboMini apps in this repo.
 - `/examples/theme-switching` - theme persistence.
 - `/examples/web-components` - tm-* events and slots.
 - `/examples/middleware-guard` - route guards.
-

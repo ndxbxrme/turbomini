@@ -600,7 +600,9 @@ const TurboMini = (basePath = "/") => {
   };
 
   on("popstate", start);
-  on("hashchange", start);
+  on("hashchange", () => {
+    if (useHash) start();
+  });
   if (hasDOM)
     on("click", (e) => {
       const a = e.target.closest ? e.target.closest("a") : null;
