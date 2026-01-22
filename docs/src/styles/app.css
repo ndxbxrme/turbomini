@@ -686,3 +686,301 @@
           opacity: 0.12;
         }
       }
+/* =========================================================
+   BEBOP OVERRIDES for Turbomini (paste at end of app.css)
+   ========================================================= */
+
+/* Type: add a sharp serif lead + mono comping */
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Roboto+Mono:wght@400;600&display=swap");
+
+:root{
+  /* keep your existing vars, but add bebop ones */
+  --bebop-bg: #0b0c10;
+  --bebop-panel: rgba(244,241,234,.06);
+  --bebop-fg: #f4f1ea;
+  --bebop-muted: rgba(244,241,234,.72);
+  --bebop-border: rgba(244,241,234,.14);
+  --bebop-grid: rgba(244,241,234,.10);
+
+  /* One accent (swap in JS if you want) */
+  --bebop-accent: #00E5A8;
+  --bebop-accent-2: #FFD84A;
+}
+
+/* Base flip: nocturnal */
+body{
+  background: var(--bebop-bg) !important;
+  color: var(--bebop-fg) !important;
+}
+
+/* Your container is white; neutralize it */
+.container{
+  background: transparent !important;
+}
+
+/* Staff-line grid + stage lights */
+body::before{
+  content:"";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    
+    radial-gradient(circle at 18% 22%, rgba(0,229,168,.12), transparent 48%),
+    radial-gradient(circle at 82% 12%, rgba(255,216,74,.10), transparent 45%);
+  opacity: .95;
+}
+
+/* Make your blur circles moodier (keep them!) */
+.blur-circle{
+  opacity: .22 !important;
+  filter: blur(70px) saturate(140%) contrast(125%) !important;
+  mix-blend-mode: screen;
+  z-index: 0;
+  position: fixed;
+}
+
+/* Header: less "nav bar", more "club marquee" */
+header{
+  border-bottom: 1px solid rgba(244,241,234,.18);
+  padding-top: 26px;
+  padding-bottom: 18px;
+}
+
+/* Brand becomes the lead */
+.logo{
+  font-family: "Instrument Serif", serif !important;
+  font-size: 22px !important;
+  letter-spacing: .02em;
+}
+
+/* Nav becomes crisp pills */
+nav a{
+  color: var(--bebop-muted) !important;
+  font-size: 15px !important;
+  border: 1px solid var(--bebop-border);
+  padding: 7px 10px;
+  border-radius: 999px;
+  transition: transform 90ms linear, background 90ms linear, color 90ms linear;
+}
+nav a:hover{
+  color: var(--bebop-fg) !important;
+  background: rgba(244,241,234,.08);
+  transform: translateX(2px);
+}
+
+/* Version tag: no "SaaS green", use nocturnal badge with accent */
+.version-tag{
+  background: rgba(244,241,234,.06) !important;
+  color: var(--bebop-fg) !important;
+  border: 1px solid var(--bebop-border);
+}
+
+
+
+/* Your h1 currently has a light gradient; replace with punchy monochrome + accent */
+h1{
+  font-family: "Instrument Serif", serif !important;
+  background: none !important;
+  -webkit-text-fill-color: unset !important;
+  color: var(--bebop-fg) !important;
+  line-height: .92 !important;
+  letter-spacing: .01em;
+  transform: translateX(-6px); /* intentional “wrong” */
+  position: relative;
+}
+
+/* If you applied the <span>/<em> change */
+h1 em{
+  font-style: italic;
+  opacity: .95;
+}
+h1::after{
+  content:"";
+  position:absolute;
+  left: 0;
+  bottom: -10px;
+  width: 92px;
+  height: 2px;
+  background: var(--bebop-accent);
+  opacity: .9;
+}
+
+/* Subhead: muted + a bit tighter */
+.hero-subtitle{
+  color: var(--bebop-muted) !important;
+  font-size: 18px !important;
+  max-width: 62ch;
+}
+
+/* Buttons: percussive */
+.btn-primary,
+.btn-secondary{
+  font-family: "Roboto Mono", ui-monospace, Menlo, Monaco, Consolas, monospace !important;
+  letter-spacing: .02em;
+  padding: 16px 26px !important;
+  transition: transform 70ms linear, background 70ms linear, border-color 70ms linear !important;
+}
+
+.btn-primary{
+  background: var(--bebop-accent) !important;
+  color: #06110f !important;
+  box-shadow: none !important;
+  border: 1px solid rgba(0,0,0,.25) !important;
+}
+.btn-secondary{
+  background: rgba(244,241,234,.06) !important;
+  color: var(--bebop-fg) !important;
+  border: 1px solid var(--bebop-border) !important;
+}
+.btn-primary:hover,
+.btn-secondary:hover{
+  transform: translateY(-1px) translateX(2px) !important;
+}
+.btn-primary:active,
+.btn-secondary:active{
+  transform: scale(.985) !important;
+}
+
+/* Stop the visual interferring with buttons */
+.hero-visual{
+  pointer-events:none;
+}
+
+/* Orbits: less airy pastel, more graphic ink */
+.orbit{
+  border-color: rgba(244,241,234,.16) !important;
+}
+.orbit-2{ border-color: rgba(244,241,234,.10) !important; }
+.orbit-3{
+  opacity: .45 !important;
+  border-style: dashed;
+}
+
+/* Example section: editorial contrast */
+.example-copy h2,
+.section-title{
+  font-family: "Instrument Serif", serif !important;
+  color: var(--bebop-fg) !important;
+}
+
+.example-copy p,
+.section-subtitle{
+  color: var(--bebop-muted) !important;
+}
+
+/* Bullets: switch check color to accent */
+.example-bullets{
+  color: rgba(244,241,234,.88) !important;
+}
+.example-bullets i{
+  color: var(--bebop-accent) !important;
+}
+
+/* Code preview: deep ink + subtle accent wash */
+.code-preview{
+  background: #06070a !important;
+  border: 1px solid rgba(244,241,234,.16) !important;
+  box-shadow: 0 20px 40px rgba(0,0,0,.55) !important;
+}
+.code-preview pre,
+.code-preview code{
+  font-family: "Roboto Mono", ui-monospace, Menlo, Monaco, Consolas, monospace !important;
+  font-size: 12.5px !important;
+}
+.code-preview::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  pointer-events:none;
+  background: linear-gradient(120deg, rgba(0,229,168,.10), transparent 40%, rgba(255,216,74,.08));
+}
+
+/* Features: break the polite grid */
+.features{
+  background: transparent !important;
+}
+
+.feature-card{
+  background: rgba(244,241,234,.05) !important;
+  border: 1px solid var(--bebop-border) !important;
+  box-shadow: none !important;
+  transition: transform 90ms linear, background 90ms linear, border-color 90ms linear !important;
+}
+
+
+
+.feature-card:hover{
+  transform: translateY(-2px) translateX(2px) !important;
+  background: rgba(244,241,234,.07) !important;
+  border-color: rgba(244,241,234,.28) !important;
+  box-shadow: none !important;
+}
+
+
+
+.feature-icon{
+  background: rgba(244,241,234,.06) !important;
+  color: var(--bebop-accent) !important;
+}
+.feature-icon.purple,
+.feature-icon.green{
+  background: rgba(244,241,234,.06) !important;
+  color: var(--bebop-accent) !important;
+}
+.feature-title{
+  color: rgba(244,241,234,.92) !important;
+  font-family: "Roboto Mono", ui-monospace, Menlo, Monaco, Consolas, monospace !important;
+  letter-spacing: .02em;
+}
+.feature-desc{
+  color: var(--bebop-muted) !important;
+}
+
+/* Examples gallery cards: less glass, more ink */
+.example-card{
+  background: rgba(244,241,234,.04) !important;
+  border: 1px solid var(--bebop-border) !important;
+  backdrop-filter: none !important;
+}
+.example-card h3{ color: rgba(244,241,234,.92) !important; }
+.example-card p{ color: var(--bebop-muted) !important; }
+.example-card__meta{ color: rgba(244,241,234,.70) !important; }
+.example-card__link{
+  color: var(--bebop-accent) !important;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0,229,168,.35);
+}
+
+/* Doc pages: keep same structure, match theme */
+.doc-page{ color: var(--bebop-fg) !important; }
+.doc-hero h1{ color: var(--bebop-fg) !important; background: none !important; }
+.doc-hero p{ color: var(--bebop-muted) !important; }
+
+.doc-card,
+.doc-toc{
+  background: rgba(244,241,234,.04) !important;
+  border: 1px solid var(--bebop-border) !important;
+  backdrop-filter: none !important;
+}
+.doc-card h2{ color: rgba(244,241,234,.92) !important; }
+
+.doc-toc a{ color: rgba(244,241,234,.85) !important; }
+.doc-links a{ color: var(--bebop-accent) !important; }
+
+/* Footer */
+.footer-simple{
+  background: transparent !important;
+  border-top: 1px solid rgba(244,241,234,.18) !important;
+  color: rgba(244,241,234,.70) !important;
+}
+.social-links a{ color: rgba(244,241,234,.70) !important; }
+.social-links a:hover{ color: var(--bebop-accent) !important; }
+
+/* Focus: crisp accent */
+a:focus-visible,
+button:focus-visible{
+  box-shadow: 0 0 0 3px rgba(0,229,168,.35) !important;
+  border-radius: 999px;
+}
+
