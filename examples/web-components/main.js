@@ -5,10 +5,15 @@ import '../shared/components/tm-dialog.js';
 
 export function createApp() {
   const app = TurboMini('/web-components');
-  const store = {
+  const controller = {
     pressCount: 0,
     lastName: '',
   };
+  let pressButton = null;
+  let input = null;
+  let dialog = null;
+  let openButton = null;
+  let closeButton = null;
 
   app.template(
     'default',
@@ -47,38 +52,55 @@ export function createApp() {
     `
   );
 
-  app.controller('default', () => ({
-    pressCount: store.pressCount,
-    lastName: store.lastName,
-    postLoad() {
-      const pressButton = document.querySelector('[data-press]');
-      if (pressButton && !pressButton.dataset.bound) {
-        pressButton.dataset.bound = 'true';
-        pressButton.addEventListener('tm-press', () => {
-          store.pressCount += 1;
-          app.invalidate();
-        });
-      }
+  const handlePress = () => {
+    controller.pressCount += 1;
+    app.refresh();
+  };
 
-      const input = document.querySelector('[data-input]');
-      if (input && !input.dataset.bound) {
-        input.dataset.bound = 'true';
-        input.addEventListener('tm-input', (event) => {
-          store.lastName = event.detail?.value ?? input.value ?? '';
-          app.invalidate();
-        });
-      }
+  const handleInput = (event) => {
+    controller.lastName = event.detail?.value ?? input?.value ?? '';
+    app.refresh();
+  };
 
-      const dialog = document.querySelector('[data-dialog]');
-      const open = document.querySelector('[data-open]');
-      const close = document.querySelector('[data-close]');
-      if (dialog && open && !dialog.dataset.bound) {
-        dialog.dataset.bound = 'true';
-        open.addEventListener('tm-press', () => dialog.show());
-        close?.addEventListener('tm-press', () => dialog.close('button'));
-      }
+  const handleOpen = () => dialog?.show();
+  const handleClose = () => dialog?.close('button');
+
+  controller.postLoad = () => {
+    pressButton = document.querySelector('[data-press]');
+    if (pressButton && !pressButton.dataset.bound) {
+      pressButton.dataset.bound = 'true';
+      pressButton.addEventListener('tm-press', handlePress);
     }
-  }));
+
+    input = document.querySelector('[data-input]');
+    if (input && !input.dataset.bound) {
+      input.dataset.bound = 'true';
+      input.addEventListener('tm-input', handleInput);
+    }
+
+    dialog = document.querySelector('[data-dialog]');
+    openButton = document.querySelector('[data-open]');
+    closeButton = document.querySelector('[data-close]');
+    if (dialog && openButton && !dialog.dataset.bound) {
+      dialog.dataset.bound = 'true';
+      openButton.addEventListener('tm-press', handleOpen);
+      closeButton?.addEventListener('tm-press', handleClose);
+    }
+  };
+
+  controller.unload = () => {
+    pressButton?.removeEventListener('tm-press', handlePress);
+    input?.removeEventListener('tm-input', handleInput);
+    openButton?.removeEventListener('tm-press', handleOpen);
+    closeButton?.removeEventListener('tm-press', handleClose);
+    pressButton = null;
+    input = null;
+    dialog = null;
+    openButton = null;
+    closeButton = null;
+  };
+
+  app.controller('default', () => controller);
 
   return app;
 }

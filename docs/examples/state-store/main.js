@@ -7,6 +7,13 @@ export function createStore() {
   };
 }
 
+export function applyCounterAction(controller, action) {
+  if (action === 'inc') controller.count += controller.step;
+  if (action === 'dec') controller.count -= controller.step;
+  if (action === 'reset') controller.count = 0;
+  return controller;
+}
+
 export function createApp() {
   const app = TurboMini('/state-store');
   const controller = {
@@ -31,9 +38,7 @@ export function createApp() {
   const handleClick = (event) => {
     const action = event.target?.closest?.('[data-action]')?.dataset?.action;
     if (!action) return;
-    if (action === 'inc') controller.count += controller.step;
-    if (action === 'dec') controller.count -= controller.step;
-    if (action === 'reset') controller.count = 0;
+    applyCounterAction(controller, action);
     app.refresh();
   };
 

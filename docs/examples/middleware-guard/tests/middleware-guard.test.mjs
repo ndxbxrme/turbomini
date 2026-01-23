@@ -8,13 +8,13 @@ test('middleware cancels admin route when logged out', async () => {
   globalThis.location = { pathname: '/middleware-guard/admin', hash: '' };
   globalThis.history = { pushState() {} };
 
-  const { app, store } = createApp();
+  const { app, controller } = createApp();
   await app.start();
 
   assert.equal(app.context.page, 'admin');
   assert.equal(app.context.data, null);
 
-  store.loggedIn = true;
+  controller.loggedIn = true;
   app.goto('/admin');
   await tick();
   assert.equal(app.context.page, 'admin');

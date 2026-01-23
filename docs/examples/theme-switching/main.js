@@ -24,9 +24,10 @@ export function toggleTheme(current) {
 
 export function createApp() {
   const app = TurboMini('/theme-switching');
-  const store = {
+  const controller = {
     theme: '',
   };
+  let boundButton = null;
 
   app.template(
     'default',
@@ -40,23 +41,30 @@ export function createApp() {
     `
   );
 
-  app.controller('default', () => ({
-    theme: store.theme,
-    postLoad() {
-      if (typeof window === 'undefined') return;
-      if (!store.theme) {
-        store.theme = applyThemePreference();
-        app.invalidate();
-      }
-      const btn = document.querySelector('[data-toggle]');
-      if (!btn || btn.dataset.bound) return;
-      btn.dataset.bound = 'true';
-      btn.addEventListener('click', () => {
-        store.theme = setTheme(toggleTheme(store.theme));
-        app.invalidate();
-      });
+  const handleToggle = () => {
+    controller.theme = setTheme(toggleTheme(controller.theme));
+    app.refresh();
+  };
+
+  controller.postLoad = () => {
+    if (typeof window === 'undefined') return;
+    if (!controller.theme) {
+      controller.theme = applyThemePreference();
+      app.refresh();
     }
-  }));
+    const btn = document.querySelector('[data-toggle]');
+    if (!btn || btn.dataset.bound) return;
+    btn.dataset.bound = 'true';
+    boundButton = btn;
+    btn.addEventListener('click', handleToggle);
+  };
+
+  controller.unload = () => {
+    if (boundButton) boundButton.removeEventListener('click', handleToggle);
+    boundButton = null;
+  };
+
+  app.controller('default', () => controller);
 
   return app;
 }

@@ -9,9 +9,12 @@ const ORDERS = [
 
 export function createApp() {
   const app = TurboMini('/real-app-dashboard');
-  const store = {
+  const controller = {
     filter: 'all',
+    stats: [],
+    visibleOrders: [],
   };
+  let boundRoot = null;
 
   app.template(
     'default',
@@ -64,37 +67,45 @@ export function createApp() {
     `
   );
 
-  app.controller('default', () => {
-    const visibleOrders =
-      store.filter === 'all'
+  const updateData = () => {
+    controller.visibleOrders =
+      controller.filter === 'all'
         ? ORDERS
-        : ORDERS.filter((order) => order.status === store.filter);
+        : ORDERS.filter((order) => order.status === controller.filter);
 
-    const stats = [
+    controller.stats = [
       { label: 'Orders', value: String(ORDERS.length) },
       { label: 'Active', value: String(ORDERS.filter((order) => order.status === 'active').length) },
       { label: 'Revenue', value: '$4.9k' },
     ];
+  };
+  controller.updateData = updateData;
 
-    return {
-      filter: store.filter,
-      stats,
-      visibleOrders,
-      postLoad() {
-        const root = document.querySelector('.dashboard');
-        if (!root || root.dataset.bound) return;
-        root.dataset.bound = 'true';
-        root.addEventListener('click', (event) => {
-          const value = event.target?.dataset?.filter;
-          if (!value) return;
-          store.filter = value;
-          app.invalidate();
-        });
-      }
-    };
-  });
+  const handleFilterClick = (event) => {
+    const value = event.target?.dataset?.filter;
+    if (!value) return;
+    controller.filter = value;
+    updateData();
+    app.refresh();
+  };
 
-  return { app, store };
+  controller.postLoad = () => {
+    const root = document.querySelector('.dashboard');
+    if (!root || root.dataset.bound) return;
+    root.dataset.bound = 'true';
+    boundRoot = root;
+    root.addEventListener('click', handleFilterClick);
+  };
+
+  controller.unload = () => {
+    boundRoot?.removeEventListener('click', handleFilterClick);
+    boundRoot = null;
+  };
+
+  updateData();
+  app.controller('default', () => controller);
+
+  return { app, controller };
 }
 
 export function startApp() {

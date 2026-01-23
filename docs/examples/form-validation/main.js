@@ -6,13 +6,21 @@ export function validateEmail(value) {
   return '';
 }
 
+export function applyFormState(controller, email) {
+  controller.email = String(email || '');
+  controller.error = validateEmail(controller.email);
+  controller.submitted = !controller.error;
+  return controller;
+}
+
 export function createApp() {
   const app = TurboMini('/form-validation');
-  const store = {
+  const controller = {
     email: '',
     error: '',
     submitted: false,
   };
+  let boundForm = null;
 
   app.template(
     'default',
@@ -34,25 +42,28 @@ export function createApp() {
     `
   );
 
-  app.controller('default', () => ({
-    email: store.email,
-    error: store.error,
-    submitted: store.submitted,
-    postLoad() {
-      const form = document.querySelector('[data-form]');
-      if (!form || form.dataset.bound) return;
-      form.dataset.bound = 'true';
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    applyFormState(controller, data.get('email'));
+    app.refresh();
+  };
 
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const data = new FormData(form);
-        store.email = String(data.get('email') || '');
-        store.error = validateEmail(store.email);
-        store.submitted = !store.error;
-        app.invalidate();
-      });
-    }
-  }));
+  controller.postLoad = () => {
+    const form = document.querySelector('[data-form]');
+    if (!form || form.dataset.bound) return;
+    form.dataset.bound = 'true';
+    boundForm = form;
+    form.addEventListener('submit', handleSubmit);
+  };
+
+  controller.unload = () => {
+    if (boundForm) boundForm.removeEventListener('submit', handleSubmit);
+    boundForm = null;
+  };
+
+  app.controller('default', () => controller);
 
   return app;
 }

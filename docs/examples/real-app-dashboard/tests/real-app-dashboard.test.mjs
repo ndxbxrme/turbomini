@@ -12,14 +12,14 @@ test('dashboard data reflects active filter', async () => {
   globalThis.location = { pathname: '/real-app-dashboard/', hash: '' };
   globalThis.history = { pushState() {} };
 
-  const { app, store } = createApp();
+  const { app, controller } = createApp();
   await app.start();
 
   assert.equal(app.context.data.stats[0].value, '4');
   assert.equal(app.context.data.visibleOrders.length, 4);
 
-  store.filter = 'active';
-  await app.start();
+  controller.filter = 'active';
+  controller.updateData();
   await tick();
   assert.equal(app.context.data.visibleOrders.length, 2);
 });

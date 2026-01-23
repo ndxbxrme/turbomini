@@ -2,9 +2,10 @@ import { TurboMini } from '../shared/turbomini.js';
 
 export function createApp() {
   const app = TurboMini('/middleware-guard');
-  const store = {
+  const controller = {
     loggedIn: false,
   };
+  let boundButton = null;
 
   app.template(
     'default',
@@ -34,27 +35,34 @@ export function createApp() {
     `
   );
 
-  app.controller('default', () => ({
-    loggedIn: store.loggedIn,
-    postLoad() {
-      if (typeof window === 'undefined') return;
-      const btn = document.querySelector('[data-toggle]');
-      if (!btn || btn.dataset.bound) return;
-      btn.dataset.bound = 'true';
-      btn.addEventListener('click', () => {
-        store.loggedIn = !store.loggedIn;
-        app.invalidate();
-      });
-    },
-  }));
+  const handleToggle = () => {
+    controller.loggedIn = !controller.loggedIn;
+    app.refresh();
+  };
+
+  controller.postLoad = () => {
+    if (typeof window === 'undefined') return;
+    const btn = document.querySelector('[data-toggle]');
+    if (!btn || btn.dataset.bound) return;
+    btn.dataset.bound = 'true';
+    boundButton = btn;
+    btn.addEventListener('click', handleToggle);
+  };
+
+  controller.unload = () => {
+    if (boundButton) boundButton.removeEventListener('click', handleToggle);
+    boundButton = null;
+  };
+
+  app.controller('default', () => controller);
 
   app.controller('admin', () => ({}));
 
   app.addMiddleware((ctx) => {
-    if (ctx.page === 'admin' && !store.loggedIn) return false;
+    if (ctx.page === 'admin' && !controller.loggedIn) return false;
   });
 
-  return { app, store };
+  return { app, controller };
 }
 
 export function startApp() {
