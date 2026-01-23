@@ -1,4 +1,4 @@
-import { TurboMini } from '../shared/turbomini.js';
+import { TurboMini } from './turbomini.js';
 
 const ORDERS = [
   { id: 'A-104', customer: 'Studio One', status: 'active', total: '$1,240' },
@@ -8,7 +8,7 @@ const ORDERS = [
 ];
 
 export function createApp() {
-  const app = TurboMini('/real-app-dashboard');
+  const app = TurboMini('/');
   const controller = {
     filter: 'all',
     stats: [],

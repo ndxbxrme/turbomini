@@ -96,6 +96,10 @@ test('serveCommand hosts static files with SPA fallback', async (t) => {
   assert.equal(nestedResponse.status, 200);
   assert.equal(await nestedResponse.text(), '<!doctype html><p>Nested</p>');
 
+  const redirectResponse = await fetch(`${baseUrl}/nested`, { redirect: 'manual' });
+  assert.equal(redirectResponse.status, 308);
+  assert.equal(redirectResponse.headers.get('location'), '/nested/');
+
   const fallbackResponse = await fetch(`${baseUrl}/missing/page`);
   assert.equal(fallbackResponse.status, 200);
   assert.equal(

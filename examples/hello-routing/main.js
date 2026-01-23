@@ -1,7 +1,7 @@
-import { TurboMini } from '../shared/turbomini.js';
+import { TurboMini } from './turbomini.js';
 
 export function createApp() {
-  const app = TurboMini('/hello-routing');
+  const app = TurboMini('/');
   const homeTemplate = `
     <main class="card">
       <h1>{{title}}</h1>

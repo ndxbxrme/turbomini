@@ -9,7 +9,8 @@
 ```bash
 npm run dev
 ```
-Open `http://localhost:4173/data-fetching/` in your browser.
+Open `http://localhost:4173/` in your browser.
+Note: the docs site hosts examples under `/turbomini/examples/<name>/`, but local dev serves from the root.
 
 ## Test it
 ```bash

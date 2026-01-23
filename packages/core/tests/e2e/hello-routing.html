@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Hello routing e2e</title>
+  </head>
+  <body>
+    <page></page>
+    <script type="module">
+      import { TurboMini } from '../../src/turbomini.js';
+
+      const app = TurboMini('/tests/e2e/hello-routing.html');
+      const homeTemplate = `
+        <main>
+          <h1 id="home">{{title}}</h1>
+          <nav>
+            <a id="to-home" href="/home">Home</a>
+            <a id="to-about" href="/about">About</a>
+          </nav>
+        </main>
+      `;
+
+      app.template('default', homeTemplate);
+      app.template('home', homeTemplate);
+      app.template('about', `
+        <main>
+          <h1 id="about">About</h1>
+          <p id="about-copy">{{message}}</p>
+          <nav>
+            <a id="back-home" href="/home">Home</a>
+          </nav>
+        </main>
+      `);
+
+      app.controller('default', () => ({
+        title: 'Hello TurboMini',
+      }));
+      app.controller('home', () => ({
+        title: 'Hello TurboMini',
+      }));
+      app.controller('about', () => ({
+        message: 'Routing works by matching template names.',
+      }));
+
+      window.app = app;
+      app.start();
+    </script>
+  </body>
+</html>

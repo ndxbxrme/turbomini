@@ -1,10 +1,10 @@
-import { TurboMini } from '../shared/turbomini.js';
+import { TurboMini } from './turbomini.js';
 import '../shared/components/tm-button.js';
 import '../shared/components/tm-input.js';
 import '../shared/components/tm-dialog.js';
 
 export function createApp() {
-  const app = TurboMini('/web-components');
+  const app = TurboMini('/');
   const controller = {
     pressCount: 0,
     lastName: '',

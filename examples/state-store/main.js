@@ -1,4 +1,4 @@
-import { TurboMini } from '../shared/turbomini.js';
+import { TurboMini } from './turbomini.js';
 
 export function createStore() {
   return {
@@ -15,7 +15,7 @@ export function applyCounterAction(controller, action) {
 }
 
 export function createApp() {
-  const app = TurboMini('/state-store');
+  const app = TurboMini('/');
   const controller = {
     ...createStore(),
   };

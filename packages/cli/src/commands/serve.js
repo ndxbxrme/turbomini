@@ -104,6 +104,12 @@ function createSpaServer(rootDir, options = {}) {
     try {
       const stats = await fs.stat(candidatePath);
       if (stats.isDirectory()) {
+        if (!decodedPathname.endsWith('/')) {
+          const location = `${decodedPathname}/` + requestUrl.search;
+          res.writeHead(308, { Location: location });
+          res.end();
+          return;
+        }
         targetPath = path.join(candidatePath, 'index.html');
       }
     } catch (error) {

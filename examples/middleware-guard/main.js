@@ -1,7 +1,7 @@
-import { TurboMini } from '../shared/turbomini.js';
+import { TurboMini } from './turbomini.js';
 
 export function createApp() {
-  const app = TurboMini('/middleware-guard');
+  const app = TurboMini('/');
   const controller = {
     loggedIn: false,
   };
