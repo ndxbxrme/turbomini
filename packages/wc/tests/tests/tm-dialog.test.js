@@ -91,3 +91,35 @@ test('tm-dialog closes on Escape and restores prior focus', async () => {
   assert.equal(reasons.at(-1), 'escape');
   assert.equal(document.activeElement, before);
 });
+
+test('tm-dialog focus trap skips sentinel elements', async () => {
+  const dialog = new dialogModule.TmDialog();
+  dialog.innerHTML = `
+    <button type="button">Primary</button>
+    <a href="#demo">Link</a>
+  `;
+  document.body.append(dialog);
+  dialog.connectedCallback?.();
+  await flushMicrotasks();
+
+  dialog.show();
+  await flushMicrotasks();
+
+  const sentinels = dialog.shadowRoot.querySelectorAll('.sentinel');
+  assert.equal(sentinels.length, 2);
+
+  let focused = null;
+  document.addEventListener('focusin', (event) => {
+    focused = event.target;
+  });
+
+  sentinels[0].dispatchEvent(new dom.window.FocusEvent('focus', { bubbles: true }));
+  await flushMicrotasks();
+  assert.notEqual(focused, sentinels[0]);
+  assert.notEqual(focused, sentinels[1]);
+
+  sentinels[1].dispatchEvent(new dom.window.FocusEvent('focus', { bubbles: true }));
+  await flushMicrotasks();
+  assert.notEqual(focused, sentinels[0]);
+  assert.notEqual(focused, sentinels[1]);
+});

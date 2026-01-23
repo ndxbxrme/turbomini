@@ -383,6 +383,7 @@ export class TmDialog extends TurboMiniElement {
     ];
     return nodes.filter((node) => {
       const el = node;
+      if (el?.classList?.contains('sentinel') || el?.dataset?.sentinel) return false;
       const style = typeof window !== 'undefined' && window.getComputedStyle ? window.getComputedStyle(el) : null;
       return !style || style.visibility !== 'hidden' && style.display !== 'none';
     });

@@ -36,6 +36,9 @@ export function createApp() {
           <span slot="label">Full name</span>
           <span slot="hint">Typing updates the template state.</span>
         </tm-input>
+        {{#if lastName}}
+          <p class="status">Latest: {{lastName}}</p>
+        {{/if}}
       </section>
       <section class="panel">
         <h2>Dialog</h2>
