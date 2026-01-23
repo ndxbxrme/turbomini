@@ -1,4 +1,4 @@
-import { TurboMini } from '../shared/turbomini.js';
+import { TurboMini } from './turbomini.js';
 
 export function validateEmail(value) {
   if (!value) return 'Email is required.';
@@ -14,7 +14,7 @@ export function applyFormState(controller, email) {
 }
 
 export function createApp() {
-  const app = TurboMini('/form-validation');
+  const app = TurboMini('/');
   const controller = {
     email: '',
     error: '',

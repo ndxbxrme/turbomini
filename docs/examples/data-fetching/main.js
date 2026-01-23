@@ -1,4 +1,4 @@
-import { TurboMini } from '../shared/turbomini.js';
+import { TurboMini } from './turbomini.js';
 
 export async function loadItems() {
   const url = new URL('./data.json', import.meta.url);
@@ -15,7 +15,7 @@ export async function loadItems() {
 }
 
 export function createApp() {
-  const app = TurboMini('/data-fetching');
+  const app = TurboMini('/');
 
   app.template(
     'default',

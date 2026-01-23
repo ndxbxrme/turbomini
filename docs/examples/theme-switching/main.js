@@ -1,4 +1,4 @@
-import { TurboMini } from '../shared/turbomini.js';
+import { TurboMini } from './turbomini.js';
 
 const STORAGE_KEY = 'tm-theme';
 
@@ -23,7 +23,7 @@ export function toggleTheme(current) {
 }
 
 export function createApp() {
-  const app = TurboMini('/theme-switching');
+  const app = TurboMini('/');
   const controller = {
     theme: '',
   };
