@@ -9,7 +9,9 @@ export function createStore() {
 
 export function createApp() {
   const app = TurboMini('/state-store');
-  const store = createStore();
+  const controller = {
+    ...createStore(),
+  };
 
   app.template(
     'default',
@@ -26,26 +28,30 @@ export function createApp() {
     `
   );
 
-  app.controller('default', () => ({
-    count: store.count,
-    step: store.step,
-    postLoad() {
-      const root = document.querySelector('.counter');
-      if (!root || root.dataset.bound) return;
-      root.dataset.bound = 'true';
+  const handleClick = (event) => {
+    const action = event.target?.closest?.('[data-action]')?.dataset?.action;
+    if (!action) return;
+    if (action === 'inc') controller.count += controller.step;
+    if (action === 'dec') controller.count -= controller.step;
+    if (action === 'reset') controller.count = 0;
+    app.refresh();
+  };
 
-      root.addEventListener('click', (event) => {
-        const action = event.target?.dataset?.action;
-        if (!action) return;
-        if (action === 'inc') store.count += store.step;
-        if (action === 'dec') store.count -= store.step;
-        if (action === 'reset') store.count = 0;
-        app.invalidate();
-      });
-    }
-  }));
+  controller.postLoad = () => {
+    const root = document.querySelector('.counter');
+    if (!root || root.dataset.bound) return;
+    root.dataset.bound = 'true';
+    root.addEventListener('click', handleClick);
+  };
 
-  return { app, store };
+  controller.unload = () => {
+    const root = document.querySelector('.counter');
+    root?.removeEventListener('click', handleClick);
+  };
+
+  app.controller('default', () => controller);
+
+  return { app, controller };
 }
 
 export function startApp() {
