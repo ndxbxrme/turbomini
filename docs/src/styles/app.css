@@ -519,6 +519,23 @@
         transition: transform 0.2s ease, box-shadow 0.2s ease;
       }
 
+      .example-card__media {
+        border-radius: 14px;
+        overflow: hidden;
+        aspect-ratio: 16 / 9;
+        background: rgba(15, 23, 42, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .example-card__media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
       .example-card:hover {
         transform: translateY(-6px);
         box-shadow: 0 18px 24px rgba(15, 23, 42, 0.08);
@@ -952,6 +969,10 @@ h1::after{
   background: rgba(244,241,234,.04) !important;
   border: 1px solid var(--bebop-border) !important;
   backdrop-filter: none !important;
+}
+.example-card__media{
+  background: rgba(244,241,234,.06) !important;
+  border: 1px solid rgba(244,241,234,.16);
 }
 .example-card h3{ color: rgba(244,241,234,.92) !important; }
 .example-card p{ color: var(--bebop-muted) !important; }

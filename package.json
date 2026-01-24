@@ -18,6 +18,8 @@
     "examples:check": "node scripts/examples-check.mjs",
     "docs:check": "node scripts/docs-check.mjs",
     "docs:prepare": "node scripts/docs-sync-examples.mjs",
+    "examples:screenshots": "node scripts/examples-screenshots.mjs",
+    "examples:screenshots:check": "node scripts/examples-screenshots.mjs --check",
     "runtime:sync": "node scripts/sync-runtime.mjs",
     "runtime:check": "node scripts/sync-runtime.mjs --check",
     "test:e2e": "npx playwright test",

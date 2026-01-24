@@ -15,6 +15,9 @@
     <div class="examples-grid">
       {{#each examples as example}}
         <article class="example-card">
+          <div class="example-card__media">
+            <img src="{{example.image}}" alt="Screenshot of {{example.title}}" />
+          </div>
           <h3>{{example.title}}</h3>
           <p>{{example.description}}</p>
           <div class="example-card__meta"><code>{{example.meta}}</code></div>
