@@ -20,7 +20,7 @@ export function createApp() {
     `
     <main class="grid">
       <section class="panel">
-        <h1>Component mini-set</h1>
+        <h2>Component mini-set</h2>
         <p>Local copy-mode components wired into TurboMini templates.</p>
       </section>
       <section class="panel">

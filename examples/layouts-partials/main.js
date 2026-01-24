@@ -3,7 +3,7 @@ import { TurboMini } from './turbomini.js';
 export function createApp() {
   const app = TurboMini('/');
 
-  app.template('header', '<header><h1>{{title}}</h1><span>{{tagline}}</span></header>');
+  app.template('header', '<header><h2>{{title}}</h2><span>{{tagline}}</span></header>');
   app.template('footer', '<footer><small>{{footer}}</small><span>{{year}}</span></footer>');
   app.template('card', '<li class="card">{{title}} — {{owner}}</li>');
   app.template('layout', '<div class="layout">{{> header title=title tagline=tagline}}<section>{{{body}}}</section>{{> footer .}}</div>');

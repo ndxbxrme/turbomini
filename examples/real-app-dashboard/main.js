@@ -21,7 +21,7 @@ export function createApp() {
     `
     <main class="dashboard">
       <section class="card">
-        <h1>Operations dashboard</h1>
+        <h2>Operations dashboard</h2>
         <p>Track orders, revenue, and fulfillment status.</p>
         <div class="filters">
           <button data-filter="all">All</button>

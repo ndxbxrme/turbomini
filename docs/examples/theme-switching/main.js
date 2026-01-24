@@ -33,7 +33,7 @@ export function createApp() {
     'default',
     `
     <main class="theme-card">
-      <h1>Theme switching</h1>
+      <h2>Theme switching</h2>
       <p>Current theme: <span class="badge">{{theme}}</span></p>
       <button type="button" data-toggle>Toggle theme</button>
       <p class="tm-text-muted">Preference is stored in localStorage.</p>

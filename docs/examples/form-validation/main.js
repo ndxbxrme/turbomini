@@ -26,7 +26,7 @@ export function createApp() {
     'default',
     `
     <main>
-      <h1>Newsletter signup</h1>
+      <h2>Newsletter signup</h2>
       <form data-form>
         <label for="email">Email</label>
         <input id="email" type="email" name="email" value="{{email}}" placeholder="you@example.com" />

@@ -24,7 +24,7 @@ export function createApp() {
     'default',
     `
     <main class="counter">
-      <h1>Counter: {{count}}</h1>
+      <h2>Counter: {{count}}</h2>
       <p>Step size: {{step}}</p>
       <div class="controls">
         <button type="button" data-action="dec">-</button>

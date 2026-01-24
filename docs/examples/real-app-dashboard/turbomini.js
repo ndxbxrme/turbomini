@@ -315,7 +315,7 @@ const TurboMini = (basePath = "/") => {
   /**
    * Register and compile a string template.
    * @type {TemplateRegistrar}
-   * @example app.template("home", "<h1>{{title}}</h1>");
+   * @example app.template("home", "<h2>{{title}}</h2>");
    */
   const template = (name, text) => {
     if (typeof name !== "string" || typeof text !== "string")

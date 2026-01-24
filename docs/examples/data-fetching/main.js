@@ -21,7 +21,7 @@ export function createApp() {
     'default',
     `
     <main>
-      <h1>Library feed</h1>
+      <h2>Library feed</h2>
       <p>Loaded from a local JSON file.</p>
       <ul class="list">
         {{#each items as item}}

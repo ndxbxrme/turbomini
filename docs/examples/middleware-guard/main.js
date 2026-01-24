@@ -11,7 +11,7 @@ export function createApp() {
     'default',
     `
     <main class="card">
-      <h1>Dashboard</h1>
+      <h2>Dashboard</h2>
       <p>Status: {{loggedIn ? "Logged in" : "Logged out"}}</p>
       <nav>
         <a href="/admin">Admin</a>
@@ -26,7 +26,7 @@ export function createApp() {
     'admin',
     `
     <main class="card">
-      <h1>Admin</h1>
+      <h2>Admin</h2>
       <p>Restricted area for signed-in users.</p>
       <nav>
         <a href="/">Back to home</a>

@@ -5,7 +5,7 @@ export function createApp() {
   const app = TurboMini('/turbomini/examples/controller-patterns/');
   const userTemplate = `
     <main class="panel">
-      <h1>User profile</h1>
+      <h2>User profile</h2>
       <p>Name: {{name}}</p>
       <p>Flags: {{flags}}</p>
       <p>Summary: {{summary}}</p>
@@ -23,7 +23,7 @@ export function createApp() {
     'team',
     `
     <main class="panel">
-      <h1>Team overview</h1>
+      <h2>Team overview</h2>
       <p>Team: {{name}}</p>
       <p>Members: {{members}}</p>
       <p>Summary: {{summary}}</p>

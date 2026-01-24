@@ -4,7 +4,7 @@ export function createApp() {
   const app = TurboMini('/turbomini/examples/hello-routing/');
   const homeTemplate = `
     <main class="card">
-      <h1>{{title}}</h1>
+      <h2>{{title}}</h2>
       <p>{{subtitle}}</p>
       <nav>
         <a href="/home">Home</a>
@@ -20,7 +20,7 @@ export function createApp() {
     'about',
     `
     <main class="card">
-      <h1>About this example</h1>
+      <h2>About this example</h2>
       <p>{{message}}</p>
       <nav>
         <a href="/home">Home</a>
