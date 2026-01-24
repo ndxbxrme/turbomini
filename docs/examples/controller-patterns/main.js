@@ -2,7 +2,7 @@ import { TurboMini } from './turbomini.js';
 import { userController, teamController } from './controllers/index.js';
 
 export function createApp() {
-  const app = TurboMini('/');
+  const app = TurboMini('/turbomini/examples/controller-patterns/');
   const userTemplate = `
     <main class="panel">
       <h1>User profile</h1>

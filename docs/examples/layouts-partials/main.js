@@ -1,7 +1,7 @@
 import { TurboMini } from './turbomini.js';
 
 export function createApp() {
-  const app = TurboMini('/');
+  const app = TurboMini('/turbomini/examples/layouts-partials/');
 
   app.template('header', '<header><h1>{{title}}</h1><span>{{tagline}}</span></header>');
   app.template('footer', '<footer><small>{{footer}}</small><span>{{year}}</span></footer>');

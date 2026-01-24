@@ -4,7 +4,7 @@ import '../shared/components/tm-input.js';
 import '../shared/components/tm-dialog.js';
 
 export function createApp() {
-  const app = TurboMini('/');
+  const app = TurboMini('/turbomini/examples/web-components/');
   const controller = {
     pressCount: 0,
     lastName: '',

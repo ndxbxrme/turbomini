@@ -23,7 +23,7 @@ export function toggleTheme(current) {
 }
 
 export function createApp() {
-  const app = TurboMini('/');
+  const app = TurboMini('/turbomini/examples/theme-switching/');
   const controller = {
     theme: '',
   };

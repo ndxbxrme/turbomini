@@ -15,7 +15,7 @@ export function applyCounterAction(controller, action) {
 }
 
 export function createApp() {
-  const app = TurboMini('/');
+  const app = TurboMini('/turbomini/examples/state-store/');
   const controller = {
     ...createStore(),
   };

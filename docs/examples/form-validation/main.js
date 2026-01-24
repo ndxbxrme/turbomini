@@ -14,7 +14,7 @@ export function applyFormState(controller, email) {
 }
 
 export function createApp() {
-  const app = TurboMini('/');
+  const app = TurboMini('/turbomini/examples/form-validation/');
   const controller = {
     email: '',
     error: '',

@@ -8,7 +8,7 @@ const ORDERS = [
 ];
 
 export function createApp() {
-  const app = TurboMini('/');
+  const app = TurboMini('/turbomini/examples/real-app-dashboard/');
   const controller = {
     filter: 'all',
     stats: [],

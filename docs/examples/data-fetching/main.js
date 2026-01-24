@@ -15,7 +15,7 @@ export async function loadItems() {
 }
 
 export function createApp() {
-  const app = TurboMini('/');
+  const app = TurboMini('/turbomini/examples/data-fetching/');
 
   app.template(
     'default',
