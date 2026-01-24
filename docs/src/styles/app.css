@@ -85,12 +85,14 @@
         gap: 12px;
         font-family: 'MiSans-Bold';
         font-size: 24px;
-        color: inherit!important;
-        text-decoration: none!important;
       }
       .logo img {
         width: 40px;
         height: 40px;
+      }
+      .logo a {
+        color: inherit!important;
+        text-decoration: none!important;
       }
 
       nav {
