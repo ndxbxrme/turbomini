@@ -22,3 +22,13 @@ test('hash navigation updates hash and supports back/forward', async ({ page, se
   await page.goForward();
   await expect(page.locator('#hash-second')).toHaveText('Second');
 });
+
+test('hash navigation trims trailing slashes', async ({ page, serverURL }) => {
+  await page.goto(`${serverURL}/tests/e2e/hash.html`);
+
+  await page.evaluate(() => window.app.goto('/second/'));
+  await expect(page.locator('#hash-second')).toHaveText('Second');
+
+  await page.evaluate(() => window.app.goto('/'));
+  await expect(page.locator('#home')).toHaveText('Home');
+});

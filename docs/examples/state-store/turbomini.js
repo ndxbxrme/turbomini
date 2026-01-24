@@ -315,7 +315,7 @@ const TurboMini = (basePath = "/") => {
   /**
    * Register and compile a string template.
    * @type {TemplateRegistrar}
-   * @example app.template("home", "<h2>{{title}}</h2>");
+   * @example app.template("home", "<h1>{{title}}</h1>");
    */
   const template = (name, text) => {
     if (typeof name !== "string" || typeof text !== "string")
@@ -541,6 +541,7 @@ const TurboMini = (basePath = "/") => {
       ? (location.hash || "#/").replace(/^#/, "")
       : location.pathname;
     if (!raw.startsWith("/")) raw = "/" + raw;
+    if (raw.length > 1 && raw.endsWith("/")) raw = raw.slice(0, -1);
     if (basePath !== "/" && basePath !== "#" && raw.startsWith(basePath))
       raw = raw.slice(basePath.length) || "/";
     const page = Object.keys(templates).sort((a,b) => a.length > b.length ? -1 : 1).find(key => raw.indexOf(key)===1) || "default";
