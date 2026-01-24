@@ -15,7 +15,7 @@ export function createApp() {
       <h2>Dashboard</h2>
       <p>Status: {{statusText}}</p>
       <nav>
-        <a href="/admin">Admin</a>
+        <a href="admin">Admin</a>
         <a href="/">Home</a>
       </nav>
       <button type="button" data-toggle>Toggle login</button>
