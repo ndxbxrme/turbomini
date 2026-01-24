@@ -28,10 +28,10 @@ for (const entry of entries) {
   await writeFile(exampleMain, exampleNext);
 
   const indexSrc = await readFile(exampleIndex, 'utf8');
-  if (!indexSrc.includes('../src/styles/app.css')) {
+  if (!indexSrc.includes('../../src/styles/app.css')) {
     const indexNext = indexSrc.replace(
       '<link rel="stylesheet" href="../shared/theme/theme.css" />',
-      '<link rel="stylesheet" href="../shared/theme/theme.css" />\n    <link rel="stylesheet" href="../src/styles/app.css" />'
+      '<link rel="stylesheet" href="../shared/theme/theme.css" />\n    <link rel="stylesheet" href="../../src/styles/app.css" />'
     );
     await writeFile(exampleIndex, indexNext);
   }
