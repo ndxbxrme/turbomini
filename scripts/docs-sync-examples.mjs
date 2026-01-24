@@ -14,6 +14,31 @@ await cp(sourceDir, targetDir, {
   },
 });
 
+const docsThemeOverrides = `:root {
+  color-scheme: dark;
+  --tm-color-background: rgba(244, 241, 234, 0.1);
+  --tm-color-surface: rgba(244, 241, 234, 0.08);
+  --tm-color-surface-strong: rgba(244, 241, 234, 0.12);
+  --tm-color-border: rgba(244, 241, 234, 0.2);
+  --tm-color-border-strong: rgba(244, 241, 234, 0.28);
+  --tm-color-text: rgba(244, 241, 234, 0.92);
+  --tm-color-text-muted: rgba(244, 241, 234, 0.7);
+  --tm-color-text-inverse: #0b0c10;
+  --tm-color-brand-soft: rgba(0, 229, 168, 0.12);
+  --tm-color-brand-contrast: #0b0c10;
+  --tm-color-backdrop: rgba(2, 6, 23, 0.65);
+}`;
+
+const docsThemeOverridePath = path.join(
+  targetDir,
+  'shared',
+  'theme'
+);
+await writeFile(
+  path.join(docsThemeOverridePath, 'docs-overrides.css'),
+  docsThemeOverrides
+);
+
 const entries = await readdir(targetDir, { withFileTypes: true });
 for (const entry of entries) {
   if (!entry.isDirectory()) continue;
@@ -31,7 +56,7 @@ for (const entry of entries) {
   if (!indexSrc.includes('../../src/styles/app.css')) {
     const indexNext = indexSrc.replace(
       '<link rel="stylesheet" href="../shared/theme/theme.css" />',
-      '<link rel="stylesheet" href="../shared/theme/theme.css" />\n    <link rel="stylesheet" href="../../src/styles/app.css" />'
+      '<link rel="stylesheet" href="../shared/theme/theme.css" />\n    <link rel="stylesheet" href="../shared/theme/docs-overrides.css" />\n    <link rel="stylesheet" href="../../src/styles/app.css" />'
     );
     await writeFile(exampleIndex, indexNext);
   }

@@ -1,0 +1,14 @@
+:root {
+  color-scheme: dark;
+  --tm-color-background: rgba(244, 241, 234, 0.1);
+  --tm-color-surface: rgba(244, 241, 234, 0.08);
+  --tm-color-surface-strong: rgba(244, 241, 234, 0.12);
+  --tm-color-border: rgba(244, 241, 234, 0.2);
+  --tm-color-border-strong: rgba(244, 241, 234, 0.28);
+  --tm-color-text: rgba(244, 241, 234, 0.92);
+  --tm-color-text-muted: rgba(244, 241, 234, 0.7);
+  --tm-color-text-inverse: #0b0c10;
+  --tm-color-brand-soft: rgba(0, 229, 168, 0.12);
+  --tm-color-brand-contrast: #0b0c10;
+  --tm-color-backdrop: rgba(2, 6, 23, 0.65);
+}
