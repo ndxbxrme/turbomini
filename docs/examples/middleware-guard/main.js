@@ -4,6 +4,7 @@ export function createApp() {
   const app = TurboMini('/turbomini/examples/middleware-guard/');
   const controller = {
     loggedIn: false,
+    statusText: 'Logged out',
   };
   let boundButton = null;
 
@@ -12,7 +13,7 @@ export function createApp() {
     `
     <main class="card">
       <h2>Dashboard</h2>
-      <p>Status: {{loggedIn ? "Logged in" : "Logged out"}}</p>
+      <p>Status: {{statusText}}</p>
       <nav>
         <a href="/admin">Admin</a>
         <a href="/">Home</a>
@@ -37,6 +38,7 @@ export function createApp() {
 
   const handleToggle = () => {
     controller.loggedIn = !controller.loggedIn;
+    controller.statusText = controller.loggedIn ? 'Logged in' : 'Logged out';
     app.refresh();
   };
 

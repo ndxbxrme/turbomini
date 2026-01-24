@@ -72,7 +72,7 @@ for (let i = 0; i < entries.length; i += 1) {
 
   try {
     await waitForServer(server);
-    const page = await browser.newPage({ viewport: { width: 960, height: 720 } });
+    const page = await browser.newPage({ viewport: { width: 960, height: 540 } });
     await page.goto(`http://localhost:${port}/examples/${name}/`, { waitUntil: 'networkidle' });
     await page.addStyleTag({
       content: `
