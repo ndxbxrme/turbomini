@@ -1,0 +1,9 @@
+{
+  "name": "tm-example-golden",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node ../../packages/cli/src/index.js serve",
+    "test": "node --test tests/*.test.mjs"
+  }
+}

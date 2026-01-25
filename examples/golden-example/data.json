@@ -1,0 +1,45 @@
+{
+  "user": {
+    "name": "Ava Patel",
+    "role": "Product Engineer",
+    "team": "Runtime"
+  },
+  "stats": [
+    { "label": "Routes", "value": "4" },
+    { "label": "Templates", "value": "6" },
+    { "label": "Components", "value": "3" },
+    { "label": "Refresh", "value": "<16ms" }
+  ],
+  "activity": [
+    {
+      "title": "Synced themes",
+      "summary": "Applied tokens with light + dark support.",
+      "time": "2m ago"
+    },
+    {
+      "title": "Added web components",
+      "summary": "Wired tm-button and tm-input into templates.",
+      "time": "12m ago"
+    },
+    {
+      "title": "Async controller",
+      "summary": "Fetched dashboard payload before render.",
+      "time": "30m ago"
+    },
+    {
+      "title": "PostLoad wiring",
+      "summary": "Connected tm-input events and dialog actions.",
+      "time": "1h ago"
+    }
+  ],
+  "announcements": [
+    {
+      "title": "Routing is optional",
+      "body": "Use /home, /profile, and /settings to see routes in action."
+    },
+    {
+      "title": "Refresh after state",
+      "body": "TurboMini refresh is debounced and only patches changed DOM."
+    }
+  ]
+}

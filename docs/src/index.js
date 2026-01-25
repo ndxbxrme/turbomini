@@ -14,6 +14,15 @@ const examples = [
     image: `${docsBase}/assets/examples/hello-routing.png`,
   },
   {
+    slug: 'golden-example',
+    title: 'Golden Example',
+    description: 'Routes, async controllers, templates, themes, and components together.',
+    meta: 'AI-friendly full walkthrough',
+    href: `${examplesBase}/golden-example/`,
+    target: '_top',
+    image: `${docsBase}/assets/examples/golden-example.png`,
+  },
+  {
     slug: 'form-validation',
     title: 'Form Validation',
     description: 'Handle form submit + inline validation with postLoad().',
