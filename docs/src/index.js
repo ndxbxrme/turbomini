@@ -119,6 +119,7 @@ app.run(async app => {
     'guides/templating',
     'guides/themes',
     'guides/web-components',
+    'guides/cli-walkthrough',
     'api-reference',
   ], '/turbomini/src/components/');
   console.log('fetched');
@@ -170,6 +171,11 @@ app.run(async app => {
     }
   });
   app.controller('guides/web-components', () => {
+    return {
+      name: 'guides',
+    }
+  });
+  app.controller('guides/cli-walkthrough', () => {
     return {
       name: 'guides',
     }

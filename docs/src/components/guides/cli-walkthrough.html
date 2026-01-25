@@ -1,0 +1,69 @@
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<div class="container">
+  <div class="blur-circle blue"></div>
+  <div class="blur-circle purple"></div>
+
+  {{> header name=name}}
+
+  <section class="doc-page">
+    <header class="doc-hero">
+      <h1>CLI walkthrough</h1>
+      <p>Scaffold a project, enable light/dark themes, and install a web component.</p>
+    </header>
+
+    <section class="doc-card">
+      <h2>1. Initialize a project</h2>
+      <p>Scaffold a new TurboMini app with the built-in runtime.</p>
+      <pre><code class="language-bash">npx turbomini init my-app
+cd my-app
+npm install
+npm run dev</code></pre>
+      <p>Open <code>http://localhost:4173</code> to see the starter page.</p>
+    </section>
+
+    <section class="doc-card">
+      <h2>2. Add light + dark theme tokens</h2>
+      <p>Generate base theme tokens and import them into your stylesheet.</p>
+      <pre><code class="language-bash">npx turbomini theme init</code></pre>
+      <pre><code class="language-css">@import &quot;./styles/turbomini/theme.css&quot;;</code></pre>
+      <p>Then toggle themes by updating <code>document.documentElement.dataset.theme</code>.</p>
+      <pre><code class="language-js">const applyTheme = (theme) =&gt; {
+  document.documentElement.dataset.theme = theme;
+  return theme;
+};</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>3. Add a web component</h2>
+      <p>Install a component in copy mode (local files) and wire it into your app.</p>
+      <pre><code class="language-bash">npx turbomini add tm-button tm-input</code></pre>
+      <p>Import the components and handle events in <code>postLoad()</code>.</p>
+      <pre><code class="language-js">import './components/tm-button.js';
+import './components/tm-input.js';
+
+app.template('default', `
+  &lt;main&gt;
+    &lt;tm-input data-name&gt;
+      &lt;span slot=&quot;label&quot;&gt;Name&lt;/span&gt;
+    &lt;/tm-input&gt;
+    &lt;tm-button data-save&gt;Save&lt;/tm-button&gt;
+  &lt;/main&gt;
+`);
+
+app.controller('default', () =&gt; ({
+  postLoad() {
+    document.querySelector('[data-save]')
+      ?.addEventListener('tm-press', () =&gt; console.log('Saved'));
+  }
+}));</code></pre>
+      <p>Want npm-based web components instead? Use <code>--mode wc</code>.</p>
+      <pre><code class="language-bash">npx turbomini add tm-button --mode wc</code></pre>
+    </section>
+
+    <section class="doc-card">
+      <h2>Next: a complete walkthrough</h2>
+      <p>The Golden Example combines routing, async data, templates, and components.</p>
+      <a class="example-card__link" href="/turbomini/examples/golden-example/" target="_top">Open Golden Example</a>
+    </section>
+  </section>
+</div>
