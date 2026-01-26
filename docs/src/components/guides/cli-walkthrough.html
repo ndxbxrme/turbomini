@@ -25,7 +25,7 @@ npm run dev</code></pre>
       <h2>2. Add light + dark theme tokens</h2>
       <p>Generate base theme tokens and import them into your stylesheet.</p>
       <pre><code class="language-bash">npx turbomini theme init</code></pre>
-      <pre><code class="language-css">@import &quot;./styles/turbomini/theme.css&quot;;</code></pre>
+      <p>The CLI adds <code>@import &quot;./styles/turbomini/theme.css&quot;;</code> to <code>src/app.css</code> by default.</p>
       <p>Then toggle themes by updating <code>document.documentElement.dataset.theme</code>.</p>
       <pre><code class="language-js">const applyTheme = (theme) =&gt; {
   document.documentElement.dataset.theme = theme;

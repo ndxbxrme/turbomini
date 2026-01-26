@@ -3,6 +3,7 @@ import pc from 'picocolors';
 import { parseCommandArgs } from '../utils/args.js';
 
 const DEFAULT_THEME = 'base';
+const THEME_IMPORT = '@import "./styles/turbomini/theme.css";';
 
 function toKebabCase(value) {
   return value
@@ -71,6 +72,26 @@ export async function createThemeAssets(context, options = {}) {
   context.logger.log(pc.green(`Created theme scaffold at ${context.formatPath(themeDir)}`));
 }
 
+async function injectThemeImport(context, projectRoot) {
+  const cssPath = path.join(projectRoot, 'src', 'app.css');
+  const existing = await context.readFile(cssPath);
+
+  if (!existing) {
+    context.logger.log(
+      pc.yellow('No src/app.css found. Add @import "./styles/turbomini/theme.css" manually.')
+    );
+    return;
+  }
+
+  if (existing.includes(THEME_IMPORT) || existing.includes('turbomini/theme.css')) {
+    context.logger.log(pc.dim('Theme import already present in src/app.css.'));
+    return;
+  }
+
+  const next = `${THEME_IMPORT}\n\n${existing.trimStart()}`;
+  await context.writeFile(cssPath, next);
+}
+
 export async function handleThemeCommand(context, args) {
   if (!args.length) {
     throw new Error('Missing theme command. Use `init` or `create`.');
@@ -84,6 +105,8 @@ export async function handleThemeCommand(context, args) {
         theme: { type: 'string' },
         force: { type: 'boolean' },
         dir: { type: 'string' },
+        apply: { type: 'boolean', default: true },
+        'no-apply': { type: 'boolean', default: false },
       });
 
       const projectRoot = path.resolve(context.cwd, positionals[0] ?? values.dir ?? '.');
@@ -92,6 +115,10 @@ export async function handleThemeCommand(context, args) {
         theme: values.theme ?? DEFAULT_THEME,
         skipExisting: !values.force,
       });
+      const shouldApply = values.apply && !values['no-apply'];
+      if (shouldApply) {
+        await injectThemeImport(context, projectRoot);
+      }
       break;
     }
 

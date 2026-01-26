@@ -18,13 +18,13 @@ async function fileExists(filePath) {
   }
 }
 
-async function readFileIfExists(filePath) {
-  try {
-    return await fs.readFile(filePath, 'utf8');
-  } catch {
-    return null;
+  async function readFileIfExists(filePath) {
+    try {
+      return await fs.readFile(filePath, 'utf8');
+    } catch {
+      return null;
+    }
   }
-}
 
 function renderDiff(oldContent, newContent) {
   const diff = diffLines(oldContent, newContent);
@@ -133,6 +133,10 @@ export function createContext(options = {}) {
     return true;
   }
 
+  async function readFile(filePath) {
+    return readFileIfExists(filePath);
+  }
+
   async function copyDir(sourceDir, targetDir, options = {}) {
     const {
       filter,
@@ -212,6 +216,7 @@ export function createContext(options = {}) {
     writeFile,
     copyDir,
     modifyJson,
+    readFile,
     formatPath,
     fileExists,
     renderDiff,

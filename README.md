@@ -57,7 +57,7 @@ Available commands:
 | Command | Description |
 | --- | --- |
 | `turbomini init [dir]` | Scaffold a new project (Vite config, starter app, base theme). |
-| `turbomini theme init [dir]` | Copy base tokens (`tokens.css`, `tokens.dark.css`, `theme.css`) into `src/styles/turbomini`. |
+| `turbomini theme init [dir]` | Copy base tokens (`tokens.css`, `tokens.dark.css`, `theme.css`) into `src/styles/turbomini` and add the import to `src/app.css` when present. |
 | `turbomini theme create <name> [--dir .]` | Generate a new theme override folder with editable JSON + CSS. |
 | `turbomini add <component> [--mode copy|wc]` | Install a component recipe (`copy`, default) or add the web component package (`wc`). |
 | `turbomini update <component>` | Refresh local component recipes from the monorepo (copy mode). |
@@ -113,7 +113,7 @@ The base theme ships design tokens in JSON plus CSS exports:
 - `theme.css` – reset + typography + spacing utilities + grid/stack helpers using container queries.
 - `tokens.json` – machine-readable source of truth for docs and tooling.
 
-`npx turbomini theme init` copies these files into your project at `src/styles/turbomini`. Use `turbomini theme create brand` to scaffold new overrides under `src/styles/themes/<name>` with editable `tokens.json` and `theme.css` shells.
+`npx turbomini theme init` copies these files into your project at `src/styles/turbomini` and adds `@import "./styles/turbomini/theme.css";` to `src/app.css` when that file exists. Use `turbomini theme init --no-apply` to skip the auto-import. Use `turbomini theme create brand` to scaffold new overrides under `src/styles/themes/<name>` with editable `tokens.json` and `theme.css` shells.
 
 ## Web Components
 
