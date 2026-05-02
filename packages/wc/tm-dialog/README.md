@@ -2,9 +2,21 @@
 
 Accessible dialog component with focus management, ESC/overlay dismissal, and configurable modality.
 
-- Emits `tm-open`/`tm-close` when toggled (see the [event guide](../../docs/web-components/events.md)).
+- Emits `tm-open`/`tm-close` when toggled (see the [event guide](https://github.com/ndxbxrme/turbomini/blob/main/docs/web-components/events.md)).
 - Focus trap, scroll locking, and focus restoration built in.
 - Supports programmatic control via `show()`/`close()`.
+
+## Install
+
+```bash
+npm install @turbomini/wc-dialog
+```
+
+Or add it from a TurboMini project:
+
+```bash
+npx turbomini add tm-dialog --mode wc
+```
 
 ## Usage
 

@@ -19,6 +19,12 @@ cd my-app
 npm run dev
 ```
 
+For an existing project, install the runtime package directly:
+
+```bash
+npm install turbomini
+```
+
 ## Packages
 
 | Path | Package | Description |
@@ -43,22 +49,25 @@ npm run dev
 
 ## CLI Quick Start
 
-Install dependencies and scaffold a project with the CLI:
+Scaffold a project with the CLI:
 
 ```bash
 npx turbomini init my-app
 ```
 
+The published `turbomini` package includes the runtime and a `turbomini` binary that delegates to the CLI, so both `npm install turbomini` and `npx turbomini ...` use the same command surface.
+
 Available commands:
 
 | Command | Description |
 | --- | --- |
-| `turbomini init [dir]` | Scaffold a new project (Vite config, starter app, base theme). |
+| `turbomini init [dir]` | Scaffold a new project with a local runtime copy. Use `--managed`, `--cdn`, or `--with-vite` to change that setup. |
 | `turbomini theme init [dir]` | Copy base tokens (`tokens.css`, `tokens.dark.css`, `theme.css`) into `src/styles/turbomini` and add the import to `src/app.css` when present. |
 | `turbomini theme create <name> [--dir .]` | Generate a new theme override folder with editable JSON + CSS. |
 | `turbomini add <component> [--mode copy|wc]` | Install a component recipe (`copy`, default) or add the web component package (`wc`). |
-| `turbomini update <component>` | Refresh local component recipes from the monorepo (copy mode). |
-| `turbomini doctor [dir]` | Check for drift between your tokens/packages and the workspace defaults. |
+| `turbomini update [dir]` | Refresh `src/turbomini.js` with the CLI's bundled runtime. |
+| `turbomini update <component>` | Refresh local component recipes from the bundled recipes (copy mode). |
+| `turbomini doctor [dir]` | Check runtime drift, theme files, and package metadata. |
 | All commands support `--dry-run` | Preview file writes with diffs before mutating disk. |
 
 Example usage:
@@ -67,6 +76,7 @@ Example usage:
 # Scaffold a project and install the base theme
 npx turbomini init awesome-app
 cd awesome-app
+turbomini theme init
 
 # Create a brand override theme
 turbomini theme create brand
@@ -114,7 +124,7 @@ The base theme ships design tokens in JSON plus CSS exports:
 
 ## Web Components
 
-The first component, `<tm-button>`, demonstrates the TurboMini web component pattern:
+TurboMini web components are standards-based custom elements built on the shared `TurboMiniElement` base. The `<tm-button>` package demonstrates the pattern:
 
 - Extends the shared `TurboMiniElement` base (props ↔ attributes, events, adopted stylesheets).
 - Variants: `solid` (default), `soft`, `outline`, `ghost`.
@@ -125,16 +135,15 @@ The first component, `<tm-button>`, demonstrates the TurboMini web component pat
 - Token + parts reference: see [`packages/wc/tm-button/README.md`](packages/wc/tm-button/README.md).
 - Event naming follows the [`tm-*` convention](docs/web-components/events.md).
 
-Install via the CLI:
+Install via the CLI. Copy mode writes source files into your app; web component mode adds the published `@turbomini/wc-*` package to `package.json`.
 
 ```bash
 # Copy recipe into src/components
 turbomini add tm-button --mode copy
 
-# The CLI defaults to copy mode and will remind you how to switch to --mode wc.
-
-# or consume the published web component package
+# Consume the published web component package
 turbomini add tm-button --mode wc
+npm install
 ```
 
 Importing the web component registers it automatically:
@@ -151,9 +160,9 @@ Then use it in templates or markup:
 
 ## Templates
 
-Starter projects and the previous examples now live under `templates/`:
+Starter references and historical examples live under `templates/`:
 
-- `templates/starter/spa` – Vite starter used by the CLI `init` command.
+- `templates/starter/spa` – Opinionated Vite starter kept as a reference template.
 - `templates/examples/*` – historical examples preserved for reference.
 
 The starter includes a responsive feature grid that demonstrates container queries (`src/styles/app.css`).
@@ -187,7 +196,8 @@ To work on the CLI or components, run `npm install` once at the workspace root. 
 
 ## Maintainer docs
 - [PR Checklist](./docs/maintainers/pr-checklist.md)
+- [Release Checklist](./docs/maintainers/release.md)
 
 ---
 
-Happy shipping! ✨
+Happy shipping.

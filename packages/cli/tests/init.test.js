@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { cp, mkdtemp, mkdir, readFile, rm } from 'node:fs/promises';
 import path from 'node:path';
 import { tmpdir } from 'node:os';
@@ -32,6 +33,7 @@ async function setupInstalledCli() {
   await mkdir(path.join(cliInstallDir, 'bin'), { recursive: true });
   await cp(path.join(cliSourceRoot, 'src'), path.join(cliInstallDir, 'src'), { recursive: true });
   await cp(path.join(cliSourceRoot, 'bin'), path.join(cliInstallDir, 'bin'), { recursive: true });
+  await cp(path.join(cliSourceRoot, 'package.json'), path.join(cliInstallDir, 'package.json'));
   await mkdir(path.join(cliInstallDir, 'node_modules'), { recursive: true });
   await cp(path.join(workspaceRoot, 'node_modules', 'diff'), path.join(cliInstallDir, 'node_modules', 'diff'), {
     recursive: true,
@@ -107,4 +109,20 @@ test('component metadata is available after packaging', async (t) => {
   const context = contextModule.createContext({ cwd: installRoot, logger: noopLogger() });
   const component = await componentsModule.loadComponent(context, 'tm-button');
   assert.equal(component.manifest.tag, 'tm-button');
+});
+
+test('root turbomini bin delegates to the installed CLI package', async (t) => {
+  const { installRoot } = await setupInstalledCli();
+  t.after(() => rm(installRoot, { recursive: true, force: true }));
+
+  const coreBinDir = path.join(installRoot, 'node_modules', 'turbomini', 'bin');
+  await mkdir(coreBinDir, { recursive: true });
+  await cp(path.join(workspaceRoot, 'packages', 'core', 'bin', 'turbomini.js'), path.join(coreBinDir, 'turbomini.js'));
+
+  const output = execFileSync(process.execPath, [path.join(coreBinDir, 'turbomini.js'), '--help'], {
+    cwd: installRoot,
+    encoding: 'utf8',
+  });
+
+  assert.match(output, /TurboMini CLI/);
 });

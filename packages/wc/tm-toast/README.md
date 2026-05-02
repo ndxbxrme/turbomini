@@ -2,9 +2,21 @@
 
 Toast manager that queues notifications, auto-dismisses after a configurable duration, and exposes an imperative `show()` API.
 
-- Emits `tm-close` with the toast id and reason (see the [event guide](../../docs/web-components/events.md)).
+- Emits `tm-close` with the toast id and reason (see the [event guide](https://github.com/ndxbxrme/turbomini/blob/main/docs/web-components/events.md)).
 - Supports action buttons, close buttons, and Escape dismissal.
 - Positioned bottom-right by default; override via CSS if needed.
+
+## Install
+
+```bash
+npm install @turbomini/wc-toast
+```
+
+Or add it from a TurboMini project:
+
+```bash
+npx turbomini add tm-toast --mode wc
+```
 
 ## Usage
 

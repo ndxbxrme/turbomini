@@ -6,6 +6,18 @@ Layout surface with header/media/body/footer slots, responsive padding, and opti
 - Provides CSS tokens for background, borders, shadows, and radius.
 - Acts like a block-level container—place any markup in the default slot.
 
+## Install
+
+```bash
+npm install @turbomini/wc-card
+```
+
+Or add it from a TurboMini project:
+
+```bash
+npx turbomini add tm-card --mode wc
+```
+
 ## Usage
 
 ```html

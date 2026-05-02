@@ -13,13 +13,13 @@
 
     <section class="doc-card">
       <h2>1. Initialize a project</h2>
-      <p>Scaffold a new TurboMini app with the built-in runtime.</p>
+      <p>Scaffold a new TurboMini app with a local runtime copy. Use <code>--managed</code> when you want the app to import from the installed <code>turbomini</code> package instead.</p>
       <pre><code class="language-bash">npx turbomini init my-app
 cd my-app
 npm run dev</code></pre>
       <p>Open <code>http://localhost:4173</code> to see the starter page.</p>
-      <p>If you prefer not to rely on <code>npx</code>, install the CLI locally and switch scripts to <code>turbomini serve</code>:</p>
-      <pre><code class="language-bash">npm install --save-dev @turbomini/cli</code></pre>
+      <p>For existing projects, install <code>turbomini</code>. It includes the runtime and the <code>turbomini</code> binary.</p>
+      <pre><code class="language-bash">npm install turbomini</code></pre>
     </section>
 
     <section class="doc-card">
@@ -58,7 +58,8 @@ app.controller('default', () =&gt; ({
   }
 }));</code></pre>
       <p>Want npm-based web components instead? Use <code>--mode wc</code>.</p>
-      <pre><code class="language-bash">npx turbomini add tm-button --mode wc</code></pre>
+      <pre><code class="language-bash">npx turbomini add tm-button --mode wc
+npm install</code></pre>
     </section>
 
     <section class="doc-card">

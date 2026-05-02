@@ -1,23 +1,31 @@
 {
   "name": "turbomini",
   "version": "1.1.0",
-  "description": "Tiny dependency-free SPA micro-framework.",
+  "description": "Tiny dependency-free SPA micro-framework with CLI tooling.",
   "type": "module",
   "main": "./src/turbomini.js",
   "module": "./src/turbomini.js",
   "exports": {
     ".": {
       "import": "./src/turbomini.js",
+      "default": "./src/turbomini.js",
       "types": "./types/turbomini.d.ts"
     }
   },
   "types": "./types/turbomini.d.ts",
+  "bin": {
+    "turbomini": "bin/turbomini.js"
+  },
   "files": [
     "src",
-    "types"
+    "types",
+    "bin"
   ],
+  "dependencies": {
+    "@turbomini/cli": "1.1.0"
+  },
   "sideEffects": false,
-  "license": "MIT",
+  "license": "ISC",
   "engines": {
     "node": ">=18"
   },

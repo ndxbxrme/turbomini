@@ -13,12 +13,12 @@
 
     <section class="doc-card">
       <h2>1. Install + scaffold</h2>
-      <p>Use the CLI to scaffold a project with the runtime and starter files.</p>
-      <pre><code class="language-bash">npm install
-npx turbomini init my-app
+      <p>Use the published CLI to scaffold a project with the runtime and starter files.</p>
+      <pre><code class="language-bash">npx turbomini init my-app
 cd my-app
-npm install
 npm run dev</code></pre>
+      <p>For an existing app, install <code>turbomini</code> and import the runtime from the package.</p>
+      <pre><code class="language-bash">npm install turbomini</code></pre>
     </section>
 
     <section class="doc-card">
@@ -41,7 +41,7 @@ npm run dev</code></pre>
 
     <section class="doc-card">
       <h2>3. Add theme tokens</h2>
-      <p>Pull in the base theme tokens and utilities, then switch themes later.</p>
+      <p>Pull in the base theme tokens and utilities, then switch themes later. The same files ship in <code>@turbomini/theme-base</code> for package-based use.</p>
       <pre><code class="language-bash">npx turbomini theme init</code></pre>
       <p>The CLI will add <code>@import &quot;./styles/turbomini/theme.css&quot;;</code> to <code>src/app.css</code> when it finds that file. Use <code>--no-apply</code> to skip.</p>
     </section>

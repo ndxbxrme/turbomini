@@ -27,6 +27,6 @@
   "parts": ["base", "control", "label", "indicator"],
   "docs": {
     "readme": "./README.md",
-    "events": "../../../docs/web-components/events.md"
+    "events": "https://github.com/ndxbxrme/turbomini/blob/main/docs/web-components/events.md"
   }
 }

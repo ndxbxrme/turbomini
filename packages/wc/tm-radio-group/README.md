@@ -2,9 +2,21 @@
 
 Coordinated set of `<tm-radio>` controls with roving tabindex, arrow-key navigation, and form integration.
 
-- Emits `tm-change` when selection changes (see the [event guide](../../docs/web-components/events.md)).
+- Emits `tm-change` when selection changes (see the [event guide](https://github.com/ndxbxrme/turbomini/blob/main/docs/web-components/events.md)).
 - Applies roving tabindex and `aria-orientation` based on usage.
 - Form-associated: the group's `value` is submitted under its `name` attribute.
+
+## Install
+
+```bash
+npm install @turbomini/wc-radio-group
+```
+
+Or add it from a TurboMini project:
+
+```bash
+npx turbomini add tm-radio-group --mode wc
+```
 
 ## Usage
 

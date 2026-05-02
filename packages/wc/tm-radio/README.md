@@ -2,8 +2,20 @@
 
 Single radio control used inside and outside `<tm-radio-group>`. Mirrors native radio behavior while exposing styling hooks.
 
-- Emits `tm-change` when selected (see the [event guide](../../docs/web-components/events.md)).
+- Emits `tm-change` when selected (see the [event guide](https://github.com/ndxbxrme/turbomini/blob/main/docs/web-components/events.md)).
 - Works standalone or in tandem with `<tm-radio-group>` for managed selection.
+
+## Install
+
+```bash
+npm install @turbomini/wc-radio
+```
+
+Or add it from a TurboMini project:
+
+```bash
+npx turbomini add tm-radio --mode wc
+```
 
 ## Usage
 

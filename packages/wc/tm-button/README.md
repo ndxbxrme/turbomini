@@ -4,7 +4,19 @@ Accessible button web component that consumes TurboMini design tokens and expose
 
 - Variants: `solid` (default), `soft`, `outline`, `ghost`
 - Sizes: `sm`, `md`, `lg`
-- Events: emits [`tm-press`](../../docs/web-components/events.md#standard-events) when activated
+- Events: emits [`tm-press`](https://github.com/ndxbxrme/turbomini/blob/main/docs/web-components/events.md#standard-events) when activated
+
+## Install
+
+```bash
+npm install @turbomini/wc-button
+```
+
+Or add it from a TurboMini project:
+
+```bash
+npx turbomini add tm-button --mode wc
+```
 
 ## Token contract
 

@@ -3,8 +3,20 @@
 Accessible text input with label, hint, and error slots. The control uses native `<input>` semantics and exposes styling hooks via CSS variables and shadow parts.
 
 - Sizes: `sm`, `md` (default), `lg`
-- Emits standard `tm-input`, `tm-change`, `tm-focus`, and `tm-blur` events (see the [event guide](../../docs/web-components/events.md)).
+- Emits standard `tm-input`, `tm-change`, `tm-focus`, and `tm-blur` events (see the [event guide](https://github.com/ndxbxrme/turbomini/blob/main/docs/web-components/events.md)).
 - Slots for start/end icons, descriptive text, and labels.
+
+## Install
+
+```bash
+npm install @turbomini/wc-input
+```
+
+Or add it from a TurboMini project:
+
+```bash
+npx turbomini add tm-input --mode wc
+```
 
 ## Usage
 

@@ -12,6 +12,15 @@
     </header>
 
     <section class="doc-card">
+      <h2>Install</h2>
+      <p>Copy mode keeps component source in your app.</p>
+      <pre><code class="language-bash">npx turbomini add tm-button</code></pre>
+      <p>Web component mode adds the published package to <code>package.json</code>.</p>
+      <pre><code class="language-bash">npx turbomini add tm-button --mode wc
+npm install</code></pre>
+    </section>
+
+    <section class="doc-card">
       <h2>Props and attributes</h2>
       <p>Set props for state and attributes for defaults or SSR-friendly markup.</p>
       <pre><code class="language-html">&lt;tm-button variant="ghost" size="lg"&gt;Save&lt;/tm-button&gt;</code></pre>

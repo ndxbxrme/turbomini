@@ -83,7 +83,7 @@
   &lt;body&gt;
     &lt;page&gt;&lt;/page&gt;
     &lt;script type="module"&gt;
-      import { TurboMini } from './turbomini';
+      import { TurboMini } from './turbomini.js';
       const app = TurboMini('/');
       app.template('home', '&lt;h1&gt;Hello {{name}}&lt;/h1&gt;');
       app.controller('home', () =&gt; ({ name: 'TurboMini' }));

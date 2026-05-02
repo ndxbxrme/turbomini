@@ -2,9 +2,21 @@
 
 Custom select/menu component with keyboard navigation, large dataset support, and themable surfaces.
 
-- Emits `tm-open`, `tm-close`, `tm-change`, and `tm-highlight` (see the [event guide](../../docs/web-components/events.md)).
+- Emits `tm-open`, `tm-close`, `tm-change`, and `tm-highlight` (see the [event guide](https://github.com/ndxbxrme/turbomini/blob/main/docs/web-components/events.md)).
 - Works with native `<option>` elements or `<tm-select-option>` helpers.
 - Form-associated: submits the current `value` when used in a form.
+
+## Install
+
+```bash
+npm install @turbomini/wc-select
+```
+
+Or add it from a TurboMini project:
+
+```bash
+npx turbomini add tm-select --mode wc
+```
 
 ## Usage
 

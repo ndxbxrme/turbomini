@@ -1,6 +1,6 @@
 {
   "name": "@turbomini/theme-base",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "description": "Base design tokens and CSS for TurboMini projects.",
   "type": "module",
   "files": [

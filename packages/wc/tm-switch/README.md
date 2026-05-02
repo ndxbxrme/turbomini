@@ -3,8 +3,20 @@
 Accessible toggle switch backed by a native checkbox. Supports keyboard activation, form submission, and theming via CSS variables.
 
 - Sizes: `sm`, `md`, `lg`
-- Emits the standard `tm-change` event (see the [event guide](../../docs/web-components/events.md)).
+- Emits the standard `tm-change` event (see the [event guide](https://github.com/ndxbxrme/turbomini/blob/main/docs/web-components/events.md)).
 - Slots: default slot renders a label adjacent to the control.
+
+## Install
+
+```bash
+npm install @turbomini/wc-switch
+```
+
+Or add it from a TurboMini project:
+
+```bash
+npx turbomini add tm-switch --mode wc
+```
 
 ## Usage
 

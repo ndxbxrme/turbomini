@@ -12,8 +12,11 @@ This guide tells an AI coding agent how to build TurboMini apps in this repo.
 ## Scaffolding
 - CLI quick start:
   - `npx turbomini init my-app`
-  - `cd my-app && npm install`
-  - `npm run dev` (or `turbomini serve` for no-build setups)
+  - `cd my-app`
+  - `npm run dev` (or `turbomini serve` when the CLI is installed locally)
+- Existing app:
+  - `npm install turbomini`
+  - `import { TurboMini } from 'turbomini'`
 - Theme tokens:
   - `npx turbomini theme init`
   - `npx turbomini theme create brand`
@@ -49,7 +52,8 @@ This guide tells an AI coding agent how to build TurboMini apps in this repo.
 - Prefer toggling `document.documentElement.dataset.theme` and persisting to `localStorage`.
 
 ## Web components
-- Use `@turbomini/wc-*` packages or copy-mode components.
+- Prefer copy mode for starter apps: `npx turbomini add tm-button`.
+- Use package mode when you want npm-managed web components: `npx turbomini add tm-button --mode wc`, then run `npm install`.
 - Components emit `tm-*` events (e.g. `tm-press`, `tm-change`).
 - Props reflect to attributes via `TurboMiniElement`; prefer passing data via `value`.
 - Wire component events in `postLoad()` and call `app.invalidate()` on state change.

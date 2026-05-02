@@ -2,9 +2,21 @@
 
 Lightweight tooltip that opens on hover/focus and clamps to the viewport.
 
-- Emits optional `tm-open`/`tm-close` events (see the [event guide](../../docs/web-components/events.md)).
+- Emits optional `tm-open`/`tm-close` events (see the [event guide](https://github.com/ndxbxrme/turbomini/blob/main/docs/web-components/events.md)).
 - `text` property for simple labels or use the `content` slot for rich markup.
 - Supports `top`, `bottom`, `left`, `right` placements with viewport clamping.
+
+## Install
+
+```bash
+npm install @turbomini/wc-tooltip
+```
+
+Or add it from a TurboMini project:
+
+```bash
+npx turbomini add tm-tooltip --mode wc
+```
 
 ## Usage
 

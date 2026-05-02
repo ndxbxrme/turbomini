@@ -1,10 +1,10 @@
 {
   "name": "@turbomini/cli",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "description": "Command line interface for TurboMini projects.",
   "type": "module",
   "bin": {
-    "turbomini": "./bin/turbomini.js"
+    "turbomini": "bin/turbomini.js"
   },
   "scripts": {
     "prepack": "node ./scripts/prepack.js",

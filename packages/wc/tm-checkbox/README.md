@@ -2,9 +2,21 @@
 
 Custom checkbox that mirrors native behavior while exposing TurboMini theming hooks.
 
-- Emits `tm-change` when toggled (see the [event guide](../../docs/web-components/events.md)).
+- Emits `tm-change` when toggled (see the [event guide](https://github.com/ndxbxrme/turbomini/blob/main/docs/web-components/events.md)).
 - Form-associated: participates in submission and constraint validation.
 - Supports the indeterminate visual state.
+
+## Install
+
+```bash
+npm install @turbomini/wc-checkbox
+```
+
+Or add it from a TurboMini project:
+
+```bash
+npx turbomini add tm-checkbox --mode wc
+```
 
 ## Usage
 

@@ -2,9 +2,21 @@
 
 Accessible tab system with keyboard navigation, indicator animation, and support for vertical layouts.
 
-- Emits `tm-change` when a new tab is activated (see the [event guide](../../docs/web-components/events.md)).
+- Emits `tm-change` when a new tab is activated (see the [event guide](https://github.com/ndxbxrme/turbomini/blob/main/docs/web-components/events.md)).
 - Roving tabindex with arrow-key, Home/End navigation.
 - Works with slotted tab/panel markup: assign `slot="tab"` and `slot="panel"` with matching `value` attributes.
+
+## Install
+
+```bash
+npm install @turbomini/wc-tabs
+```
+
+Or add it from a TurboMini project:
+
+```bash
+npx turbomini add tm-tabs --mode wc
+```
 
 ## Usage
 

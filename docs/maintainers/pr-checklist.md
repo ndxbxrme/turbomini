@@ -1,6 +1,6 @@
 # TurboMini PR Checklist
 
-A concise, actionable list the agent can use to polish the repo before the next release. Check items off and commit the file with your PR.
+A concise, actionable list to use before a release PR. This file is part of the public docs tree, so keep it current and polished.
 
 ---
 
@@ -20,8 +20,8 @@ A concise, actionable list the agent can use to polish the repo before the next 
 
 **Acceptance hints**
 ```bash
-npx turbomini add button         # copies source by default
-npx turbomini add button --mode wc  # installs @turbomini/wc-button
+npx turbomini add tm-button            # copies source by default
+npx turbomini add tm-button --mode wc  # installs @turbomini/wc-button
 ```
 
 ---
@@ -35,7 +35,7 @@ npx turbomini add button --mode wc  # installs @turbomini/wc-button
 
 ## 3) Web Components Base & Conventions
 - [ ] Base element provides **adoptedStyleSheets** with a `<style>` fallback for older Safari/iframes.
-- [ ] Event conventions centralized: document `tm-press`, `tm-change`, `tm-select`, `tm-open`, `tm-close` in `/docs/conventions/events.md`.
+- [ ] Event conventions centralized: document `tm-press`, `tm-change`, `tm-select`, `tm-open`, `tm-close` in `/docs/web-components/events.md`.
 - [ ] Each component README links to the conventions doc.
 - [ ] Each component README includes a table of:
   - Consumed CSS vars (e.g., `--tm-button-bg`, `--tm-button-fg`, padding/radius vars)
@@ -68,7 +68,7 @@ if (this.shadowRoot && 'adoptedStyleSheets' in this.shadowRoot) {
 ## 5) Starter & Demos
 - [ ] Starter shows **container queries** with a responsive card or grid (resize a parent to see behavior).
 - [ ] Starter includes a **theme switcher** (light/dark toggler using `[data-theme]`). 
-- [ ] `turbomini add button` injects a demo page/section showcasing variants/sizes and listening to `tm-press`.
+- [ ] `turbomini add tm-button` injects a demo page/section showcasing variants/sizes and listening to `tm-press`.
 - [ ] README includes copy/paste snippets for quick usage.
 
 ---
@@ -85,16 +85,18 @@ if (this.shadowRoot && 'adoptedStyleSheets' in this.shadowRoot) {
 - [ ] Add **Changesets** for independent versioning of `@turbomini/cli` and `@turbomini/wc-*`.
 - [ ] CI workflow includes: install → build → lint → test (unit + basic e2e) → changeset version/publish (on main).
 - [ ] Protect `main` with required checks; publish happens from tags created by Changesets.
-- [ ] Document release steps in `/docs/maintainers/release.md`.
+- [ ] Release steps in `/docs/maintainers/release.md` match the current package graph.
 
 **Changesets quickstart**
 ```bash
-pnpm add -D @changesets/cli
-pnpm changeset init
+npm install -D @changesets/cli
+npx changeset init
 # after changes:
-pnpm changeset           # add a changeset
-pnpm changeset version   # bump versions locally
-pnpm -r publish --access public
+npx changeset           # add a changeset
+npx changeset version   # bump versions locally
+npm run build
+npm test
+npm run release
 ```
 
 ---
@@ -118,13 +120,13 @@ pnpm -r publish --access public
 
 ## 10) Sanity Commands (should all succeed)
 ```bash
-pnpm -w build
-pnpm -w test
+npm run build
+npm test
 npx turbomini init demo-app --dry-run
 npx turbomini theme init --dry-run
-npx turbomini add button --dry-run
+npx turbomini add tm-button --dry-run
 ```
 
 ---
 
-**When this checklist is all green, ship it 🚀**
+**When this checklist is all green, ship it.**
