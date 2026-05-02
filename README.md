@@ -14,10 +14,8 @@ Prefer the docs? Start here: https://ndxbxrme.github.io/turbomini/
 Fast local start:
 
 ```bash
-npm install
 npx turbomini init my-app
 cd my-app
-npm install
 npm run dev
 ```
 
@@ -48,7 +46,6 @@ npm run dev
 Install dependencies and scaffold a project with the CLI:
 
 ```bash
-npm install
 npx turbomini init my-app
 ```
 

@@ -170,8 +170,8 @@ function createPackageJson({ projectName, runtimeMode, runtimeVersion, withVite 
           serve: 'turbomini serve',
         }
       : {
-          dev: 'turbomini serve',
-          build: 'turbomini build',
+          dev: 'npx turbomini serve',
+          build: 'npx turbomini build',
         },
   };
 

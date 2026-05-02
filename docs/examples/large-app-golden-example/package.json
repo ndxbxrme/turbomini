@@ -1,0 +1,9 @@
+{
+  "name": "golden-example",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "turbomini serve",
+    "build": "turbomini build"
+  }
+}

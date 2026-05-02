@@ -47,7 +47,7 @@ test('serveCommand hosts static files with SPA fallback', async (t) => {
   );
 
   const context = createContext({ cwd: tempDir, logger: noopLogger() });
-  server = await serveCommand(context, ['--port', '0']);
+  server = await serveCommand(context, ['--port', '0', '--no-reload']);
 
   const address = server.address();
   assert.ok(address && typeof address === 'object' && 'port' in address);

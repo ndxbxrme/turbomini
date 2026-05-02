@@ -58,8 +58,8 @@ test('init scaffolds a project with embedded runtime', async (t) => {
   const projectRoot = path.join(tempDir, 'demo-app');
   const packageJson = JSON.parse(await readFile(path.join(projectRoot, 'package.json'), 'utf8'));
   assert.equal(packageJson.name, 'demo-app');
-  assert.equal(packageJson.scripts.dev, 'turbomini serve');
-  assert.equal(packageJson.scripts.build, 'turbomini build');
+  assert.equal(packageJson.scripts.dev, 'npx turbomini serve');
+  assert.equal(packageJson.scripts.build, 'npx turbomini build');
 
   const mainJs = await readFile(path.join(projectRoot, 'src', 'main.js'), 'utf8');
   assert.match(mainJs, /import \{ TurboMini \} from '\.\/turbomini\.js'/);
