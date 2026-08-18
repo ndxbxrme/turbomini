@@ -1,7 +1,14 @@
 export default TurboMini;
 export type RenderMode = "microtask" | "raf" | "throttle" | "debounce" | "idle";
 export type RenderStrategyOptions = any;
-export type Controller = (params?: string[]) => (Promise<any> | any);
+export type ControllerBinder = (target: EventTarget | null | undefined, type: string, handler: EventListener, opts?: AddEventListenerOptions | boolean) => (() => void);
+export type ControllerState = {
+    bind?: ControllerBinder;
+    postLoad?: () => (void | Promise<void>);
+    unload?: () => (void | Promise<void>);
+    [key: string]: any;
+};
+export type Controller = (params?: string[]) => (Promise<ControllerState | null | undefined> | ControllerState | null | undefined);
 export type Middleware = (ctx: Context) => (boolean | void | Promise<boolean | void>);
 export type TemplateRegistrar = (name: string, text: string) => TurboMiniApp;
 export type TemplateRenderer = (name: string, data?: any, opts?: {
@@ -17,7 +24,7 @@ export type TemplateFetcher = (names: string[], path?: string) => Promise<void[]
 export type Context = {
     page: string;
     params: string[];
-    data: any;
+    data: ControllerState | null | undefined;
 };
 export type HelperFn = (value: any, meta: {
     data?: any;
@@ -36,7 +43,11 @@ export type TurboMiniApp = any;
 /** @property {number} [interval=16] Interval in ms for throttle/debounce/idle. */
 /** @property {boolean} [leading=false] Throttle leading-edge behavior. */
 /** A route controller. Returns data sync or async. */
-/** @typedef {(params?: string[]) => (Promise<any> | any)} Controller */
+/** @typedef {(target: EventTarget | null | undefined, type: string, handler: EventListener, opts?: AddEventListenerOptions | boolean) => (() => void)} ControllerBinder */
+/** Controller lifecycle hooks and helper methods. */
+/** @typedef {{ bind?: ControllerBinder, postLoad?: () => (void|Promise<void>), unload?: () => (void|Promise<void>), [key: string]: any }} ControllerState */
+/** A route controller. Returns data sync or async. */
+/** @typedef {(params?: string[]) => (Promise<ControllerState | null | undefined> | ControllerState | null | undefined)} Controller */
 /** Middleware run before navigation; return false to cancel. */
 /** @typedef {(ctx: Context) => (boolean|void|Promise<boolean|void>)} Middleware */
 /** Register/compile a template. */
@@ -52,7 +63,7 @@ export type TurboMiniApp = any;
 /** Fetch templates from the network and register them. */
 /** @typedef {(names: string[], path?: string) => Promise<void[]>} TemplateFetcher */
 /** Routing context. */
-/** @typedef {{page: string, params: string[], data: any}} Context */
+/** @typedef {{page: string, params: string[], data: ControllerState | null | undefined}} Context */
 /** Template helper signature. */
 /** @typedef {(value: any, meta: {data?: any, stack?: any[]}) => any} HelperFn */
 /** The TurboMini application API. */

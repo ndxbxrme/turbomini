@@ -11,7 +11,7 @@ async function collectFiles(rootDir) {
 
   while (queue.length > 0) {
     const current = queue.pop();
-    // eslint-disable-next-line no-await-in-loop
+     
     const entries = await fs.readdir(current, { withFileTypes: true });
     for (const entry of entries) {
       const entryPath = path.join(current, entry.name);
@@ -33,16 +33,16 @@ async function maybeMinifyHtml(distDir, logger) {
     const htmlFiles = files.filter((file) => file.endsWith('.html'));
 
     for (const file of htmlFiles) {
-      // eslint-disable-next-line no-await-in-loop
+       
       const content = await fs.readFile(file, 'utf8');
-      // eslint-disable-next-line no-await-in-loop
+       
       const minified = await minify(content, {
         collapseWhitespace: true,
         removeComments: true,
         minifyCSS: true,
         minifyJS: true,
       });
-      // eslint-disable-next-line no-await-in-loop
+       
       await fs.writeFile(file, minified, 'utf8');
     }
 
@@ -65,14 +65,14 @@ async function maybeMinifyCss(distDir, logger) {
     const cssFiles = files.filter((file) => file.endsWith('.css'));
 
     for (const file of cssFiles) {
-      // eslint-disable-next-line no-await-in-loop
+       
       const content = await fs.readFile(file, 'utf8');
       const result = transform({
         filename: file,
         code: Buffer.from(content),
         minify: true,
       });
-      // eslint-disable-next-line no-await-in-loop
+       
       await fs.writeFile(file, result.code, 'utf8');
     }
 
@@ -132,7 +132,7 @@ export async function buildCommand(context, args) {
 
     const source = path.join(projectRoot, entry.name);
     const target = path.join(outDir, entry.name);
-    // eslint-disable-next-line no-await-in-loop
+     
     await fs.cp(source, target, {
       recursive: true,
       force: true,

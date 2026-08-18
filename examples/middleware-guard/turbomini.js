@@ -15,7 +15,13 @@
 /** @property {boolean} [leading=false] Throttle leading-edge behavior. */
 
 /** A route controller. Returns data sync or async. */
-/** @typedef {(params?: string[]) => (Promise<any> | any)} Controller */
+/** @typedef {(target: EventTarget | null | undefined, type: string, handler: EventListener, opts?: AddEventListenerOptions | boolean) => (() => void)} ControllerBinder */
+
+/** Controller lifecycle hooks and helper methods. */
+/** @typedef {{ bind?: ControllerBinder, postLoad?: () => (void|Promise<void>), unload?: () => (void|Promise<void>), [key: string]: any }} ControllerState */
+
+/** A route controller. Returns data sync or async. */
+/** @typedef {(params?: string[]) => (Promise<ControllerState | null | undefined> | ControllerState | null | undefined)} Controller */
 
 /** Middleware run before navigation; return false to cancel. */
 /** @typedef {(ctx: Context) => (boolean|void|Promise<boolean|void>)} Middleware */
@@ -39,7 +45,7 @@
 /** @typedef {(names: string[], path?: string) => Promise<void[]>} TemplateFetcher */
 
 /** Routing context. */
-/** @typedef {{page: string, params: string[], data: any}} Context */
+/** @typedef {{page: string, params: string[], data: ControllerState | null | undefined}} Context */
 
 /** Template helper signature. */
 /** @typedef {(value: any, meta: {data?: any, stack?: any[]}) => any} HelperFn */
@@ -84,6 +90,7 @@ const TurboMini = (basePath = "/") => {
   const controllers = Object.create(null);
   const templates = Object.create(null);
   const helpers = Object.create(null);
+  const unloadHandlers = [];
   const middleware = [];
 
   // ---- Context --------------------------------------------------------------
@@ -562,6 +569,8 @@ const TurboMini = (basePath = "/") => {
    */
   const start = async () => {
     try {
+      unloadHandlers.forEach((unload) => unload());
+      unloadHandlers.length = 0;
       await ctx.data?.unload?.();
 
       const { page, params } = normalizeRoute();
@@ -573,6 +582,21 @@ const TurboMini = (basePath = "/") => {
       ctx.data = controllers[ctx.page]
         ? await controllers[ctx.page](ctx.params)
         : null;
+      if (ctx.data && (typeof ctx.data === "object" || typeof ctx.data === "function")) {
+        Object.defineProperty(ctx.data, "bind", {
+          configurable: true,
+          enumerable: false,
+          writable: true,
+          value: (target, type, handler, opts) => {
+            if (!target?.addEventListener || !target?.removeEventListener)
+              return () => {};
+            target.addEventListener(type, handler, opts);
+            const dispose = () => target.removeEventListener(type, handler, opts);
+            unloadHandlers.push(dispose);
+            return dispose;
+          },
+        });
+      }
 
       refreshNow(); // render immediately after navigation
 

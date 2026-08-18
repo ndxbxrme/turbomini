@@ -50,7 +50,7 @@ async function backupRuntime(runtimePath) {
   while (true) {
     const suffix = counter === 0 ? '' : `.${counter}`;
     const candidate = path.join(dir, `${baseName}${suffix}.js`);
-    // eslint-disable-next-line no-await-in-loop
+     
     if (!(await fs.stat(candidate).catch(() => false))) {
       return candidate;
     }

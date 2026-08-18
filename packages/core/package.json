@@ -1,6 +1,6 @@
 {
   "name": "turbomini",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Tiny dependency-free SPA micro-framework with CLI tooling.",
   "type": "module",
   "main": "./src/turbomini.js",
