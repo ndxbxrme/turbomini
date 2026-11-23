@@ -126,11 +126,6 @@ const TurboMini = (basePath = "/") => {
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#39;");
 
-  const get = (obj, path) =>
-    path === "." || path === "this"
-      ? obj
-      : path.split(".").reduce((o, k) => (o == null ? undefined : o[k]), obj);
-
   // ---- Helpers (internal registration during boot) --------------------------
   /** @internal */
   const _registerHelper = (name, fn) => {
@@ -172,11 +167,84 @@ const TurboMini = (basePath = "/") => {
   );
 
   // ---- Templating compiler --------------------------------------------------
+  // Split only at the outer level so bracket keys can contain dots, spaces,
+  // quoted strings, and further bracket lookups.
+  const splitExpr = (src, path = false) => {
+    const parts = [];
+    let start = 0;
+    let depth = 0;
+    const push = (end) => {
+      const part = src.slice(start, end).trim();
+      if (part) parts.push(part);
+    };
+
+    for (const { 0: token, index } of src.matchAll(
+      /"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\[|\]|\.|\s+/g,
+    )) {
+      if (token === "[") {
+        if (path && depth === 0) {
+          push(index);
+          start = index;
+        }
+        depth++;
+      } else if (token === "]") {
+        depth--;
+        if (path && depth === 0) {
+          push(index + 1);
+          start = index + 1;
+        }
+      } else if (depth === 0 && (path ? token === "." : /^\s/.test(token))) {
+        push(index);
+        start = index + token.length;
+      }
+    }
+    push(src.length);
+    return parts;
+  };
+
+  const get = (path, scope) => {
+    const data = scope[0];
+    if (path === "." || path === "this") return data;
+    const [root, ...segments] = path.includes("[")
+      ? splitExpr(path, true)
+      : path.split(".");
+    if (root === undefined) return undefined;
+    const computedRoot = root.startsWith("[");
+    let value = data;
+    if (computedRoot) segments.unshift(root);
+    else {
+      const owner = scope.find((frame) => root in Object(frame));
+      value = owner?.[root];
+    }
+
+    for (const segment of segments) {
+      if (value == null) return undefined;
+      let key = segment;
+      if (segment.startsWith("[")) {
+        if (!segment.endsWith("]")) return undefined;
+        const source = segment.slice(1, -1).trim();
+        if (!source) return undefined;
+        const quoted = source.match(
+          /^(?:"((?:\\.|[^"\\])*)"|'((?:\\.|[^'\\])*)')$/,
+        );
+        if (quoted) {
+          key = (quoted[1] ?? quoted[2]).replace(/\\(['"\\])/g, "$1");
+        } else if (/^-?\d+$/.test(source)) key = Number(source);
+        else {
+          key = get(source, scope);
+          if (key === undefined) return undefined;
+        }
+      }
+      value = value[key];
+    }
+    return value;
+  };
+
   /** @internal */
   const parseExpr = (src) => {
-    const parts = src.trim().split(/\s+/);
-    return parts.length === 1
-      ? { type: "path", path: parts[0] }
+    const parts = splitExpr(src);
+    return parts.length <= 1
+      ? { type: "path", path: parts[0] ?? "" }
       : {
           type: "helper",
           name: parts[0],
@@ -185,12 +253,12 @@ const TurboMini = (basePath = "/") => {
   };
 
   /** @internal */
-  const evalExpr = (expr, data, stack, H) => {
-    if (expr.type === "path") return get(data, expr.path);
+  const evalExpr = (expr, scope, stack, H) => {
+    if (expr.type === "path") return get(expr.path, scope);
     const h = H[expr.name];
     if (!h) throw new Error(`Unknown helper: ${expr.name}`);
-    const args = expr.args.map((a) => evalExpr(a, data, stack, H));
-    return h(...args, { data, stack });
+    const args = expr.args.map((a) => evalExpr(a, scope, stack, H));
+    return h(...args, { data: scope[0], stack });
   };
 
   /** @internal */
@@ -245,7 +313,7 @@ const TurboMini = (basePath = "/") => {
 
   /** @internal */
   const parsePartial = (src) => {
-    const [name, ...rest] = src.split(/\s+/);
+    const [name, ...rest] = splitExpr(src);
     const args = Object.create(null);
     if (rest.length === 1 && rest[0] === ".")
       args["."] = { type: "path", path: "." };
@@ -260,20 +328,20 @@ const TurboMini = (basePath = "/") => {
   /** @internal */
   const compileTemplate = (tpl) => {
     const ast = buildAst(tokenize(tpl));
-    const renderNode = (node, data, stack, env) => {
+    const renderNode = (node, scope, stack, env) => {
       const H = env.helpers;
       switch (node.t) {
         case "block":
           return node.children
-            .map((n) => renderNode(n, data, stack, env))
+            .map((n) => renderNode(n, scope, stack, env))
             .join("");
         case "text":
           return node.v;
         case "raw":
-          return String(get(data, node.v) ?? "");
+          return String(get(node.v, scope) ?? "");
         case "esc": {
           const ex = parseExpr(node.v);
-          const v = evalExpr(ex, data, stack, H);
+          const v = evalExpr(ex, scope, stack, H);
           return escapeHtml(v ?? "");
         }
         case "partial": {
@@ -282,40 +350,46 @@ const TurboMini = (basePath = "/") => {
           if (!render) throw new Error(`Partial "${name}" not found.`);
           let pd = {};
           for (const [k, ex] of Object.entries(args)) {
-            if (k === ".") pd = evalExpr(ex, data, stack, H);
-            else pd[k] = evalExpr(ex, data, stack, H);
+            if (k === ".") pd = evalExpr(ex, scope, stack, H);
+            else pd[k] = evalExpr(ex, scope, stack, H);
           }
-          return render(pd == null ? {} : pd, env);
+          return render(pd ?? {}, env, scope);
         }
         case "each": {
-          const m = node.v.match(/^(.+?)(?:\s+as\s+([A-Za-z_$][\w$]*))?$/);
+          const m = node.v.match(/^([\s\S]+?)(?:\s+as\s+([A-Za-z_$][\w$]*))?$/);
           const expr = parseExpr(m[1]);
           const alias = m[2] || null;
-          const arr = evalExpr(expr, data, stack, H) || [];
+          const arr = evalExpr(expr, scope, stack, H) || [];
           let out = "";
           for (let i = 0; i < arr.length; i++) {
             const item = arr[i];
             const childData = alias
-              ? Object.assign(Object.create(data), { [alias]: item, index: i })
+              ? Object.setPrototypeOf(
+                  { [alias]: item, index: i },
+                  Object(scope[0]),
+                )
               : item;
+            const childScope = [childData, ...scope];
+            const childStack = [...stack, item];
             out += node.children
-              .map((n) => renderNode(n, childData, [...stack, item], env))
+              .map((n) => renderNode(n, childScope, childStack, env))
               .join("");
           }
           return out;
         }
         case "if": {
-          const cond = !!evalExpr(parseExpr(node.v), data, stack, H);
+          const cond = !!evalExpr(parseExpr(node.v), scope, stack, H);
           if (!cond) return "";
           return node.children
-            .map((n) => renderNode(n, data, stack, env))
+            .map((n) => renderNode(n, scope, stack, env))
             .join("");
         }
         default:
           return "";
       }
     };
-    return (data, env) => renderNode(ast, data || {}, [data], env);
+    return (data, env, parents = []) =>
+      renderNode(ast, [data || {}, ...parents], [data], env);
   };
 
   // Runtime render glue

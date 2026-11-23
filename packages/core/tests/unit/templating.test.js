@@ -53,3 +53,34 @@ test('template: custom helper and unknown helper', () => {
   app.template('bad', '{{nope x}}');
   assert.throws(() => app.$t('bad', { x: 1 }), /Unknown helper: nope/);
 });
+
+test('template: nested loops inherit controller and enclosing item names', () => {
+  const app = TurboMini('/');
+  app.template('row', '{{title}}/{{group.name}}/{{value}}/{{name}};');
+  app.template('list', '{{#each groups as group}}{{#each group.rows}}{{#if show}}{{> row .}}{{/if}}{{/each}}{{/each}}');
+  const out = app.$t('list', {
+    title: 'Outer',
+    value: 'fallback',
+    show: true,
+    groups: [{ name: 'Group', rows: [{ name: 'A', value: null }, { name: 'B' }] }],
+  });
+  assert.equal(out, 'Outer/Group//A;Outer/Group/fallback/B;');
+});
+
+test('template: chained bracket keys resolve in the active scope', () => {
+  const app = TurboMini('/');
+  app.registerHelper('upper', (value) => value.toUpperCase());
+  app.template('list', '{{api.tables[0]}} {{#each api.fields as field}}' +
+    '{{upper api.data[api.cursors[api.active]][field]}} ' +
+    '{{{api.data[0]["raw.html ]"]}}} {{api.data[5][field]}}{{/each}}');
+  const out = app.$t('list', {
+    api: {
+      tables: ['users'],
+      fields: ['name'],
+      cursors: { current: 1 },
+      active: 'current',
+      data: [{ 'raw.html ]': '<b>raw</b>' }, { name: 'Alice' }],
+    },
+  });
+  assert.equal(out, 'users ALICE <b>raw</b> ');
+});
